@@ -1,0 +1,167 @@
+Release 14.6 - xst P.68d (nt)
+Copyright (c) 1995-2013 Xilinx, Inc.  All rights reserved.
+--> Parameter TMPDIR set to xst/projnav.tmp
+
+
+Total REAL time to Xst completion: 1.00 secs
+Total CPU time to Xst completion: 1.89 secs
+ 
+--> Parameter xsthdpdir set to xst
+
+
+Total REAL time to Xst completion: 1.00 secs
+Total CPU time to Xst completion: 1.89 secs
+ 
+--> Reading design: glue.prj
+
+TABLE OF CONTENTS
+  1) Synthesis Options Summary
+  2) HDL Parsing
+  3) HDL Elaboration
+  4) HDL Synthesis
+       4.1) HDL Synthesis Report
+  5) Advanced HDL Synthesis
+       5.1) Advanced HDL Synthesis Report
+  6) Low Level Synthesis
+  7) Partition Report
+  8) Design Summary
+       8.1) Primitive and Black Box Usage
+       8.2) Device utilization summary
+       8.3) Partition Resource Summary
+       8.4) Timing Report
+            8.4.1) Clock Information
+            8.4.2) Asynchronous Control Signals Information
+            8.4.3) Timing Summary
+            8.4.4) Timing Details
+            8.4.5) Cross Clock Domains Report
+
+
+=========================================================================
+*                      Synthesis Options Summary                        *
+=========================================================================
+---- Source Parameters
+Input File Name                    : "glue.prj"
+Ignore Synthesis Constraint File   : NO
+
+---- Target Parameters
+Output File Name                   : "glue"
+Output Format                      : NGC
+Target Device                      : xc7z020-1-clg484
+
+---- Source Options
+Top Module Name                    : glue
+Automatic FSM Extraction           : YES
+FSM Encoding Algorithm             : Auto
+Safe Implementation                : No
+FSM Style                          : LUT
+RAM Extraction                     : Yes
+RAM Style                          : Auto
+ROM Extraction                     : Yes
+Shift Register Extraction          : YES
+ROM Style                          : Auto
+Resource Sharing                   : YES
+Asynchronous To Synchronous        : NO
+Shift Register Minimum Size        : 2
+Use DSP Block                      : Auto
+Automatic Register Balancing       : No
+
+---- Target Options
+LUT Combining                      : Auto
+Reduce Control Sets                : Auto
+Add IO Buffers                     : YES
+Global Maximum Fanout              : 100000
+Add Generic Clock Buffer(BUFG)     : 32
+Register Duplication               : YES
+Optimize Instantiated Primitives   : NO
+Use Clock Enable                   : Auto
+Use Synchronous Set                : Auto
+Use Synchronous Reset              : Auto
+Pack IO Registers into IOBs        : Auto
+Equivalent register Removal        : YES
+
+---- General Options
+Optimization Goal                  : Speed
+Optimization Effort                : 1
+Power Reduction                    : NO
+Keep Hierarchy                     : No
+Netlist Hierarchy                  : As_Optimized
+RTL Output                         : Yes
+Global Optimization                : AllClockNets
+Read Cores                         : YES
+Write Timing Constraints           : NO
+Cross Clock Analysis               : NO
+Hierarchy Separator                : /
+Bus Delimiter                      : <>
+Case Specifier                     : Maintain
+Slice Utilization Ratio            : 100
+BRAM Utilization Ratio             : 100
+DSP48 Utilization Ratio            : 100
+Auto BRAM Packing                  : NO
+Slice Utilization Ratio Delta      : 5
+
+=========================================================================
+
+
+=========================================================================
+*                          HDL Parsing                                  *
+=========================================================================
+Parsing VHDL file "S:/eti/eda/xilinx/suite/14.7/Windows/14.7/ISE_DS/EDK/hw/XilinxProcessorIPLib/pcores/proc_common_v3_00_a/hdl/vhdl/proc_common_pkg.vhd" into library proc_common_v3_00_a
+Parsing package <proc_common_pkg>.
+Parsing package body <proc_common_pkg>.
+Parsing VHDL file "S:/eti/eda/xilinx/suite/14.7/Windows/14.7/ISE_DS/EDK/hw/XilinxProcessorIPLib/pcores/proc_common_v3_00_a/hdl/vhdl/family_support.vhd" into library proc_common_v3_00_a
+Parsing package <family_support>.
+Parsing package body <family_support>.
+Parsing VHDL file "S:/eti/eda/xilinx/suite/14.7/Windows/14.7/ISE_DS/EDK/hw/XilinxProcessorIPLib/pcores/proc_common_v3_00_a/hdl/vhdl/pselect_f.vhd" into library proc_common_v3_00_a
+Parsing entity <pselect_f>.
+Parsing architecture <imp> of entity <pselect_f>.
+Parsing VHDL file "S:/eti/eda/xilinx/suite/14.7/Windows/14.7/ISE_DS/EDK/hw/XilinxProcessorIPLib/pcores/proc_common_v3_00_a/hdl/vhdl/ipif_pkg.vhd" into library proc_common_v3_00_a
+Parsing package <ipif_pkg>.
+Parsing package body <ipif_pkg>.
+Parsing VHDL file "S:/eti/eda/xilinx/suite/14.7/Windows/14.7/ISE_DS/EDK/hw/XilinxProcessorIPLib/pcores/proc_common_v3_00_a/hdl/vhdl/counter_f.vhd" into library proc_common_v3_00_a
+Parsing entity <counter_f>.
+Parsing architecture <imp> of entity <counter_f>.
+Parsing VHDL file "S:/eti/eda/xilinx/suite/14.7/Windows/14.7/ISE_DS/EDK/hw/XilinxProcessorIPLib/pcores/axi_lite_ipif_v1_01_a/hdl/vhdl/address_decoder.vhd" into library axi_lite_ipif_v1_01_a
+Parsing entity <address_decoder>.
+Parsing architecture <IMP> of entity <address_decoder>.
+Parsing VHDL file "F:\Project_Files\gradFinalProjCPRE583\pcores\glue_v1_00_a\hdl\vhdl\c6b.vhd" into library glue_v1_00_a
+Parsing entity <c6b>.
+Parsing architecture <rtl_c6b> of entity <c6b>.
+Parsing VHDL file "F:\Project_Files\gradFinalProjCPRE583\pcores\glue_v1_00_a\hdl\vhdl\c4b.vhd" into library glue_v1_00_a
+Parsing entity <c4b>.
+Parsing architecture <rtl_c4b> of entity <c4b>.
+Parsing VHDL file "S:/eti/eda/xilinx/suite/14.7/Windows/14.7/ISE_DS/EDK/hw/XilinxProcessorIPLib/pcores/axi_lite_ipif_v1_01_a/hdl/vhdl/slave_attachment.vhd" into library axi_lite_ipif_v1_01_a
+Parsing entity <slave_attachment>.
+Parsing architecture <imp> of entity <slave_attachment>.
+Parsing VHDL file "F:\Project_Files\gradFinalProjCPRE583\pcores\glue_v1_00_a\hdl\vhdl\sha1_oc.vhdl" into library glue_v1_00_a
+Parsing entity <sha1>.
+Parsing architecture <phy> of entity <sha1>.
+Parsing VHDL file "S:/eti/eda/xilinx/suite/14.7/Windows/14.7/ISE_DS/EDK/hw/XilinxProcessorIPLib/pcores/proc_common_v3_00_a/hdl/vhdl/soft_reset.vhd" into library proc_common_v3_00_a
+Parsing entity <soft_reset>.
+Parsing architecture <implementation> of entity <soft_reset>.
+Parsing VHDL file "S:/eti/eda/xilinx/suite/14.7/Windows/14.7/ISE_DS/EDK/hw/XilinxProcessorIPLib/pcores/axi_lite_ipif_v1_01_a/hdl/vhdl/axi_lite_ipif.vhd" into library axi_lite_ipif_v1_01_a
+Parsing entity <axi_lite_ipif>.
+Parsing architecture <imp> of entity <axi_lite_ipif>.
+Parsing VHDL file "F:\Project_Files\gradFinalProjCPRE583\pcores\glue_v1_00_a\hdl\vhdl\user_logic.vhd" into library glue_v1_00_a
+Parsing entity <user_logic>.
+Parsing architecture <IMP> of entity <user_logic>.
+ERROR:HDLCompiler:69 - "F:\Project_Files\gradFinalProjCPRE583\pcores\glue_v1_00_a\hdl\vhdl\user_logic.vhd" Line 525: <sha_m> is not declared.
+ERROR:HDLCompiler:69 - "F:\Project_Files\gradFinalProjCPRE583\pcores\glue_v1_00_a\hdl\vhdl\user_logic.vhd" Line 562: <sha_h> is not declared.
+ERROR:HDLCompiler:69 - "F:\Project_Files\gradFinalProjCPRE583\pcores\glue_v1_00_a\hdl\vhdl\user_logic.vhd" Line 564: <sha_h> is not declared.
+ERROR:HDLCompiler:69 - "F:\Project_Files\gradFinalProjCPRE583\pcores\glue_v1_00_a\hdl\vhdl\user_logic.vhd" Line 566: <sha_h> is not declared.
+ERROR:HDLCompiler:69 - "F:\Project_Files\gradFinalProjCPRE583\pcores\glue_v1_00_a\hdl\vhdl\user_logic.vhd" Line 568: <sha_h> is not declared.
+ERROR:HDLCompiler:69 - "F:\Project_Files\gradFinalProjCPRE583\pcores\glue_v1_00_a\hdl\vhdl\user_logic.vhd" Line 559: <sha_valid> is not declared.
+ERROR:HDLCompiler:69 - "F:\Project_Files\gradFinalProjCPRE583\pcores\glue_v1_00_a\hdl\vhdl\user_logic.vhd" Line 585: <sha_m> is not declared.
+ERROR:HDLCompiler:69 - "F:\Project_Files\gradFinalProjCPRE583\pcores\glue_v1_00_a\hdl\vhdl\user_logic.vhd" Line 586: <sha_ld> is not declared.
+ERROR:HDLCompiler:69 - "F:\Project_Files\gradFinalProjCPRE583\pcores\glue_v1_00_a\hdl\vhdl\user_logic.vhd" Line 587: <sha_init> is not declared.
+ERROR:HDLCompiler:69 - "F:\Project_Files\gradFinalProjCPRE583\pcores\glue_v1_00_a\hdl\vhdl\user_logic.vhd" Line 588: <sha_clk> is not declared.
+ERROR:HDLCompiler:69 - "F:\Project_Files\gradFinalProjCPRE583\pcores\glue_v1_00_a\hdl\vhdl\user_logic.vhd" Line 589: <sha_rst> is not declared.
+ERROR:HDLCompiler:854 - "F:\Project_Files\gradFinalProjCPRE583\pcores\glue_v1_00_a\hdl\vhdl\user_logic.vhd" Line 131: Unit <imp> ignored due to previous errors.
+VHDL file F:\Project_Files\gradFinalProjCPRE583\pcores\glue_v1_00_a\hdl\vhdl\user_logic.vhd ignored due to errors
+--> 
+
+Total memory usage is 209844 kilobytes
+
+Number of errors   :   12 (   0 filtered)
+Number of warnings :    0 (   0 filtered)
+Number of infos    :    0 (   0 filtered)
+

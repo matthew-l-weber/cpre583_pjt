@@ -1,0 +1,10 @@
+-batch 
+-create glue 
+-ver 1.00.a 
+-dir "F:\Project_Files\gradFinalProjCPRE583" 
+-lang vhdl 
+-bus axi4lite s 
+-rst 
+-reg 32 
+-xps 
+-ise 
