@@ -1,0 +1,623 @@
+Release 14.6 - xst P.68d (lin64)
+Copyright (c) 1995-2013 Xilinx, Inc.  All rights reserved.
+--> 
+Parameter TMPDIR set to xst/projnav.tmp
+
+
+Total REAL time to Xst completion: 0.00 secs
+Total CPU time to Xst completion: 0.05 secs
+ 
+--> 
+Parameter xsthdpdir set to xst
+
+
+Total REAL time to Xst completion: 0.00 secs
+Total CPU time to Xst completion: 0.05 secs
+ 
+--> 
+Reading design: sha1.prj
+
+TABLE OF CONTENTS
+  1) Synthesis Options Summary
+  2) HDL Compilation
+  3) Design Hierarchy Analysis
+  4) HDL Analysis
+  5) HDL Synthesis
+     5.1) HDL Synthesis Report
+  6) Advanced HDL Synthesis
+     6.1) Advanced HDL Synthesis Report
+  7) Low Level Synthesis
+  8) Partition Report
+  9) Final Report
+	9.1) Device utilization summary
+	9.2) Partition Resource Summary
+	9.3) TIMING REPORT
+
+
+=========================================================================
+*                      Synthesis Options Summary                        *
+=========================================================================
+---- Source Parameters
+Input File Name                    : "sha1.prj"
+Input Format                       : mixed
+Ignore Synthesis Constraint File   : NO
+
+---- Target Parameters
+Output File Name                   : "sha1"
+Output Format                      : NGC
+Target Device                      : xc5vlx110t-1-ff1136
+
+---- Source Options
+Top Module Name                    : sha1
+Automatic FSM Extraction           : YES
+FSM Encoding Algorithm             : Auto
+Safe Implementation                : No
+FSM Style                          : LUT
+RAM Extraction                     : Yes
+RAM Style                          : Auto
+ROM Extraction                     : Yes
+Mux Style                          : Auto
+Decoder Extraction                 : YES
+Priority Encoder Extraction        : Yes
+Shift Register Extraction          : YES
+Logical Shifter Extraction         : YES
+XOR Collapsing                     : YES
+ROM Style                          : Auto
+Mux Extraction                     : Yes
+Resource Sharing                   : YES
+Asynchronous To Synchronous        : NO
+Use DSP Block                      : Auto
+Automatic Register Balancing       : No
+
+---- Target Options
+LUT Combining                      : Off
+Reduce Control Sets                : Off
+Add IO Buffers                     : YES
+Global Maximum Fanout              : 100000
+Add Generic Clock Buffer(BUFG)     : 32
+Register Duplication               : YES
+Slice Packing                      : YES
+Optimize Instantiated Primitives   : NO
+Use Clock Enable                   : Auto
+Use Synchronous Set                : Auto
+Use Synchronous Reset              : Auto
+Pack IO Registers into IOBs        : Auto
+Equivalent register Removal        : YES
+
+---- General Options
+Optimization Goal                  : Speed
+Optimization Effort                : 1
+Power Reduction                    : NO
+Keep Hierarchy                     : No
+Netlist Hierarchy                  : As_Optimized
+RTL Output                         : Yes
+Global Optimization                : AllClockNets
+Read Cores                         : YES
+Write Timing Constraints           : NO
+Cross Clock Analysis               : NO
+Hierarchy Separator                : /
+Bus Delimiter                      : <>
+Case Specifier                     : Maintain
+Slice Utilization Ratio            : 100
+BRAM Utilization Ratio             : 100
+DSP48 Utilization Ratio            : 100
+Verilog 2001                       : YES
+Auto BRAM Packing                  : NO
+Slice Utilization Ratio Delta      : 5
+
+=========================================================================
+
+
+=========================================================================
+*                          HDL Compilation                              *
+=========================================================================
+WARNING:HDLParsers:3607 - Unit work/c4b/rtl_c4b is now defined in a different file.  It was defined in "/home/nmiller/Documents/CprE583_Reconfigurable/CprE583_Group2/Project/sha1_oc.vhdl", and is now defined in "/home/nmiller/Documents/CprE583_Reconfigurable/CprE583_Group2/Project/c4b.vhd".
+WARNING:HDLParsers:3607 - Unit work/c6b/rtl_c6b is now defined in a different file.  It was defined in "/home/nmiller/Documents/CprE583_Reconfigurable/CprE583_Group2/Project/sha1_oc.vhdl", and is now defined in "/home/nmiller/Documents/CprE583_Reconfigurable/CprE583_Group2/Project/c6b.vhd".
+Compiling vhdl file "/home/nmiller/Documents/CprE583_Reconfigurable/CprE583_Group2/Project/c4b.vhd" in Library work.
+Entity <c4b> compiled.
+Entity <c4b> (Architecture <rtl_c4b>) compiled.
+Compiling vhdl file "/home/nmiller/Documents/CprE583_Reconfigurable/CprE583_Group2/Project/c6b.vhd" in Library work.
+Entity <c6b> compiled.
+Entity <c6b> (Architecture <rtl_c6b>) compiled.
+Compiling vhdl file "/home/nmiller/Documents/CprE583_Reconfigurable/CprE583_Group2/Project/sha1_oc.vhdl" in Library work.
+Entity <sha1> compiled.
+Entity <sha1> (Architecture <phy>) compiled.
+
+=========================================================================
+*                     Design Hierarchy Analysis                         *
+=========================================================================
+Analyzing hierarchy for entity <sha1> in library <work> (architecture <phy>).
+
+Analyzing hierarchy for entity <c4b> in library <work> (architecture <rtl_c4b>).
+
+Analyzing hierarchy for entity <c6b> in library <work> (architecture <rtl_c6b>).
+
+
+=========================================================================
+*                            HDL Analysis                               *
+=========================================================================
+Analyzing Entity <sha1> in library <work> (Architecture <phy>).
+Entity <sha1> analyzed. Unit <sha1> generated.
+
+Analyzing Entity <c4b> in library <work> (Architecture <rtl_c4b>).
+Entity <c4b> analyzed. Unit <c4b> generated.
+
+Analyzing Entity <c6b> in library <work> (Architecture <rtl_c6b>).
+Entity <c6b> analyzed. Unit <c6b> generated.
+
+
+=========================================================================
+*                           HDL Synthesis                               *
+=========================================================================
+
+Performing bidirectional port resolution...
+
+Synthesizing Unit <c4b>.
+    Related source file is "/home/nmiller/Documents/CprE583_Reconfigurable/CprE583_Group2/Project/c4b.vhd".
+    Found 4-bit up counter for signal <reg>.
+    Summary:
+	inferred   1 Counter(s).
+Unit <c4b> synthesized.
+
+
+Synthesizing Unit <c6b>.
+    Related source file is "/home/nmiller/Documents/CprE583_Reconfigurable/CprE583_Group2/Project/c6b.vhd".
+    Found 6-bit up counter for signal <reg>.
+    Summary:
+	inferred   1 Counter(s).
+Unit <c6b> synthesized.
+
+
+Synthesizing Unit <sha1>.
+    Related source file is "/home/nmiller/Documents/CprE583_Reconfigurable/CprE583_Group2/Project/sha1_oc.vhdl".
+    Found 4x32-bit ROM for signal <k>.
+    Found 32-bit register for signal <a>.
+    Found 32-bit adder for signal <a$addsub0000> created at line 292.
+    Found 32-bit adder for signal <a$addsub0001> created at line 292.
+    Found 32-bit adder for signal <a$addsub0002> created at line 292.
+    Found 32-bit adder for signal <a$addsub0003> created at line 292.
+    Found 32-bit register for signal <b>.
+    Found 32-bit register for signal <c>.
+    Found 32-bit register for signal <d>.
+    Found 32-bit register for signal <e>.
+    Found 32-bit xor3 for signal <f$xor0000> created at line 176.
+    Found 32-bit xor3 for signal <f$xor0001> created at line 176.
+    Found 32-bit xor2 for signal <f$xor0002> created at line 176.
+    Found 32-bit up accumulator for signal <h0>.
+    Found 32-bit up accumulator for signal <h1>.
+    Found 32-bit up accumulator for signal <h2>.
+    Found 32-bit up accumulator for signal <h3>.
+    Found 32-bit up accumulator for signal <h4>.
+    Found 1-bit register for signal <ild>.
+    Found 32-bit register for signal <im>.
+    Found 32-bit xor4 for signal <iw>.
+    Found 1-bit register for signal <nld>.
+    Found 2-bit register for signal <sc>.
+    Found 1-bit xor2 for signal <sc$xor0000> created at line 238.
+    Found 1-bit xor2 for signal <sc$xor0002> created at line 238.
+    Found 1-bit register for signal <vld>.
+    Found 32-bit register for signal <w>.
+    Found 512-bit register for signal <w0>.
+INFO:Xst:738 - HDL ADVISOR - 512 flip-flops were inferred for signal <w0>. You may be trying to describe a RAM in a way that is incompatible with block and distributed RAM resources available on Xilinx devices, or with a specific template that is not supported. Please review the Xilinx resources documentation and the XST user manual for coding guidelines. Taking advantage of RAM resources will lead to improved device usage and reduced synthesis time.
+    Summary:
+	inferred   1 ROM(s).
+	inferred   5 Accumulator(s).
+	inferred 741 D-type flip-flop(s).
+	inferred   4 Adder/Subtractor(s).
+	inferred  96 Xor(s).
+Unit <sha1> synthesized.
+
+
+=========================================================================
+HDL Synthesis Report
+
+Macro Statistics
+# ROMs                                                 : 1
+ 4x32-bit ROM                                          : 1
+# Adders/Subtractors                                   : 4
+ 32-bit adder                                          : 4
+# Counters                                             : 2
+ 4-bit up counter                                      : 1
+ 6-bit up counter                                      : 1
+# Accumulators                                         : 5
+ 32-bit up accumulator                                 : 5
+# Registers                                            : 12
+ 1-bit register                                        : 3
+ 2-bit register                                        : 1
+ 32-bit register                                       : 7
+ 512-bit register                                      : 1
+# Xors                                                 : 6
+ 1-bit xor2                                            : 2
+ 32-bit xor2                                           : 1
+ 32-bit xor3                                           : 2
+ 32-bit xor4                                           : 1
+
+=========================================================================
+
+=========================================================================
+*                       Advanced HDL Synthesis                          *
+=========================================================================
+
+
+Synthesizing (advanced) Unit <sha1>.
+INFO:Xst:3021 - HDL ADVISOR - Asynchronous or synchronous initialization of the register <sc> prevents it from being combined with the ROM <Mrom_k> for implementation as read-only block RAM.
+Unit <sha1> synthesized (advanced).
+
+=========================================================================
+Advanced HDL Synthesis Report
+
+Macro Statistics
+# ROMs                                                 : 1
+ 4x32-bit ROM                                          : 1
+# Adders/Subtractors                                   : 4
+ 32-bit adder                                          : 4
+# Counters                                             : 2
+ 4-bit up counter                                      : 1
+ 6-bit up counter                                      : 1
+# Accumulators                                         : 5
+ 32-bit up accumulator                                 : 5
+# Registers                                            : 741
+ Flip-Flops                                            : 741
+# Xors                                                 : 6
+ 1-bit xor2                                            : 2
+ 32-bit xor2                                           : 1
+ 32-bit xor3                                           : 2
+ 32-bit xor4                                           : 1
+
+=========================================================================
+
+=========================================================================
+*                         Low Level Synthesis                           *
+=========================================================================
+INFO:Xst:2261 - The FF/Latch <w0_8> in Unit <sha1> is equivalent to the following FF/Latch, which will be removed : <w_8> 
+INFO:Xst:2261 - The FF/Latch <w0_18> in Unit <sha1> is equivalent to the following FF/Latch, which will be removed : <w_18> 
+INFO:Xst:2261 - The FF/Latch <w0_23> in Unit <sha1> is equivalent to the following FF/Latch, which will be removed : <w_23> 
+INFO:Xst:2261 - The FF/Latch <w0_3> in Unit <sha1> is equivalent to the following FF/Latch, which will be removed : <w_3> 
+INFO:Xst:2261 - The FF/Latch <w0_13> in Unit <sha1> is equivalent to the following FF/Latch, which will be removed : <w_13> 
+INFO:Xst:2261 - The FF/Latch <w0_29> in Unit <sha1> is equivalent to the following FF/Latch, which will be removed : <w_29> 
+INFO:Xst:2261 - The FF/Latch <w0_9> in Unit <sha1> is equivalent to the following FF/Latch, which will be removed : <w_9> 
+INFO:Xst:2261 - The FF/Latch <w0_19> in Unit <sha1> is equivalent to the following FF/Latch, which will be removed : <w_19> 
+INFO:Xst:2261 - The FF/Latch <w0_24> in Unit <sha1> is equivalent to the following FF/Latch, which will be removed : <w_24> 
+INFO:Xst:2261 - The FF/Latch <w0_4> in Unit <sha1> is equivalent to the following FF/Latch, which will be removed : <w_4> 
+INFO:Xst:2261 - The FF/Latch <w0_14> in Unit <sha1> is equivalent to the following FF/Latch, which will be removed : <w_14> 
+INFO:Xst:2261 - The FF/Latch <w0_25> in Unit <sha1> is equivalent to the following FF/Latch, which will be removed : <w_25> 
+INFO:Xst:2261 - The FF/Latch <w0_30> in Unit <sha1> is equivalent to the following FF/Latch, which will be removed : <w_30> 
+INFO:Xst:2261 - The FF/Latch <w0_5> in Unit <sha1> is equivalent to the following FF/Latch, which will be removed : <w_5> 
+INFO:Xst:2261 - The FF/Latch <w0_15> in Unit <sha1> is equivalent to the following FF/Latch, which will be removed : <w_15> 
+INFO:Xst:2261 - The FF/Latch <w0_20> in Unit <sha1> is equivalent to the following FF/Latch, which will be removed : <w_20> 
+INFO:Xst:2261 - The FF/Latch <w0_0> in Unit <sha1> is equivalent to the following FF/Latch, which will be removed : <w_0> 
+INFO:Xst:2261 - The FF/Latch <w0_10> in Unit <sha1> is equivalent to the following FF/Latch, which will be removed : <w_10> 
+INFO:Xst:2261 - The FF/Latch <w0_26> in Unit <sha1> is equivalent to the following FF/Latch, which will be removed : <w_26> 
+INFO:Xst:2261 - The FF/Latch <w0_31> in Unit <sha1> is equivalent to the following FF/Latch, which will be removed : <w_31> 
+INFO:Xst:2261 - The FF/Latch <w0_6> in Unit <sha1> is equivalent to the following FF/Latch, which will be removed : <w_6> 
+INFO:Xst:2261 - The FF/Latch <w0_16> in Unit <sha1> is equivalent to the following FF/Latch, which will be removed : <w_16> 
+INFO:Xst:2261 - The FF/Latch <w0_21> in Unit <sha1> is equivalent to the following FF/Latch, which will be removed : <w_21> 
+INFO:Xst:2261 - The FF/Latch <w0_1> in Unit <sha1> is equivalent to the following FF/Latch, which will be removed : <w_1> 
+INFO:Xst:2261 - The FF/Latch <w0_11> in Unit <sha1> is equivalent to the following FF/Latch, which will be removed : <w_11> 
+INFO:Xst:2261 - The FF/Latch <w0_27> in Unit <sha1> is equivalent to the following FF/Latch, which will be removed : <w_27> 
+INFO:Xst:2261 - The FF/Latch <w0_7> in Unit <sha1> is equivalent to the following FF/Latch, which will be removed : <w_7> 
+INFO:Xst:2261 - The FF/Latch <w0_17> in Unit <sha1> is equivalent to the following FF/Latch, which will be removed : <w_17> 
+INFO:Xst:2261 - The FF/Latch <w0_22> in Unit <sha1> is equivalent to the following FF/Latch, which will be removed : <w_22> 
+INFO:Xst:2261 - The FF/Latch <w0_2> in Unit <sha1> is equivalent to the following FF/Latch, which will be removed : <w_2> 
+INFO:Xst:2261 - The FF/Latch <w0_12> in Unit <sha1> is equivalent to the following FF/Latch, which will be removed : <w_12> 
+INFO:Xst:2261 - The FF/Latch <w0_28> in Unit <sha1> is equivalent to the following FF/Latch, which will be removed : <w_28> 
+
+Optimizing unit <sha1> ...
+
+Mapping all equations...
+Building and optimizing final netlist ...
+Found area constraint ratio of 100 (+ 5) on block sha1, actual ratio is 2.
+FlipFlop sc_0 has been replicated 1 time(s)
+
+Final Macro Processing ...
+
+Processing Unit <sha1> :
+	Found 5-bit shift register for signal <w0_224>.
+	Found 5-bit shift register for signal <w0_225>.
+	Found 5-bit shift register for signal <w0_226>.
+	Found 5-bit shift register for signal <w0_227>.
+	Found 5-bit shift register for signal <w0_228>.
+	Found 5-bit shift register for signal <w0_229>.
+	Found 5-bit shift register for signal <w0_230>.
+	Found 5-bit shift register for signal <w0_231>.
+	Found 5-bit shift register for signal <w0_232>.
+	Found 5-bit shift register for signal <w0_233>.
+	Found 5-bit shift register for signal <w0_234>.
+	Found 5-bit shift register for signal <w0_235>.
+	Found 5-bit shift register for signal <w0_236>.
+	Found 5-bit shift register for signal <w0_237>.
+	Found 5-bit shift register for signal <w0_238>.
+	Found 5-bit shift register for signal <w0_239>.
+	Found 5-bit shift register for signal <w0_240>.
+	Found 5-bit shift register for signal <w0_241>.
+	Found 5-bit shift register for signal <w0_242>.
+	Found 5-bit shift register for signal <w0_243>.
+	Found 5-bit shift register for signal <w0_244>.
+	Found 5-bit shift register for signal <w0_245>.
+	Found 5-bit shift register for signal <w0_246>.
+	Found 5-bit shift register for signal <w0_247>.
+	Found 5-bit shift register for signal <w0_248>.
+	Found 5-bit shift register for signal <w0_249>.
+	Found 5-bit shift register for signal <w0_250>.
+	Found 5-bit shift register for signal <w0_251>.
+	Found 5-bit shift register for signal <w0_252>.
+	Found 5-bit shift register for signal <w0_253>.
+	Found 5-bit shift register for signal <w0_254>.
+	Found 5-bit shift register for signal <w0_255>.
+	Found 6-bit shift register for signal <w0_416>.
+	Found 6-bit shift register for signal <w0_417>.
+	Found 6-bit shift register for signal <w0_418>.
+	Found 6-bit shift register for signal <w0_419>.
+	Found 6-bit shift register for signal <w0_420>.
+	Found 6-bit shift register for signal <w0_421>.
+	Found 6-bit shift register for signal <w0_422>.
+	Found 6-bit shift register for signal <w0_423>.
+	Found 6-bit shift register for signal <w0_424>.
+	Found 6-bit shift register for signal <w0_425>.
+	Found 6-bit shift register for signal <w0_426>.
+	Found 6-bit shift register for signal <w0_427>.
+	Found 6-bit shift register for signal <w0_428>.
+	Found 6-bit shift register for signal <w0_429>.
+	Found 6-bit shift register for signal <w0_430>.
+	Found 6-bit shift register for signal <w0_431>.
+	Found 6-bit shift register for signal <w0_432>.
+	Found 6-bit shift register for signal <w0_433>.
+	Found 6-bit shift register for signal <w0_434>.
+	Found 6-bit shift register for signal <w0_435>.
+	Found 6-bit shift register for signal <w0_436>.
+	Found 6-bit shift register for signal <w0_437>.
+	Found 6-bit shift register for signal <w0_438>.
+	Found 6-bit shift register for signal <w0_439>.
+	Found 6-bit shift register for signal <w0_440>.
+	Found 6-bit shift register for signal <w0_441>.
+	Found 6-bit shift register for signal <w0_442>.
+	Found 6-bit shift register for signal <w0_443>.
+	Found 6-bit shift register for signal <w0_444>.
+	Found 6-bit shift register for signal <w0_445>.
+	Found 6-bit shift register for signal <w0_446>.
+	Found 6-bit shift register for signal <w0_447>.
+Unit <sha1> processed.
+
+=========================================================================
+Final Register Report
+
+Macro Statistics
+# Registers                                            : 528
+ Flip-Flops                                            : 528
+# Shift Registers                                      : 64
+ 5-bit shift register                                  : 32
+ 6-bit shift register                                  : 32
+
+=========================================================================
+
+=========================================================================
+*                           Partition Report                            *
+=========================================================================
+
+Partition Implementation Status
+-------------------------------
+
+  No Partitions were found in this design.
+
+-------------------------------
+
+=========================================================================
+*                            Final Report                               *
+=========================================================================
+Final Results
+RTL Top Level Output File Name     : sha1.ngr
+Top Level Output File Name         : sha1
+Output Format                      : NGC
+Optimization Goal                  : Speed
+Keep Hierarchy                     : No
+
+Design Statistics
+# IOs                              : 69
+
+Cell Usage :
+# BELS                             : 1128
+#      GND                         : 1
+#      INV                         : 3
+#      LUT2                        : 234
+#      LUT3                        : 39
+#      LUT4                        : 24
+#      LUT5                        : 226
+#      LUT6                        : 127
+#      MUXCY                       : 217
+#      MUXF7                       : 32
+#      VCC                         : 1
+#      XORCY                       : 224
+# FlipFlops/Latches                : 661
+#      FD                          : 160
+#      FDE                         : 64
+#      FDR                         : 205
+#      FDRE                        : 152
+#      FDSE                        : 80
+# Shift Registers                  : 64
+#      SRLC16E                     : 64
+# Clock Buffers                    : 1
+#      BUFGP                       : 1
+# IO Buffers                       : 68
+#      IBUF                        : 35
+#      OBUF                        : 33
+=========================================================================
+
+Device utilization summary:
+---------------------------
+
+Selected Device : 5vlx110tff1136-1 
+
+
+Slice Logic Utilization: 
+ Number of Slice Registers:             661  out of  69120     0%  
+ Number of Slice LUTs:                  717  out of  69120     1%  
+    Number used as Logic:               653  out of  69120     0%  
+    Number used as Memory:               64  out of  17920     0%  
+       Number used as SRL:               64
+
+Slice Logic Distribution: 
+ Number of LUT Flip Flop pairs used:    908
+   Number with an unused Flip Flop:     247  out of    908    27%  
+   Number with an unused LUT:           191  out of    908    21%  
+   Number of fully used LUT-FF pairs:   470  out of    908    51%  
+   Number of unique control sets:         9
+
+IO Utilization: 
+ Number of IOs:                          69
+ Number of bonded IOBs:                  69  out of    640    10%  
+
+Specific Feature Utilization:
+ Number of BUFG/BUFGCTRLs:                1  out of     32     3%  
+
+---------------------------
+Partition Resource Summary:
+---------------------------
+
+  No Partitions were found in this design.
+
+---------------------------
+
+
+=========================================================================
+TIMING REPORT
+
+NOTE: THESE TIMING NUMBERS ARE ONLY A SYNTHESIS ESTIMATE.
+      FOR ACCURATE TIMING INFORMATION PLEASE REFER TO THE TRACE REPORT
+      GENERATED AFTER PLACE-and-ROUTE.
+
+Clock Information:
+------------------
+-----------------------------------+------------------------+-------+
+Clock Signal                       | Clock buffer(FF name)  | Load  |
+-----------------------------------+------------------------+-------+
+clk                                | BUFGP                  | 725   |
+-----------------------------------+------------------------+-------+
+
+Asynchronous Control Signals Information:
+----------------------------------------
+No asynchronous control signals found in this design
+
+Timing Summary:
+---------------
+Speed Grade: -1
+
+   Minimum period: 5.619ns (Maximum Frequency: 177.968MHz)
+   Minimum input arrival time before clock: 2.838ns
+   Maximum output required time after clock: 4.807ns
+   Maximum combinational path delay: No path found
+
+Timing Detail:
+--------------
+All values displayed in nanoseconds (ns)
+
+=========================================================================
+Timing constraint: Default period analysis for Clock 'clk'
+  Clock period: 5.619ns (frequency: 177.968MHz)
+  Total number of paths / destination ports: 308265 / 867
+-------------------------------------------------------------------------
+Delay:               5.619ns (Levels of Logic = 34)
+  Source:            d_2 (FF)
+  Destination:       a_31 (FF)
+  Source Clock:      clk rising
+  Destination Clock: clk rising
+
+  Data Path: d_2 to a_31
+                                Gate     Net
+    Cell:in->out      fanout   Delay   Delay  Logical Name (Net Name)
+    ----------------------------------------  ------------
+     FD:C->Q               3   0.471   0.984  d_2 (d_2)
+     LUT5:I0->O            3   0.094   0.587  Madd_a_addsub0001C1211 (Madd_a_addsub0001C1_bdd0)
+     LUT6:I4->O            1   0.094   0.000  Madd_a_addsub0001_Madd_lut<2> (Madd_a_addsub0001_Madd_lut<2>)
+     MUXCY:S->O            1   0.372   0.000  Madd_a_addsub0001_Madd_cy<2> (Madd_a_addsub0001_Madd_cy<2>)
+     MUXCY:CI->O           1   0.026   0.000  Madd_a_addsub0001_Madd_cy<3> (Madd_a_addsub0001_Madd_cy<3>)
+     MUXCY:CI->O           1   0.026   0.000  Madd_a_addsub0001_Madd_cy<4> (Madd_a_addsub0001_Madd_cy<4>)
+     MUXCY:CI->O           1   0.026   0.000  Madd_a_addsub0001_Madd_cy<5> (Madd_a_addsub0001_Madd_cy<5>)
+     MUXCY:CI->O           1   0.026   0.000  Madd_a_addsub0001_Madd_cy<6> (Madd_a_addsub0001_Madd_cy<6>)
+     MUXCY:CI->O           1   0.026   0.000  Madd_a_addsub0001_Madd_cy<7> (Madd_a_addsub0001_Madd_cy<7>)
+     MUXCY:CI->O           1   0.026   0.000  Madd_a_addsub0001_Madd_cy<8> (Madd_a_addsub0001_Madd_cy<8>)
+     MUXCY:CI->O           1   0.026   0.000  Madd_a_addsub0001_Madd_cy<9> (Madd_a_addsub0001_Madd_cy<9>)
+     MUXCY:CI->O           1   0.026   0.000  Madd_a_addsub0001_Madd_cy<10> (Madd_a_addsub0001_Madd_cy<10>)
+     MUXCY:CI->O           1   0.026   0.000  Madd_a_addsub0001_Madd_cy<11> (Madd_a_addsub0001_Madd_cy<11>)
+     MUXCY:CI->O           1   0.026   0.000  Madd_a_addsub0001_Madd_cy<12> (Madd_a_addsub0001_Madd_cy<12>)
+     MUXCY:CI->O           1   0.026   0.000  Madd_a_addsub0001_Madd_cy<13> (Madd_a_addsub0001_Madd_cy<13>)
+     MUXCY:CI->O           1   0.026   0.000  Madd_a_addsub0001_Madd_cy<14> (Madd_a_addsub0001_Madd_cy<14>)
+     MUXCY:CI->O           1   0.026   0.000  Madd_a_addsub0001_Madd_cy<15> (Madd_a_addsub0001_Madd_cy<15>)
+     MUXCY:CI->O           1   0.026   0.000  Madd_a_addsub0001_Madd_cy<16> (Madd_a_addsub0001_Madd_cy<16>)
+     MUXCY:CI->O           1   0.026   0.000  Madd_a_addsub0001_Madd_cy<17> (Madd_a_addsub0001_Madd_cy<17>)
+     MUXCY:CI->O           1   0.026   0.000  Madd_a_addsub0001_Madd_cy<18> (Madd_a_addsub0001_Madd_cy<18>)
+     MUXCY:CI->O           1   0.026   0.000  Madd_a_addsub0001_Madd_cy<19> (Madd_a_addsub0001_Madd_cy<19>)
+     MUXCY:CI->O           1   0.026   0.000  Madd_a_addsub0001_Madd_cy<20> (Madd_a_addsub0001_Madd_cy<20>)
+     MUXCY:CI->O           1   0.026   0.000  Madd_a_addsub0001_Madd_cy<21> (Madd_a_addsub0001_Madd_cy<21>)
+     MUXCY:CI->O           1   0.026   0.000  Madd_a_addsub0001_Madd_cy<22> (Madd_a_addsub0001_Madd_cy<22>)
+     MUXCY:CI->O           1   0.026   0.000  Madd_a_addsub0001_Madd_cy<23> (Madd_a_addsub0001_Madd_cy<23>)
+     MUXCY:CI->O           1   0.026   0.000  Madd_a_addsub0001_Madd_cy<24> (Madd_a_addsub0001_Madd_cy<24>)
+     MUXCY:CI->O           1   0.026   0.000  Madd_a_addsub0001_Madd_cy<25> (Madd_a_addsub0001_Madd_cy<25>)
+     MUXCY:CI->O           1   0.026   0.000  Madd_a_addsub0001_Madd_cy<26> (Madd_a_addsub0001_Madd_cy<26>)
+     MUXCY:CI->O           1   0.026   0.000  Madd_a_addsub0001_Madd_cy<27> (Madd_a_addsub0001_Madd_cy<27>)
+     MUXCY:CI->O           1   0.026   0.000  Madd_a_addsub0001_Madd_cy<28> (Madd_a_addsub0001_Madd_cy<28>)
+     XORCY:CI->O           3   0.357   0.587  Madd_a_addsub0001_Madd_xor<29> (a_addsub0001<29>)
+     LUT6:I4->O            1   0.094   0.000  Madd_a_addsub0003_Madd_lut<30> (Madd_a_addsub0003_Madd_lut<30>)
+     MUXCY:S->O            0   0.372   0.000  Madd_a_addsub0003_Madd_cy<30> (Madd_a_addsub0003_Madd_cy<30>)
+     XORCY:CI->O           1   0.357   0.480  Madd_a_addsub0003_Madd_xor<31> (a_addsub0003<31>)
+     LUT5:I4->O            1   0.094   0.000  a_mux0001<31>1 (a_mux0001<31>)
+     FD:D                     -0.018          a_31
+    ----------------------------------------
+    Total                      5.619ns (2.981ns logic, 2.638ns route)
+                                       (53.1% logic, 46.9% route)
+
+=========================================================================
+Timing constraint: Default OFFSET IN BEFORE for Clock 'clk'
+  Total number of paths / destination ports: 964 / 630
+-------------------------------------------------------------------------
+Offset:              2.838ns (Levels of Logic = 2)
+  Source:            rst (PAD)
+  Destination:       ct3/reg_0 (FF)
+  Destination Clock: clk rising
+
+  Data Path: rst to ct3/reg_0
+                                Gate     Net
+    Cell:in->out      fanout   Delay   Delay  Logical Name (Net Name)
+    ----------------------------------------  ------------
+     IBUF:I->O           428   0.818   0.990  rst_IBUF (rst_IBUF)
+     LUT4:I0->O            6   0.094   0.363  ctr3_rst1 (ctr3_rst)
+     FDR:R                     0.573          ct3/reg_0
+    ----------------------------------------
+    Total                      2.838ns (1.485ns logic, 1.353ns route)
+                                       (52.3% logic, 47.7% route)
+
+=========================================================================
+Timing constraint: Default OFFSET OUT AFTER for Clock 'clk'
+  Total number of paths / destination ports: 385 / 33
+-------------------------------------------------------------------------
+Offset:              4.807ns (Levels of Logic = 3)
+  Source:            ct2/reg_3 (FF)
+  Destination:       h<31> (PAD)
+  Source Clock:      clk rising
+
+  Data Path: ct2/reg_3 to h<31>
+                                Gate     Net
+    Cell:in->out      fanout   Delay   Delay  Logical Name (Net Name)
+    ----------------------------------------  ------------
+     FDR:C->Q             66   0.471   1.203  ct2/reg_3 (ct2/reg_3)
+     LUT6:I0->O            1   0.094   0.000  ih<9>2 (ih<9>1)
+     MUXF7:I0->O           1   0.251   0.336  ih<9>_f7 (h_9_OBUF)
+     OBUF:I->O                 2.452          h_9_OBUF (h<9>)
+    ----------------------------------------
+    Total                      4.807ns (3.268ns logic, 1.539ns route)
+                                       (68.0% logic, 32.0% route)
+
+=========================================================================
+
+
+Total REAL time to Xst completion: 10.00 secs
+Total CPU time to Xst completion: 9.74 secs
+ 
+--> 
+
+
+Total memory usage is 581108 kilobytes
+
+Number of errors   :    0 (   0 filtered)
+Number of warnings :    2 (   0 filtered)
+Number of infos    :   34 (   0 filtered)
+

@@ -1,0 +1,3 @@
+vhdl work "../c6b.vhd"
+vhdl work "../c4b.vhd"
+vhdl work "../sha1_oc.vhdl"
