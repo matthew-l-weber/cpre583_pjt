@@ -153,6 +153,7 @@ architecture phy of sha1 is
   signal   nld     :     std_logic;
   signal   ild     :     std_logic;
   signal   ild_rst :     std_logic;
+  signal   commit  :     std_logic;
  
   signal   sr      :     std_logic_vector (  1 downto 0);
   signal   sc      :     std_logic_vector (  1 downto 0);
@@ -253,6 +254,19 @@ begin
     end if;
   end process;
  
+  process (clk)
+  begin
+	  if ((clk = '1') and clk'event) then
+		  if( rst = '1') then
+			  commit <= '0';
+		  elsif( ild_rst = '1' ) then
+			  commit <= '1';
+		  elsif( vld = '1' ) then
+			  commit <= '0';
+		  end if;
+	 end if;
+  end process;
+
   ild_rst          <= (ild xor ld) and ld;
 --ctr2_rst         <=  ild_rst     or rst or vld or (ctr2 = B"0100");     -- set to count to  4 (  5 clock)
   ctr2_rst         <=  ild_rst     or rst or vld or not(ctr2(3) or not(ctr2(2)) or ctr2(1) or ctr2(0));
@@ -268,7 +282,7 @@ begin
         h2         <= X"98badcfe";
         h3         <= X"10325476";
         h4         <= X"c3d2e1f0";
-      elsif (vld = '1') then -- FIXME this adder is very costly and NOT A PORTABLE CODE
+      elsif (vld = '1') and (commit = '1') then -- FIXME this adder is very costly and NOT A PORTABLE CODE
 		h0         <= std_logic_vector( unsigned(a) + unsigned(h0));
         h1         <= std_logic_vector( unsigned(b) + unsigned(h1));
         h2         <= std_logic_vector( unsigned(c) + unsigned(h2));
@@ -299,6 +313,6 @@ begin
   end process;
  
   h                <=  ih;
-  v                <=  vld;
+  v                <=  vld and commit;
  
 end phy;
