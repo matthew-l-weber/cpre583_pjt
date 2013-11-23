@@ -5,40 +5,40 @@
      behavior or data corruption.  It is strongly advised that
      users do not edit the contents of this file. -->
 <messages>
-<msg type="error" file="HDLCompiler" num="69" delta="old" >"F:\Project_Files\gradFinalProjCPRE583\pcores\glue_v1_00_a\hdl\vhdl\user_logic.vhd" Line 525: &lt;<arg fmt="%s" index="1">sha_m</arg>&gt; is not declared.
+<msg type="error" file="HDLCompiler" num="69" delta="old" >"/home/nmiller/Documents/CprE583_Reconfigurable/CprE583_Group2_GitHub/cpre583_pjt/pcore/glue_v1_00_a_opencore_sha/hdl/vhdl/user_logic.vhd" Line 525: &lt;<arg fmt="%s" index="1">sha_m</arg>&gt; is not declared.
 </msg>
 
-<msg type="error" file="HDLCompiler" num="69" delta="old" >"F:\Project_Files\gradFinalProjCPRE583\pcores\glue_v1_00_a\hdl\vhdl\user_logic.vhd" Line 562: &lt;<arg fmt="%s" index="1">sha_h</arg>&gt; is not declared.
+<msg type="error" file="HDLCompiler" num="69" delta="old" >"/home/nmiller/Documents/CprE583_Reconfigurable/CprE583_Group2_GitHub/cpre583_pjt/pcore/glue_v1_00_a_opencore_sha/hdl/vhdl/user_logic.vhd" Line 562: &lt;<arg fmt="%s" index="1">sha_h</arg>&gt; is not declared.
 </msg>
 
-<msg type="error" file="HDLCompiler" num="69" delta="old" >"F:\Project_Files\gradFinalProjCPRE583\pcores\glue_v1_00_a\hdl\vhdl\user_logic.vhd" Line 564: &lt;<arg fmt="%s" index="1">sha_h</arg>&gt; is not declared.
+<msg type="error" file="HDLCompiler" num="69" delta="old" >"/home/nmiller/Documents/CprE583_Reconfigurable/CprE583_Group2_GitHub/cpre583_pjt/pcore/glue_v1_00_a_opencore_sha/hdl/vhdl/user_logic.vhd" Line 564: &lt;<arg fmt="%s" index="1">sha_h</arg>&gt; is not declared.
 </msg>
 
-<msg type="error" file="HDLCompiler" num="69" delta="old" >"F:\Project_Files\gradFinalProjCPRE583\pcores\glue_v1_00_a\hdl\vhdl\user_logic.vhd" Line 566: &lt;<arg fmt="%s" index="1">sha_h</arg>&gt; is not declared.
+<msg type="error" file="HDLCompiler" num="69" delta="old" >"/home/nmiller/Documents/CprE583_Reconfigurable/CprE583_Group2_GitHub/cpre583_pjt/pcore/glue_v1_00_a_opencore_sha/hdl/vhdl/user_logic.vhd" Line 566: &lt;<arg fmt="%s" index="1">sha_h</arg>&gt; is not declared.
 </msg>
 
-<msg type="error" file="HDLCompiler" num="69" delta="old" >"F:\Project_Files\gradFinalProjCPRE583\pcores\glue_v1_00_a\hdl\vhdl\user_logic.vhd" Line 568: &lt;<arg fmt="%s" index="1">sha_h</arg>&gt; is not declared.
+<msg type="error" file="HDLCompiler" num="69" delta="old" >"/home/nmiller/Documents/CprE583_Reconfigurable/CprE583_Group2_GitHub/cpre583_pjt/pcore/glue_v1_00_a_opencore_sha/hdl/vhdl/user_logic.vhd" Line 568: &lt;<arg fmt="%s" index="1">sha_h</arg>&gt; is not declared.
 </msg>
 
-<msg type="error" file="HDLCompiler" num="69" delta="old" >"F:\Project_Files\gradFinalProjCPRE583\pcores\glue_v1_00_a\hdl\vhdl\user_logic.vhd" Line 559: &lt;<arg fmt="%s" index="1">sha_valid</arg>&gt; is not declared.
+<msg type="error" file="HDLCompiler" num="69" delta="old" >"/home/nmiller/Documents/CprE583_Reconfigurable/CprE583_Group2_GitHub/cpre583_pjt/pcore/glue_v1_00_a_opencore_sha/hdl/vhdl/user_logic.vhd" Line 559: &lt;<arg fmt="%s" index="1">sha_valid</arg>&gt; is not declared.
 </msg>
 
-<msg type="error" file="HDLCompiler" num="69" delta="old" >"F:\Project_Files\gradFinalProjCPRE583\pcores\glue_v1_00_a\hdl\vhdl\user_logic.vhd" Line 585: &lt;<arg fmt="%s" index="1">sha_m</arg>&gt; is not declared.
+<msg type="error" file="HDLCompiler" num="69" delta="old" >"/home/nmiller/Documents/CprE583_Reconfigurable/CprE583_Group2_GitHub/cpre583_pjt/pcore/glue_v1_00_a_opencore_sha/hdl/vhdl/user_logic.vhd" Line 585: &lt;<arg fmt="%s" index="1">sha_m</arg>&gt; is not declared.
 </msg>
 
-<msg type="error" file="HDLCompiler" num="69" delta="old" >"F:\Project_Files\gradFinalProjCPRE583\pcores\glue_v1_00_a\hdl\vhdl\user_logic.vhd" Line 586: &lt;<arg fmt="%s" index="1">sha_ld</arg>&gt; is not declared.
+<msg type="error" file="HDLCompiler" num="69" delta="old" >"/home/nmiller/Documents/CprE583_Reconfigurable/CprE583_Group2_GitHub/cpre583_pjt/pcore/glue_v1_00_a_opencore_sha/hdl/vhdl/user_logic.vhd" Line 586: &lt;<arg fmt="%s" index="1">sha_ld</arg>&gt; is not declared.
 </msg>
 
-<msg type="error" file="HDLCompiler" num="69" delta="old" >"F:\Project_Files\gradFinalProjCPRE583\pcores\glue_v1_00_a\hdl\vhdl\user_logic.vhd" Line 587: &lt;<arg fmt="%s" index="1">sha_init</arg>&gt; is not declared.
+<msg type="error" file="HDLCompiler" num="69" delta="old" >"/home/nmiller/Documents/CprE583_Reconfigurable/CprE583_Group2_GitHub/cpre583_pjt/pcore/glue_v1_00_a_opencore_sha/hdl/vhdl/user_logic.vhd" Line 587: &lt;<arg fmt="%s" index="1">sha_init</arg>&gt; is not declared.
 </msg>
 
-<msg type="error" file="HDLCompiler" num="69" delta="old" >"F:\Project_Files\gradFinalProjCPRE583\pcores\glue_v1_00_a\hdl\vhdl\user_logic.vhd" Line 588: &lt;<arg fmt="%s" index="1">sha_clk</arg>&gt; is not declared.
+<msg type="error" file="HDLCompiler" num="69" delta="old" >"/home/nmiller/Documents/CprE583_Reconfigurable/CprE583_Group2_GitHub/cpre583_pjt/pcore/glue_v1_00_a_opencore_sha/hdl/vhdl/user_logic.vhd" Line 588: &lt;<arg fmt="%s" index="1">sha_clk</arg>&gt; is not declared.
 </msg>
 
-<msg type="error" file="HDLCompiler" num="69" delta="old" >"F:\Project_Files\gradFinalProjCPRE583\pcores\glue_v1_00_a\hdl\vhdl\user_logic.vhd" Line 589: &lt;<arg fmt="%s" index="1">sha_rst</arg>&gt; is not declared.
+<msg type="error" file="HDLCompiler" num="69" delta="old" >"/home/nmiller/Documents/CprE583_Reconfigurable/CprE583_Group2_GitHub/cpre583_pjt/pcore/glue_v1_00_a_opencore_sha/hdl/vhdl/user_logic.vhd" Line 589: &lt;<arg fmt="%s" index="1">sha_rst</arg>&gt; is not declared.
 </msg>
 
-<msg type="error" file="HDLCompiler" num="854" delta="old" >"F:\Project_Files\gradFinalProjCPRE583\pcores\glue_v1_00_a\hdl\vhdl\user_logic.vhd" Line 131: Unit &lt;<arg fmt="%s" index="1">imp</arg>&gt; ignored due to previous errors.
+<msg type="error" file="HDLCompiler" num="854" delta="old" >"/home/nmiller/Documents/CprE583_Reconfigurable/CprE583_Group2_GitHub/cpre583_pjt/pcore/glue_v1_00_a_opencore_sha/hdl/vhdl/user_logic.vhd" Line 131: Unit &lt;<arg fmt="%s" index="1">imp</arg>&gt; ignored due to previous errors.
 </msg>
 
 </messages>

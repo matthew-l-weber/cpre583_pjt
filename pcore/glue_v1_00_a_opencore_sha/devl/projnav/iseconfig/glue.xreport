@@ -1,11 +1,11 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <report-views version="2.0" >
  <header>
-  <DateModified>2013-11-13T20:38:41</DateModified>
+  <DateModified>2013-11-19T22:56:53</DateModified>
   <ModuleName>glue</ModuleName>
-  <SummaryTimeStamp>2013-11-12T21:56:43</SummaryTimeStamp>
-  <SavedFilePath>F:/Project_Files/gradFinalProjCPRE583/pcores/glue_v1_00_a/devl/projnav/iseconfig/glue.xreport</SavedFilePath>
-  <ImplementationReportsDirectory>F:/Project_Files/gradFinalProjCPRE583/pcores/glue_v1_00_a/devl/projnav\</ImplementationReportsDirectory>
+  <SummaryTimeStamp>2013-11-19T21:29:49</SummaryTimeStamp>
+  <SavedFilePath>/home/nmiller/Documents/CprE583_Reconfigurable/CprE583_Group2_GitHub/cpre583_pjt/pcore/glue_v1_00_a_opencore_sha/devl/projnav/iseconfig/glue.xreport</SavedFilePath>
+  <ImplementationReportsDirectory>/home/nmiller/Documents/CprE583_Reconfigurable/CprE583_Group2_GitHub/cpre583_pjt/pcore/glue_v1_00_a_opencore_sha/devl/projnav/</ImplementationReportsDirectory>
   <DateInitialized>2013-11-12T21:16:50</DateInitialized>
   <EnableMessageFiltering>false</EnableMessageFiltering>
  </header>

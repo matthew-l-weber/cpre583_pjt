@@ -1,0 +1,16 @@
+ISim log file
+Running: /home/nmiller/Documents/CprE583_Reconfigurable/CprE583_Group2_GitHub/cpre583_pjt/pcore/glue_v1_00_a_opencore_sha/devl/projnav/sha1_tb_isim_beh.exe -intstyle ise -gui -tclbatch isim.cmd -wdb /home/nmiller/Documents/CprE583_Reconfigurable/CprE583_Group2_GitHub/cpre583_pjt/pcore/glue_v1_00_a_opencore_sha/devl/projnav/sha1_tb_isim_beh.wdb 
+ISim P.68d (signature 0xfbc00daa)
+This is a Full version of ISim.
+Time resolution is 1 ps
+# onerror resume
+# wave add /
+# run 1000 ns
+Simulator is doing circuit initialization process.
+Finished circuit initialization process.
+ISim P.68d (signature 0xfbc00daa)
+This is a Full version of ISim.
+# run 1000 ns
+Simulator is doing circuit initialization process.
+Finished circuit initialization process.
+# exit 0

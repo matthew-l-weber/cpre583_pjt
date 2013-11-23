@@ -1,18 +1,21 @@
-Release 14.6 - xst P.68d (nt)
+Release 14.6 - xst P.68d (lin64)
 Copyright (c) 1995-2013 Xilinx, Inc.  All rights reserved.
---> Parameter TMPDIR set to xst/projnav.tmp
+--> 
+Parameter TMPDIR set to xst/projnav.tmp
 
 
-Total REAL time to Xst completion: 1.00 secs
-Total CPU time to Xst completion: 1.89 secs
+Total REAL time to Xst completion: 0.00 secs
+Total CPU time to Xst completion: 0.04 secs
  
---> Parameter xsthdpdir set to xst
+--> 
+Parameter xsthdpdir set to xst
 
 
-Total REAL time to Xst completion: 1.00 secs
-Total CPU time to Xst completion: 1.89 secs
+Total REAL time to Xst completion: 0.00 secs
+Total CPU time to Xst completion: 0.04 secs
  
---> Reading design: glue.prj
+--> 
+Reading design: glue.prj
 
 TABLE OF CONTENTS
   1) Synthesis Options Summary
@@ -105,61 +108,62 @@ Slice Utilization Ratio Delta      : 5
 =========================================================================
 *                          HDL Parsing                                  *
 =========================================================================
-Parsing VHDL file "S:/eti/eda/xilinx/suite/14.7/Windows/14.7/ISE_DS/EDK/hw/XilinxProcessorIPLib/pcores/proc_common_v3_00_a/hdl/vhdl/proc_common_pkg.vhd" into library proc_common_v3_00_a
+Parsing VHDL file "/opt/Xilinx/14.6/ISE_DS/EDK/hw/XilinxProcessorIPLib/pcores/proc_common_v3_00_a/hdl/vhdl/proc_common_pkg.vhd" into library proc_common_v3_00_a
 Parsing package <proc_common_pkg>.
 Parsing package body <proc_common_pkg>.
-Parsing VHDL file "S:/eti/eda/xilinx/suite/14.7/Windows/14.7/ISE_DS/EDK/hw/XilinxProcessorIPLib/pcores/proc_common_v3_00_a/hdl/vhdl/family_support.vhd" into library proc_common_v3_00_a
+Parsing VHDL file "/opt/Xilinx/14.6/ISE_DS/EDK/hw/XilinxProcessorIPLib/pcores/proc_common_v3_00_a/hdl/vhdl/family_support.vhd" into library proc_common_v3_00_a
 Parsing package <family_support>.
 Parsing package body <family_support>.
-Parsing VHDL file "S:/eti/eda/xilinx/suite/14.7/Windows/14.7/ISE_DS/EDK/hw/XilinxProcessorIPLib/pcores/proc_common_v3_00_a/hdl/vhdl/pselect_f.vhd" into library proc_common_v3_00_a
+Parsing VHDL file "/opt/Xilinx/14.6/ISE_DS/EDK/hw/XilinxProcessorIPLib/pcores/proc_common_v3_00_a/hdl/vhdl/pselect_f.vhd" into library proc_common_v3_00_a
 Parsing entity <pselect_f>.
 Parsing architecture <imp> of entity <pselect_f>.
-Parsing VHDL file "S:/eti/eda/xilinx/suite/14.7/Windows/14.7/ISE_DS/EDK/hw/XilinxProcessorIPLib/pcores/proc_common_v3_00_a/hdl/vhdl/ipif_pkg.vhd" into library proc_common_v3_00_a
+Parsing VHDL file "/opt/Xilinx/14.6/ISE_DS/EDK/hw/XilinxProcessorIPLib/pcores/proc_common_v3_00_a/hdl/vhdl/ipif_pkg.vhd" into library proc_common_v3_00_a
 Parsing package <ipif_pkg>.
 Parsing package body <ipif_pkg>.
-Parsing VHDL file "S:/eti/eda/xilinx/suite/14.7/Windows/14.7/ISE_DS/EDK/hw/XilinxProcessorIPLib/pcores/proc_common_v3_00_a/hdl/vhdl/counter_f.vhd" into library proc_common_v3_00_a
+Parsing VHDL file "/opt/Xilinx/14.6/ISE_DS/EDK/hw/XilinxProcessorIPLib/pcores/proc_common_v3_00_a/hdl/vhdl/counter_f.vhd" into library proc_common_v3_00_a
 Parsing entity <counter_f>.
 Parsing architecture <imp> of entity <counter_f>.
-Parsing VHDL file "S:/eti/eda/xilinx/suite/14.7/Windows/14.7/ISE_DS/EDK/hw/XilinxProcessorIPLib/pcores/axi_lite_ipif_v1_01_a/hdl/vhdl/address_decoder.vhd" into library axi_lite_ipif_v1_01_a
+Parsing VHDL file "/opt/Xilinx/14.6/ISE_DS/EDK/hw/XilinxProcessorIPLib/pcores/axi_lite_ipif_v1_01_a/hdl/vhdl/address_decoder.vhd" into library axi_lite_ipif_v1_01_a
 Parsing entity <address_decoder>.
 Parsing architecture <IMP> of entity <address_decoder>.
-Parsing VHDL file "F:\Project_Files\gradFinalProjCPRE583\pcores\glue_v1_00_a\hdl\vhdl\c6b.vhd" into library glue_v1_00_a
+Parsing VHDL file "/home/nmiller/Documents/CprE583_Reconfigurable/CprE583_Group2_GitHub/cpre583_pjt/pcore/glue_v1_00_a_opencore_sha/hdl/vhdl/c6b.vhd" into library glue_v1_00_a
 Parsing entity <c6b>.
 Parsing architecture <rtl_c6b> of entity <c6b>.
-Parsing VHDL file "F:\Project_Files\gradFinalProjCPRE583\pcores\glue_v1_00_a\hdl\vhdl\c4b.vhd" into library glue_v1_00_a
+Parsing VHDL file "/home/nmiller/Documents/CprE583_Reconfigurable/CprE583_Group2_GitHub/cpre583_pjt/pcore/glue_v1_00_a_opencore_sha/hdl/vhdl/c4b.vhd" into library glue_v1_00_a
 Parsing entity <c4b>.
 Parsing architecture <rtl_c4b> of entity <c4b>.
-Parsing VHDL file "S:/eti/eda/xilinx/suite/14.7/Windows/14.7/ISE_DS/EDK/hw/XilinxProcessorIPLib/pcores/axi_lite_ipif_v1_01_a/hdl/vhdl/slave_attachment.vhd" into library axi_lite_ipif_v1_01_a
+Parsing VHDL file "/opt/Xilinx/14.6/ISE_DS/EDK/hw/XilinxProcessorIPLib/pcores/axi_lite_ipif_v1_01_a/hdl/vhdl/slave_attachment.vhd" into library axi_lite_ipif_v1_01_a
 Parsing entity <slave_attachment>.
 Parsing architecture <imp> of entity <slave_attachment>.
-Parsing VHDL file "F:\Project_Files\gradFinalProjCPRE583\pcores\glue_v1_00_a\hdl\vhdl\sha1_oc.vhdl" into library glue_v1_00_a
+Parsing VHDL file "/home/nmiller/Documents/CprE583_Reconfigurable/CprE583_Group2_GitHub/cpre583_pjt/pcore/glue_v1_00_a_opencore_sha/hdl/vhdl/sha1_oc.vhdl" into library glue_v1_00_a
 Parsing entity <sha1>.
 Parsing architecture <phy> of entity <sha1>.
-Parsing VHDL file "S:/eti/eda/xilinx/suite/14.7/Windows/14.7/ISE_DS/EDK/hw/XilinxProcessorIPLib/pcores/proc_common_v3_00_a/hdl/vhdl/soft_reset.vhd" into library proc_common_v3_00_a
+Parsing VHDL file "/opt/Xilinx/14.6/ISE_DS/EDK/hw/XilinxProcessorIPLib/pcores/proc_common_v3_00_a/hdl/vhdl/soft_reset.vhd" into library proc_common_v3_00_a
 Parsing entity <soft_reset>.
 Parsing architecture <implementation> of entity <soft_reset>.
-Parsing VHDL file "S:/eti/eda/xilinx/suite/14.7/Windows/14.7/ISE_DS/EDK/hw/XilinxProcessorIPLib/pcores/axi_lite_ipif_v1_01_a/hdl/vhdl/axi_lite_ipif.vhd" into library axi_lite_ipif_v1_01_a
+Parsing VHDL file "/opt/Xilinx/14.6/ISE_DS/EDK/hw/XilinxProcessorIPLib/pcores/axi_lite_ipif_v1_01_a/hdl/vhdl/axi_lite_ipif.vhd" into library axi_lite_ipif_v1_01_a
 Parsing entity <axi_lite_ipif>.
 Parsing architecture <imp> of entity <axi_lite_ipif>.
-Parsing VHDL file "F:\Project_Files\gradFinalProjCPRE583\pcores\glue_v1_00_a\hdl\vhdl\user_logic.vhd" into library glue_v1_00_a
+Parsing VHDL file "/home/nmiller/Documents/CprE583_Reconfigurable/CprE583_Group2_GitHub/cpre583_pjt/pcore/glue_v1_00_a_opencore_sha/hdl/vhdl/user_logic.vhd" into library glue_v1_00_a
 Parsing entity <user_logic>.
 Parsing architecture <IMP> of entity <user_logic>.
-ERROR:HDLCompiler:69 - "F:\Project_Files\gradFinalProjCPRE583\pcores\glue_v1_00_a\hdl\vhdl\user_logic.vhd" Line 525: <sha_m> is not declared.
-ERROR:HDLCompiler:69 - "F:\Project_Files\gradFinalProjCPRE583\pcores\glue_v1_00_a\hdl\vhdl\user_logic.vhd" Line 562: <sha_h> is not declared.
-ERROR:HDLCompiler:69 - "F:\Project_Files\gradFinalProjCPRE583\pcores\glue_v1_00_a\hdl\vhdl\user_logic.vhd" Line 564: <sha_h> is not declared.
-ERROR:HDLCompiler:69 - "F:\Project_Files\gradFinalProjCPRE583\pcores\glue_v1_00_a\hdl\vhdl\user_logic.vhd" Line 566: <sha_h> is not declared.
-ERROR:HDLCompiler:69 - "F:\Project_Files\gradFinalProjCPRE583\pcores\glue_v1_00_a\hdl\vhdl\user_logic.vhd" Line 568: <sha_h> is not declared.
-ERROR:HDLCompiler:69 - "F:\Project_Files\gradFinalProjCPRE583\pcores\glue_v1_00_a\hdl\vhdl\user_logic.vhd" Line 559: <sha_valid> is not declared.
-ERROR:HDLCompiler:69 - "F:\Project_Files\gradFinalProjCPRE583\pcores\glue_v1_00_a\hdl\vhdl\user_logic.vhd" Line 585: <sha_m> is not declared.
-ERROR:HDLCompiler:69 - "F:\Project_Files\gradFinalProjCPRE583\pcores\glue_v1_00_a\hdl\vhdl\user_logic.vhd" Line 586: <sha_ld> is not declared.
-ERROR:HDLCompiler:69 - "F:\Project_Files\gradFinalProjCPRE583\pcores\glue_v1_00_a\hdl\vhdl\user_logic.vhd" Line 587: <sha_init> is not declared.
-ERROR:HDLCompiler:69 - "F:\Project_Files\gradFinalProjCPRE583\pcores\glue_v1_00_a\hdl\vhdl\user_logic.vhd" Line 588: <sha_clk> is not declared.
-ERROR:HDLCompiler:69 - "F:\Project_Files\gradFinalProjCPRE583\pcores\glue_v1_00_a\hdl\vhdl\user_logic.vhd" Line 589: <sha_rst> is not declared.
-ERROR:HDLCompiler:854 - "F:\Project_Files\gradFinalProjCPRE583\pcores\glue_v1_00_a\hdl\vhdl\user_logic.vhd" Line 131: Unit <imp> ignored due to previous errors.
-VHDL file F:\Project_Files\gradFinalProjCPRE583\pcores\glue_v1_00_a\hdl\vhdl\user_logic.vhd ignored due to errors
+ERROR:HDLCompiler:69 - "/home/nmiller/Documents/CprE583_Reconfigurable/CprE583_Group2_GitHub/cpre583_pjt/pcore/glue_v1_00_a_opencore_sha/hdl/vhdl/user_logic.vhd" Line 525: <sha_m> is not declared.
+ERROR:HDLCompiler:69 - "/home/nmiller/Documents/CprE583_Reconfigurable/CprE583_Group2_GitHub/cpre583_pjt/pcore/glue_v1_00_a_opencore_sha/hdl/vhdl/user_logic.vhd" Line 562: <sha_h> is not declared.
+ERROR:HDLCompiler:69 - "/home/nmiller/Documents/CprE583_Reconfigurable/CprE583_Group2_GitHub/cpre583_pjt/pcore/glue_v1_00_a_opencore_sha/hdl/vhdl/user_logic.vhd" Line 564: <sha_h> is not declared.
+ERROR:HDLCompiler:69 - "/home/nmiller/Documents/CprE583_Reconfigurable/CprE583_Group2_GitHub/cpre583_pjt/pcore/glue_v1_00_a_opencore_sha/hdl/vhdl/user_logic.vhd" Line 566: <sha_h> is not declared.
+ERROR:HDLCompiler:69 - "/home/nmiller/Documents/CprE583_Reconfigurable/CprE583_Group2_GitHub/cpre583_pjt/pcore/glue_v1_00_a_opencore_sha/hdl/vhdl/user_logic.vhd" Line 568: <sha_h> is not declared.
+ERROR:HDLCompiler:69 - "/home/nmiller/Documents/CprE583_Reconfigurable/CprE583_Group2_GitHub/cpre583_pjt/pcore/glue_v1_00_a_opencore_sha/hdl/vhdl/user_logic.vhd" Line 559: <sha_valid> is not declared.
+ERROR:HDLCompiler:69 - "/home/nmiller/Documents/CprE583_Reconfigurable/CprE583_Group2_GitHub/cpre583_pjt/pcore/glue_v1_00_a_opencore_sha/hdl/vhdl/user_logic.vhd" Line 585: <sha_m> is not declared.
+ERROR:HDLCompiler:69 - "/home/nmiller/Documents/CprE583_Reconfigurable/CprE583_Group2_GitHub/cpre583_pjt/pcore/glue_v1_00_a_opencore_sha/hdl/vhdl/user_logic.vhd" Line 586: <sha_ld> is not declared.
+ERROR:HDLCompiler:69 - "/home/nmiller/Documents/CprE583_Reconfigurable/CprE583_Group2_GitHub/cpre583_pjt/pcore/glue_v1_00_a_opencore_sha/hdl/vhdl/user_logic.vhd" Line 587: <sha_init> is not declared.
+ERROR:HDLCompiler:69 - "/home/nmiller/Documents/CprE583_Reconfigurable/CprE583_Group2_GitHub/cpre583_pjt/pcore/glue_v1_00_a_opencore_sha/hdl/vhdl/user_logic.vhd" Line 588: <sha_clk> is not declared.
+ERROR:HDLCompiler:69 - "/home/nmiller/Documents/CprE583_Reconfigurable/CprE583_Group2_GitHub/cpre583_pjt/pcore/glue_v1_00_a_opencore_sha/hdl/vhdl/user_logic.vhd" Line 589: <sha_rst> is not declared.
+ERROR:HDLCompiler:854 - "/home/nmiller/Documents/CprE583_Reconfigurable/CprE583_Group2_GitHub/cpre583_pjt/pcore/glue_v1_00_a_opencore_sha/hdl/vhdl/user_logic.vhd" Line 131: Unit <imp> ignored due to previous errors.
+VHDL file /home/nmiller/Documents/CprE583_Reconfigurable/CprE583_Group2_GitHub/cpre583_pjt/pcore/glue_v1_00_a_opencore_sha/hdl/vhdl/user_logic.vhd ignored due to errors
 --> 
 
-Total memory usage is 209844 kilobytes
+
+Total memory usage is 375564 kilobytes
 
 Number of errors   :   12 (   0 filtered)
 Number of warnings :    0 (   0 filtered)

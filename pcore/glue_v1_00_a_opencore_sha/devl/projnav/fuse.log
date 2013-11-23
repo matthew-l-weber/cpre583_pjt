@@ -1,0 +1,27 @@
+Running: /opt/Xilinx/14.6/ISE_DS/ISE/bin/lin64/unwrapped/fuse -relaunch -intstyle "ise" -incremental -lib "secureip" -o "/home/nmiller/Documents/CprE583_Reconfigurable/CprE583_Group2_GitHub/cpre583_pjt/pcore/glue_v1_00_a_opencore_sha/devl/projnav/sha1_tb_isim_beh.exe" -prj "/home/nmiller/Documents/CprE583_Reconfigurable/CprE583_Group2_GitHub/cpre583_pjt/pcore/glue_v1_00_a_opencore_sha/devl/projnav/sha1_tb_beh.prj" "work.sha1_tb" 
+ISim P.68d (signature 0xfbc00daa)
+Number of CPUs detected in this system: 8
+Turning on mult-threading, number of parallel sub-compilation jobs: 16 
+Determining compilation order of HDL files
+Parsing VHDL file "/home/nmiller/Documents/CprE583_Reconfigurable/CprE583_Group2_GitHub/cpre583_pjt/pcore/glue_v1_00_a_opencore_sha/devl/projnav/../../hdl/vhdl/c6b.vhd" into library glue_v1_00_a
+Parsing VHDL file "/home/nmiller/Documents/CprE583_Reconfigurable/CprE583_Group2_GitHub/cpre583_pjt/pcore/glue_v1_00_a_opencore_sha/devl/projnav/../../hdl/vhdl/c4b.vhd" into library glue_v1_00_a
+Parsing VHDL file "/home/nmiller/Documents/CprE583_Reconfigurable/CprE583_Group2_GitHub/cpre583_pjt/pcore/glue_v1_00_a_opencore_sha/devl/projnav/../../../../sha_tb/sha1_tb_driver.vhd" into library work
+Parsing VHDL file "/home/nmiller/Documents/CprE583_Reconfigurable/CprE583_Group2_GitHub/cpre583_pjt/pcore/glue_v1_00_a_opencore_sha/devl/projnav/../../hdl/vhdl/sha1_oc.vhdl" into library glue_v1_00_a
+Parsing VHDL file "/home/nmiller/Documents/CprE583_Reconfigurable/CprE583_Group2_GitHub/cpre583_pjt/pcore/glue_v1_00_a_opencore_sha/devl/projnav/../../../../sha_tb/sha1_tb.vhd" into library work
+Starting static elaboration
+WARNING:HDLCompiler:89 - "/home/nmiller/Documents/CprE583_Reconfigurable/CprE583_Group2_GitHub/cpre583_pjt/pcore/glue_v1_00_a_opencore_sha/devl/projnav/../../../../sha_tb/sha1_tb.vhd" Line 137: <sha1> remains a black-box since it has no binding entity.
+Completed static elaboration
+Fuse Memory Usage: 96604 KB
+Fuse CPU Usage: 920 ms
+WARNING:Simulator:648 - "/home/nmiller/Documents/CprE583_Reconfigurable/CprE583_Group2_GitHub/cpre583_pjt/pcore/glue_v1_00_a_opencore_sha/devl/projnav/../../../../sha_tb/sha1_tb.vhd" Line 137. Instance sha1 is unbound
+Compiling package standard
+Compiling package std_logic_1164
+Compiling architecture rtl of entity sha1_tb_driver [sha1_tb_driver_default]
+Compiling architecture rtl of entity sha1_tb
+Time Resolution for simulation is 1ps.
+Waiting for 1 sub-compilation(s) to finish...
+Compiled 5 VHDL Units
+Built simulation executable /home/nmiller/Documents/CprE583_Reconfigurable/CprE583_Group2_GitHub/cpre583_pjt/pcore/glue_v1_00_a_opencore_sha/devl/projnav/sha1_tb_isim_beh.exe
+Fuse Memory Usage: 1186872 KB
+Fuse CPU Usage: 1000 ms
+GCC CPU Usage: 100 ms

@@ -1,0 +1,59 @@
+# //  ModelSim SE-64 10.1c Jul 27 2012 Linux 3.2.0-56-generic
+# //
+# //  Copyright 1991-2012 Mentor Graphics Corporation
+# //  All Rights Reserved.
+# //
+# //  THIS WORK CONTAINS TRADE SECRET AND PROPRIETARY INFORMATION
+# //  WHICH IS THE PROPERTY OF MENTOR GRAPHICS CORPORATION OR ITS
+# //  LICENSORS AND IS SUBJECT TO LICENSE TERMS.
+# //
+# do {sha1_tb.fdo} 
+# ** Warning: (vlib-34) Library already exists at "work".
+# ** Warning: (vlib-34) Library already exists at "glue_v1_00_a".
+# Model Technology ModelSim SE-64 vcom 10.1c Compiler 2012.07 Jul 27 2012
+# -- Loading package STANDARD
+# -- Loading package TEXTIO
+# -- Loading package std_logic_1164
+# -- Loading package NUMERIC_STD
+# -- Compiling entity c6b
+# -- Compiling architecture rtl_c6b of c6b
+# ** Warning: (vlib-34) Library already exists at "glue_v1_00_a".
+# Model Technology ModelSim SE-64 vcom 10.1c Compiler 2012.07 Jul 27 2012
+# -- Loading package STANDARD
+# -- Loading package TEXTIO
+# -- Loading package std_logic_1164
+# -- Loading package NUMERIC_STD
+# -- Compiling entity c4b
+# -- Compiling architecture rtl_c4b of c4b
+# Model Technology ModelSim SE-64 vcom 10.1c Compiler 2012.07 Jul 27 2012
+# -- Loading package STANDARD
+# -- Loading package TEXTIO
+# -- Loading package std_logic_1164
+# -- Compiling entity sha1_tb_driver
+# -- Compiling architecture rtl of sha1_tb_driver
+# ** Warning: (vlib-34) Library already exists at "glue_v1_00_a".
+# Model Technology ModelSim SE-64 vcom 10.1c Compiler 2012.07 Jul 27 2012
+# -- Loading package STANDARD
+# -- Loading package TEXTIO
+# -- Loading package std_logic_1164
+# -- Loading package NUMERIC_STD
+# -- Compiling entity sha1
+# -- Compiling architecture phy of sha1
+# Model Technology ModelSim SE-64 vcom 10.1c Compiler 2012.07 Jul 27 2012
+# -- Loading package STANDARD
+# -- Loading package TEXTIO
+# -- Loading package std_logic_1164
+# -- Compiling entity sha1_tb
+# -- Compiling architecture rtl of sha1_tb
+# vsim -lib work -voptargs=\"+acc\" -t 1ps work.sha1_tb 
+# Loading std.standard
+# Loading std.textio(body)
+# Loading ieee.std_logic_1164(body)
+# Loading work.sha1_tb(rtl)#1
+# Loading work.sha1_tb_driver(rtl)#1
+# ** Warning: (vsim-3473) Component instance "sha1_hw : sha1" is not bound.
+#    Time: 0 ps  Iteration: 0  Instance: /sha1_tb File: ../../../../sha_tb/sha1_tb.vhd
+# .main_pane.wave.interior.cs.body.pw.wf
+# .main_pane.structure.interior.cs.body.struct
+# .main_pane.objects.interior.cs.body.tree
+quit

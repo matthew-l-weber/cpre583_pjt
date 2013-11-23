@@ -1,0 +1,28 @@
+Command line:
+   sha1_tb_isim_beh.exe
+     -simmode  gui
+     -simrunnum  0
+     -socket  37046
+
+Tue Nov 19 21:54:05 2013
+
+
+ Elaboration Time: 0.07 sec
+
+ Current Memory Usage: 216.691 Meg
+
+ Total Signals          : 28
+ Total Nets             : 2635
+ Total Signal Drivers   : 11
+ Total Blocks           : 3
+ Total Primitive Blocks : 2
+ Total Processes        : 7
+ Total Traceable Variables  : 8
+ Total Scalar Nets and Variables : 2995
+
+ Total Simulation Time: 0.09 sec
+
+ Current Memory Usage: 292.192 Meg
+
+Tue Nov 19 21:59:46 2013
+
