@@ -158,7 +158,7 @@ architecture IMP of user_logic is
   signal slv_reg0_rst                   : std_logic_vector(C_SLV_DWIDTH-1 downto 0);  --rst  0-no,1-yes
   signal slv_reg1_status                : std_logic_vector(C_SLV_DWIDTH-1 downto 0);  --rdy  0-no,1-rdy for data, 2-hash rdy
   signal slv_reg2_rsv                   : std_logic_vector(C_SLV_DWIDTH-1 downto 0);  --reserved
-  signal slv_reg3_size                  : std_logic_vector(C_SLV_DWIDTH-1 downto 0);  --size in words
+  signal slv_reg3_finished              : std_logic_vector(C_SLV_DWIDTH-1 downto 0);  --finished multi-blk 0-no,1-yes
   signal slv_reg4_h0                    : std_logic_vector(C_SLV_DWIDTH-1 downto 0);  --Hash0
   signal slv_reg5_h1                    : std_logic_vector(C_SLV_DWIDTH-1 downto 0);  --Hash1
   signal slv_reg6_h2                    : std_logic_vector(C_SLV_DWIDTH-1 downto 0);  --Hash2
