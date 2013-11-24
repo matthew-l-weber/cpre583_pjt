@@ -1,0 +1,371 @@
+ 1631  sudo umount /dev/sdc
+ 1632  sudo umount /dev/sdc*
+ 1633  make linux-menuconfig
+ 1634  ls output/build/ocf-linux-20120127/ocf/
+ 1635  pushd output/build/ocf-linux-20120127/ocf/
+ 1636  ls
+ 1637  vi Makefile
+ 1638  vi cryptodev.c
+ 1639  vi Makefile
+ 1640  popd
+ 1641  make ocf-linux-clean
+ 1642  make ocf-linux
+ 1643  grep -rn CRYPTODEV_MINOR output/build/ocf-linux-20120127/*
+ 1644  vi output/build/ocf-linux-20120127/patches/linux-3.2.1-ocf.patch
+ 1645  cd output/build/linux-3.12/ output/build/ocf-linux-20120127/patches/linux-3.2.1-ocf.patch
+ 1646  patch -p1 < ../ocf-linux-20120127/patches/linux-3.2.1-ocf.patch
+ 1647  cd ../../
+ 1648  cd ..
+ 1649  make linux-menuconfig
+ 1650  cp output/build/ocf-linux-20120127/ocf output/build/linux-3.12/crypto/ -a
+ 1651  make linux-menuconfig
+ 1652  ls output/build/linux-3.12/arch/arm/plat-omap/include/plat/
+ 1653  rm output/build/linux-3.12 -rf
+ 1654  rm output/build/ocf-linux-20120127 -rf
+ 1655  make menuconfig
+ 1656  make
+ 1657  sudo cp output/images/uImage /media/boot/
+ 1658  pushd /media/rootfs/
+ 1659  sudo rm * -rf
+ 1660  sudo tar xf /home/mlweber/Desktop/buildroot-git/output/images/rootfs.tar
+ 1661  popd
+ 1662  sudo umount /dev/sdc*
+ 1663  cat output/build/cryptodev-linux-1.6/Makefile
+ 1664  cat output/build/cryptodev-linux-1.6/tests/Makefile
+ 1665  vi package/cryptodev-linux/cryptodev-linux.mk
+ 1666  vi package/cryptodev/cryptodev.mk
+ 1667  vi package/cryptodev-linux/cryptodev-linux.mk
+ 1668  cat output/build/cryptodev-linux-1.6/tests/Makefile
+ 1669  vi package/cryptodev-linux/cryptodev-linux.mk
+ 1670  vi package/omniorb/omniorb.mk
+ 1671  vi package/xerces/xerces.mk
+ 1672  grep -rn generic package/
+ 1673  vi package/pkg-generic.mk
+ 1674  grep -rn generic package/
+ 1675  vi package/
+ 1676  grep -rn _MAKE package/
+ 1677  vi package/cryptodev-linux/cryptodev-linux.mk
+ 1678  make cryptodev-linux-build
+ 1679  rm output/build/cryptodev-linux-1.6/.stamp_built
+ 1680  make cryptodev-linux-build
+ 1681  sudo cp output/build/cryptodev-linux-1.6/tests/sha_speed /media/rootfs/usr/bin/
+ 1682  sudo cp output/build/cryptodev-linux-1.6/tests/cipher /media/rootfs/usr/bin/
+ 1683  sudo cp output/build/cryptodev-linux-1.6/tests/fullspeed /media/rootfs/usr/bin/
+ 1684  sudo cp output/build/cryptodev-linux-1.6/tests/hmac /media/rootfs/usr/bin/
+ 1685  sudo cp output/build/cryptodev-linux-1.6/tests/speed /media/rootfs/usr/bin/
+ 1686  sudo umount /dev/sdc*
+ 1687  sudo cp output/build/cryptodev-linux-1.6/tests/sha_speed /media/rootfs/usr/bin/
+ 1688  sudo umount /dev/sdc*
+ 1689  sudo cp output/build/cryptodev-linux-1.6/tests/sha_speed /media/rootfs/
+ 1690  ls /media/rootfs/
+ 1691  ls /media/rootfs/ -l
+ 1692  sync
+ 1693  sudo umount /dev/sdc*
+ 1694  ls /media/rootfs/ -l
+ 1695  sudo umount /dev/sdc*
+ 1696  history
+ 1697  pushd /media/rootfs/ ; sudo rm * -rf ;sudo tar xf /home/mlweber/Desktop/buildroot-git/output/images/rootfs.tar ; popd ; sudo cp output/build/cryptodev-linux-1.6/tests/* /media/rootfs/root/ ; sync ; sudo umount /dev/sdc*
+ 1698  sync
+ 1699  history
+ 1700  rm output/build/cryptodev-linux-1.6/.stamp_built
+ 1701  s
+ 1702  ls
+ 1703  make cryptodev-linux-build
+ 1704  output/host/usr/bin/arm-linux-gnueabihf-gcc output/build/cryptodev-linux-1.6/tests/sha_speed.c
+ 1705  ls
+ 1706  rm a.out
+ 1707  output/host/usr/bin/arm-linux-gnueabihf-gcc output/build/cryptodev-linux-1.6/tests/sha_speed.c
+ 1708  ls
+ 1709  file a.out
+ 1710  sudo cp a.out /media/rootfs/
+ 1711  sudo umount /dev/sdc*
+ 1712  cat package/openssl/openssl.mk
+ 1713  less package/openssl/openssl.mk
+ 1714  q
+ 1715  vi package/cryptodev-linux/cryptodev-linux.mk
+ 1716  make
+ 1717  sudo cp output/images/uImage /media/boot/
+ 1718  sudo umount /dev/sd*
+ 1719  sudo umount /dev/sdc*
+ 1720  history
+ 1721  rm output/build/linux-3.12 -rf
+ 1722  rm output/build/openssl-1.0.1e -rf
+ 1723  rm output/build/cryptodev-* -rf
+ 1724  make menuconfig
+ 1725  rm output/target/lib/modules -rf
+ 1726  rm output/target/usr/bin/openssl
+ 1727  make
+ 1728  cp a.out output/target/
+ 1729  make
+ 1730  history
+ 1731  sudo cp output/images/uImage /media/boot/
+ 1732  make linux-menuconfig
+ 1733  make
+ 1734  sudo cp output/images/uImage /media/boot/ ; sync ; sudo umount /media/boot/ /media/rootfs/
+ 1735  make linux-menuconfig
+ 1736  make
+ 1737  sudo cp output/images/uImage /media/boot/ ; sync ; sudo umount /media/boot/ /media/rootfs/
+ 1738  make linux-menuconfig
+ 1739  make
+ 1740  sudo cp output/images/uImage /media/boot/ ; sync ; sudo umount /media/boot/ /media/rootfs/
+ 1741  make savedefconfig
+ 1742  make linux-savedefconfig
+ 1743  mv defconfig omapInitialTest_br_defconfig
+ 1744  mv output/build/linux-3.12/defconfig omapInitialTest_linux_br_defconfig
+ 1745  pushd /media/boot/
+ 1746  sudo mv uImage uImage_
+ 1747  sudo mv zynq-zc702.dtb zynq-zc702.dtb_
+ 1748  cp /mnt/nas/matt/Documents/College/cpre583/proj/* .
+ 1749  sudo cp /mnt/nas/matt/Documents/College/cpre583/proj/* .
+ 1750  ls -l
+ 1751  cd ..
+ 1752  sudo umount *
+ 1753  ls
+ 1754  sudo umount *
+ 1755  mount
+ 1756  sudo cp ~/Downloads/zImage boot/
+ 1757  sudo umount *
+ 1758  sudo cp ~/Downloads/zImage\ \(1\) boot/zImage
+ 1759  sudo umount *
+ 1760  sudo cp ~/Downloads/zImage boot/zImage
+ 1761  sudo umount *
+ 1762  sudo cp ~/Downloads/zImage\ \(1\) boot/zImage
+ 1763  sudo umount *
+ 1764  sudo cp ~/Desktop/buildroot-git/a.out boot/
+ 1765  sudo umount *
+ 1766  cd /
+ 1767  du -h --max-depth=2
+ 1768  du -h --max-depth=1 /usr
+ 1769  sudo umount /backup
+ 1770  ls /backup/
+ 1771  ls /backup/nas/
+ 1772  mount
+ 1773  df -h
+ 1774  rm /backup/* -rf
+ 1775  sudo rm /backup/* -rf
+ 1776  sudo mount /backup
+ 1777  mount
+ 1778  df -h
+ 1779  mount
+ 1780  df -h
+ 1781  exit
+ 1782  ssh speedy
+ 1783  cd /mnt/speedy/var/media/tv01/
+ 1784  ls
+ 1785  scp DocMcStuffins-Doc* admin@172.16.2.145:/storage/emulated/legacy/Podcasts/
+ 1786  scp -P2222 DocMcStuffins-Doc* admin@172.16.2.145:/storage/emulated/legacy/Podcasts/
+ 1787  screen -dr
+ 1788  screen
+ 1789  history |grep minit
+ 1790  miniterm.py -p /dev/ttyUSB0 -b 115200
+ 1791  ssh 172.16.2.114
+ 1792  ssh root@172.16.2.114
+ 1793  ssh root@dev.thewebers.ws
+ 1794  ssh root@dev.thewebers.ws -P 12345
+ 1795  ssh root@dev.thewebers.ws -p 12345
+ 1796  cd Downloads/
+ 1797  git clone git@github.com:matthew-l-weber/linux-xlnx.git
+ 1798  git clone https://github.com/matthew-l-weber/linux-xlnx.git
+ 1799  cd Desktop/buildroot-git/
+ 1800  cd ../br-continuous/buildroot/t_zynq/
+ 1801  vi build/linux-xilinx-v14.6/arch/arm/crypto/sha1_zynq.c
+ 1802  screen
+ 1803  ps
+ 1804  ps aux |grep mini
+ 1805  kill -9 13339
+ 1806  ps aux |grep mini
+ 1807  /usr/bin/python /usr/bin/miniterm.py -p /dev/ttyUSB0 -b 115200
+ 1808  ssh root@172.16.2.114
+ 1809  miniterm.py -p /dev/ttyUSB0 -b 115200
+ 1810  miniterm.py -p /dev/ttyUSB1 -b 115200
+ 1811  miniterm.py -p /dev/ttyUSB0 -b 115200
+ 1812  cd Desktop/buildroot-git/
+ 1813  output/host/usr/bin/arm-linux-gnueabihf-gcc output/build/cryptodev-linux-1.6/tests/sha_speed.c
+ 1814  gedit output/build/cryptodev-linux-1.6/tests/sha_speed.c &
+ 1815  output/host/usr/bin/arm-linux-gnueabihf-gcc output/build/cryptodev-linux-1.6/tests/sha_speed.c
+ 1816  mount
+ 1817  sudo cp ~/Downloads/zImage\ \(2\) /media/boot/zImage
+ 1818  sync; sudo umount /dev/sdc*
+ 1819  killall miniterm.py
+ 1820  ps aux
+ 1821  sudo cp ~/Downloads/zImage\ \(3\) /media/boot/zImage
+ 1822  sync; sudo umount /dev/sdc*
+ 1823  cd ~/Downloads/
+ 1824  unzip Cpre583_pjt.zip
+ 1825  cd Cpre583_pjt/
+ 1826  git init
+ 1827  git add *
+ 1828  git init
+ 1829  git commit -m "first commit"h
+ 1830  git remote add origin https://github.com/matthew-l-weber/cpre583_pjt.git
+ 1831  git push -u origin master
+ 1832  git remote add origin ssh://github.com/matthew-l-weber/cpre583_pjt.git
+ 1833  git remote remove  origin https://github.com/matthew-l-weber/cpre583_pjt.git
+ 1834  git remote rm  origin https://github.com/matthew-l-weber/cpre583_pjt.git
+ 1835  git remote rm  origin
+ 1836  git remote add origin ssh://github.com/matthew-l-weber/cpre583_pjt.git
+ 1837  git push -u origin master
+ 1838  git clone https://github.com/matthew-l-weber/cpre583_pjt.git
+ 1839  git add *
+ 1840  git commit -m "first"
+ 1841  git push
+ 1842  git remote rm  origin
+ 1843  git remote rm  origin https://github.com/matthew-l-weber/cpre583_pjt.git
+ 1844  git remote add origin https://github.com/matthew-l-weber/cpre583_pjt.git
+ 1845  git push -u origin master
+ 1846  git remote rm  origin
+ 1847  git remote add origin git@github.com:matthew-l-weber/cpre583_pjt.git
+ 1848  git push -u origin master
+ 1849  ls
+ 1850  cd ..
+ 1851  ls ../Desktop/
+ 1852  ls
+ 1853  cd linux-xlnx/
+ 1854  ls
+ 1855  grep -rn CROSS *
+ 1856  make ARCH=arm CROSS-COMPILE=/home/mlweber/Downloads/gcc-linaro-arm-linux-gnueabihf-4.7-2013.04-20130415_linux/bin/arm-linux-gnueabihf- xilinx_zynq_defconfig
+ 1857  df -h
+ 1858  ls /tmp/
+ 1859  rm /tmp/* -rf
+ 1860  sudo rm /tmp/* -rf
+ 1861  df -h
+ 1862  make ARCH=arm CROSS-COMPILE=/home/mlweber/Downloads/gcc-linaro-arm-linux-gnueabihf-4.7-2013.04-20130415_linux/bin/arm-linux-gnueabihf- xilinx_zynq_defconfig
+ 1863  make menuconfig
+ 1864  make ARCH=arm CROSS-COMPILE=/home/mlweber/Downloads/gcc-linaro-arm-linux-gnueabihf-4.7-2013.04-20130415_linux/bin/arm-linux-gnueabihf- xilinx_zynq_defconfig
+ 1865  make ARCH=arm CROSS-COMPILE=/home/mlweber/Downloads/gcc-linaro-arm-linux-gnueabihf-4.7-2013.04-20130415_linux/bin/arm-linux-gnueabihf- menuconfig
+ 1866  make ARCH=arm CROSS-COMPILE=/home/mlweber/Downloads/gcc-linaro-arm-linux-gnueabihf-4.7-2013.04-20130415_linux/bin/arm-linux-gnueabihf- -j 8
+ 1867  make ARCH=arm CROSS-COMPILE=/home/mlweber/Downloads/gcc-linaro-arm-linux-gnueabihf-4.7-2013.04-20130415_linux/bin/arm-linux-gnueabihf-
+ 1868  cd ../../Desktop/buildroot-git/
+ 1869  ls
+ 1870  cd ../br-continuous/buildroot/
+ 1871  cd t_zynq/
+ 1872  make menuconfig
+ 1873  rm build/linux* -rf
+ 1874  make clean; make toolchain linux
+ 1875  make menuconfig
+ 1876  make linux
+ 1877  make menuconfig
+ 1878  make linux-menuconfig
+ 1879  make
+ 1880  make linuxz
+ 1881  rm build/linux-HEAD -rf
+ 1882  make linux
+ 1883  rm target/lib/modules/3.10.0-xilinx -rf
+ 1884  rm build/linux-HEAD -rf
+ 1885  make linux
+ 1886  make linux-menuconfig
+ 1887  make menuconfig
+ 1888  rm build/linux-HEAD -rf
+ 1889  make linux
+ 1890  sudo rm /tmp/* -rf
+ 1891  make linux
+ 1892  sudo rm /tmp/* -rf
+ 1893  make linux
+ 1894  df -h
+ 1895  sudo rm /tmp/* -rf
+ 1896  df -h
+ 1897  ls /tmp/
+ 1898  ls /tmp/ -la
+ 1899  mount -t  tmpfs tmpfs /tmp
+ 1900  sudo mount -t  tmpfs tmpfs /tmp
+ 1901  make linux
+ 1902  cp ~/Downloads/linux-xlnx/arch/arm/crypto/sha1_zynq.c build/linux-xilinx-v14.6/arch/arm/crypto/
+ 1903  cp ~/Downloads/linux-xlnx/arch/arm/crypto/Makefile build/linux-xilinx-v14.6/arch/arm/crypto/
+ 1904  cp ~/Downloads/linux-xlnx/crypto/Kconfig build/linux-xilinx-v14.6/crypto/
+ 1905  make linux-menuconfig
+ 1906  make linux
+ 1907  vi build/linux-xilinx-v14.6/arch/arm/crypto/Makefile
+ 1908  make linux
+ 1909  gedit build/linux-xilinx-v14.6/arch/arm/crypto/sha1_zynq.c  &
+ 1910  make relinux
+ 1911  rm target/lib/modules -rf
+ 1912  rm build/linux-xilinx-v14.6 -rf
+ 1913  make linux
+ 1914  vi build/linux-xilinx-v14.6/arch/arm/crypto/Makefile
+ 1915  cp ~/Downloads/linux-xlnx/crypto/Kconfig build/linux-xilinx-v14.6/crypto/
+ 1916  make linux-menuconfig
+ 1917  make linux
+ 1918  make linux-rebuild
+ 1919  history |grep gcc
+ 1920  output/host/usr/bin/arm-linux-gnueabihf-gcc output/build/cryptodev-linux-1.6/tests/sha_speed.c
+ 1921  make linux-rebuild
+ 1922  miniterm.py -p /dev/ttyUSB0 -b 115200
+ 1923  cd Downloads/linux-xlnx/
+ 1924  git status
+ 1925  cat .git/config
+ 1926  sudo cp ~/Downloads/zImage\ \(4\) /media/boot/zImage
+ 1927  sync
+ 1928  sudo umount /dev/sdc*
+ 1929  sync
+ 1930  sudo cp ~/Downloads/zImage\ \(5\) /media/boot/zImage
+ 1931  sudo umount /dev/sdc*
+ 1932  sync
+ 1933  git checkout v14.6
+ 1934  git checkout xilinx-v14.6
+ 1935  git status
+ 1936  ls arch/arm/crypto/
+ 1937  git checkout master
+ 1938  ls arch/arm/crypto/
+ 1939  git checkout xilinx-v14.6
+ 1940  vi drivers/crypto/Kconfig
+ 1941  vi crypto/Kconfig
+ 1942  cd arch/arm/crypto/
+ 1943  ls
+ 1944  cp sha1_glue.c sha1_zynq.c
+ 1945  gedit sha1_zynq.c
+ 1946  ls -l
+ 1947  vi Makefile
+ 1948  git add sha1_zynq.c
+ 1949  git commit
+ 1950  git commit sha1_zynq.c Makefile ../../../crypto/Kconfig
+ 1951  git status
+ 1952  ls
+ 1953  scp -P2222 MickeyMouseClubhouse-S0* ThomasFriends-* admin@172.16.2.145:/storage/emulated/legacy/Podcasts/
+ 1954  scp -P2222 DocMcStuffins-Doc* admin@172.16.2.145:/storage/emulated/legacy/Podcasts/
+ 1955  scp -P2222 CuriousGeorge-S01E21-SurpriseQuintsMuddyMonkey-2801213-0.mpg  admin@172.16.2.145:/storage/emulated/legacy/Podcasts/
+ 1956  cd ../../../buildroot-git/
+ 1957  ls
+ 1958  history |grep gcc
+ 1959  output/host/usr/bin/arm-linux-gnueabihf-gcc output/build/cryptodev-linux-1.6/tests/sha_speed.c
+ 1960  vi output/build/cryptodev-linux-1.6/tests/sha_speed.c
+ 1961  output/host/usr/bin/arm-linux-gnueabihf-gcc output/build/cryptodev-linux-1.6/tests/sha_speed.c
+ 1962  vi output/build/cryptodev-linux-1.6/tests/sha_speed.c
+ 1963  output/host/usr/bin/arm-linux-gnueabihf-gcc output/build/cryptodev-linux-1.6/tests/sha_speed.c
+ 1964  scp a.out   root@172.16.2.115:/root/
+ 1965  vi output/build/cryptodev-linux-1.6/tests/sha_speed.c
+ 1966  output/host/usr/bin/arm-linux-gnueabihf-gcc output/build/cryptodev-linux-1.6/tests/sha_speed.c
+ 1967  scp a.out   root@172.16.2.115:/root/
+ 1968  vi output/build/cryptodev-linux-1.6/tests/sha_speed.c
+ 1969  output/host/usr/bin/arm-linux-gnueabihf-gcc output/build/cryptodev-linux-1.6/tests/sha_speed.c
+ 1970  scp a.out   root@172.16.2.115:/root/
+ 1971  vi output/build/cryptodev-linux-1.6/tests/sha_speed.c
+ 1972  output/host/usr/bin/arm-linux-gnueabihf-gcc output/build/cryptodev-linux-1.6/tests/sha_speed.c
+ 1973  scp a.out   root@172.16.2.115:/root/
+ 1974  vi output/build/cryptodev-linux-1.6/tests/sha_speed.c
+ 1975  make linux-rebuild
+ 1976  make linux-modules
+ 1977  make linux-module
+ 1978  make linux-rebuild
+ 1979  scp target/lib/modules/3.9.0-xilinx/kernel/arch/arm/crypto/sha1_zynq.ko  root@172.16.2.115:/root/
+ 1980  rm ~/.ssh/known_hosts
+ 1981  scp target/lib/modules/3.9.0-xilinx/kernel/arch/arm/crypto/sha1_zynq.ko  root@172.16.2.115:/root/
+ 1982  make linux-rebuild
+ 1983  scp target/lib/modules/3.9.0-xilinx/kernel/arch/arm/crypto/sha1_zynq.ko  root@172.16.2.115:/root/
+ 1984  make linux-rebuild
+ 1985  scp target/lib/modules/3.9.0-xilinx/kernel/arch/arm/crypto/sha1_zynq.ko  root@172.16.2.115:/root/
+ 1986  make linux-rebuild
+ 1987  scp target/lib/modules/3.9.0-xilinx/kernel/arch/arm/crypto/sha1_zynq.ko  root@172.16.2.115:/root/
+ 1988  make linux-rebuild
+ 1989  scp target/lib/modules/3.9.0-xilinx/kernel/arch/arm/crypto/sha1_zynq.ko  root@172.16.2.115:/root/
+ 1990  make linux-rebuild
+ 1991  make linux-rebuild ; scp target/lib/modules/3.9.0-xilinx/kernel/arch/arm/crypto/sha1_zynq.ko  root@172.16.2.115:/root/
+ 1992  scp target/lib/modules/3.9.0-xilinx/kernel/arch/arm/crypto/sha1_zynq.ko  root@172.16.2.115:/root/
+ 1993  make linux-rebuild ; scp target/lib/modules/3.9.0-xilinx/kernel/arch/arm/crypto/sha1_zynq.ko  root@172.16.2.115:/root/
+ 1994  history |grep amke
+ 1995  history |grep make
+ 1996  make linux-rebuild ; scp ../../../buildroot-git/a.out   root@172.16.2.115:/root/
+ 1997  scp ../../../buildroot-git/a.out   root@172.16.2.115:/root/
+ 1998  scp ../../../buildroot-git/a.out   root@172.16.2.115:/root/output/build/cryptodev-linux-1.6/tests/sha_speed.c
+ 1999  make linux-rebuild ; scp target/lib/modules/3.9.0-xilinx/kernel/arch/arm/crypto/sha1_zynq.ko  root@172.16.2.115:/root/
+ 2000  history
+ 2001  history >zynq_cmds.txt
