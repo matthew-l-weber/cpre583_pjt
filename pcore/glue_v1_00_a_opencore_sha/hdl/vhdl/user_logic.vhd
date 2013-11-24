@@ -163,23 +163,23 @@ architecture IMP of user_logic is
   signal slv_reg5_h1                    : std_logic_vector(C_SLV_DWIDTH-1 downto 0);  --Hash1
   signal slv_reg6_h2                    : std_logic_vector(C_SLV_DWIDTH-1 downto 0);  --Hash2
   signal slv_reg7_h3                    : std_logic_vector(C_SLV_DWIDTH-1 downto 0);  --Hash3
-  signal slv_reg8_dataIn                : std_logic_vector(C_SLV_DWIDTH-1 downto 0);  --data in
-  signal slv_reg9                       : std_logic_vector(C_SLV_DWIDTH-1 downto 0);
-  signal slv_reg10                      : std_logic_vector(C_SLV_DWIDTH-1 downto 0);
-  signal slv_reg11                      : std_logic_vector(C_SLV_DWIDTH-1 downto 0);
-  signal slv_reg12                      : std_logic_vector(C_SLV_DWIDTH-1 downto 0);
-  signal slv_reg13                      : std_logic_vector(C_SLV_DWIDTH-1 downto 0);
-  signal slv_reg14                      : std_logic_vector(C_SLV_DWIDTH-1 downto 0);
-  signal slv_reg15                      : std_logic_vector(C_SLV_DWIDTH-1 downto 0);
-  signal slv_reg16                      : std_logic_vector(C_SLV_DWIDTH-1 downto 0);
-  signal slv_reg17                      : std_logic_vector(C_SLV_DWIDTH-1 downto 0);
-  signal slv_reg18                      : std_logic_vector(C_SLV_DWIDTH-1 downto 0);
-  signal slv_reg19                      : std_logic_vector(C_SLV_DWIDTH-1 downto 0);
-  signal slv_reg20                      : std_logic_vector(C_SLV_DWIDTH-1 downto 0);
-  signal slv_reg21                      : std_logic_vector(C_SLV_DWIDTH-1 downto 0);
-  signal slv_reg22                      : std_logic_vector(C_SLV_DWIDTH-1 downto 0);
-  signal slv_reg23                      : std_logic_vector(C_SLV_DWIDTH-1 downto 0);
-  signal slv_reg24                      : std_logic_vector(C_SLV_DWIDTH-1 downto 0);
+  signal slv_reg8_h4                    : std_logic_vector(C_SLV_DWIDTH-1 downto 0);  --Hash4
+  signal slv_reg9                       : std_logic_vector(C_SLV_DWIDTH-1 downto 0);  --Data0
+  signal slv_reg10                      : std_logic_vector(C_SLV_DWIDTH-1 downto 0);  --Data1
+  signal slv_reg11                      : std_logic_vector(C_SLV_DWIDTH-1 downto 0);  --Data2
+  signal slv_reg12                      : std_logic_vector(C_SLV_DWIDTH-1 downto 0);  --Data3
+  signal slv_reg13                      : std_logic_vector(C_SLV_DWIDTH-1 downto 0);  --Data4
+  signal slv_reg14                      : std_logic_vector(C_SLV_DWIDTH-1 downto 0);  --Data5
+  signal slv_reg15                      : std_logic_vector(C_SLV_DWIDTH-1 downto 0);  --Data6
+  signal slv_reg16                      : std_logic_vector(C_SLV_DWIDTH-1 downto 0);  --Data7
+  signal slv_reg17                      : std_logic_vector(C_SLV_DWIDTH-1 downto 0);  --Data8
+  signal slv_reg18                      : std_logic_vector(C_SLV_DWIDTH-1 downto 0);  --Data9
+  signal slv_reg19                      : std_logic_vector(C_SLV_DWIDTH-1 downto 0);  --Data10
+  signal slv_reg20                      : std_logic_vector(C_SLV_DWIDTH-1 downto 0);  --Data11
+  signal slv_reg21                      : std_logic_vector(C_SLV_DWIDTH-1 downto 0);  --Data12
+  signal slv_reg22                      : std_logic_vector(C_SLV_DWIDTH-1 downto 0);  --Data13
+  signal slv_reg23                      : std_logic_vector(C_SLV_DWIDTH-1 downto 0);  --Data14
+  signal slv_reg24                      : std_logic_vector(C_SLV_DWIDTH-1 downto 0);  --Data15
   signal slv_reg25                      : std_logic_vector(C_SLV_DWIDTH-1 downto 0);
   signal slv_reg26                      : std_logic_vector(C_SLV_DWIDTH-1 downto 0);
   signal slv_reg27                      : std_logic_vector(C_SLV_DWIDTH-1 downto 0);
