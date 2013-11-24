@@ -28,6 +28,39 @@
 #include <crypto/sha.h>
 #include <asm/byteorder.h>
 
+
+
+#define ZYNQ_SHA1_RST		0x00
+#define ZYNQ_SHA1_STATUS	0X01
+#define ZYNQ_SHA1_RSV		0x02
+#define ZYNQ_SHA1_FINISHED	0x03
+#define ZYNQ_SHA1_H0		0x04
+#define ZYNQ_SHA1_HASH_BASH	0x04
+#define ZYNQ_SHA1_HASH_SIZE	0x05
+#define ZYNQ_SHA1_H1		0x05
+#define ZYNQ_SHA1_H2		0x05
+#define ZYNQ_SHA1_H3		0x06
+#define ZYNQ_SHA1_H4		0x07
+#define ZYNQ_SHA1_DATA_BASE	0x08
+#define ZYNQ_SHA1_DATA_NUM_REGS	0x20
+#define ZYNQ_SHA1_D0		0x08
+#define ZYNQ_SHA1_D1		0x09
+#define ZYNQ_SHA1_D2		0x0A
+#define ZYNQ_SHA1_D3		0x0B
+#define ZYNQ_SHA1_D4		0x0C
+#define ZYNQ_SHA1_D5		0x0D
+#define ZYNQ_SHA1_D6		0x0E
+#define ZYNQ_SHA1_D7		0x0F
+#define ZYNQ_SHA1_D8		0x10
+#define ZYNQ_SHA1_D9		0x11
+#define ZYNQ_SHA1_D10		0x12
+#define ZYNQ_SHA1_D11		0x13
+#define ZYNQ_SHA1_D12		0x14
+#define ZYNQ_SHA1_D13		0x15
+#define ZYNQ_SHA1_D14		0x16
+#define ZYNQ_SHA1_D15		0x17
+
+
 struct SHA1_CTX {
 	uint32_t h0,h1,h2,h3,h4;
 	u64 count;
@@ -66,7 +99,7 @@ static void printBlk(const u8* buf, unsigned int size)
 static int __sha1_update(struct SHA1_CTX *sctx, const u8 *data,
 			       unsigned int len, unsigned int partial)
 {
-	unsigned int done = 0;
+	unsigned int done = 0, i = 0;
 
 	sctx->count += len;
 	if (partial) {
@@ -75,12 +108,23 @@ static int __sha1_update(struct SHA1_CTX *sctx, const u8 *data,
 		memcpy(sctx->data + partial, data, done);
 		printBlk(sctx->data,SHA1_BLOCK_SIZE);
 //		sha1_block_data_order(sctx, sctx->data, 1);
+		(void)memcpy((void*)ZYNQ_SHA1_DATA_BASE,
+			(void*)(sctx->data),
+			SHA1_BLOCK_SIZE);
 	}
 
 	if (len - done >= SHA1_BLOCK_SIZE) {
 //		printk("__sha1_update --> len:%u.(0x%x) done:%u.(0x%x) cnt:%llu.(0x%x)\n",len, len, done, done, sctx->count,(u32) sctx->count);
 		const unsigned int rounds = (len - done) / SHA1_BLOCK_SIZE;
 //		sha1_block_data_order(sctx, data + done, rounds);
+		for(i = 0; i < rounds; i++)
+		{
+			//!!!!!!!!!!!!!!!!!!!  MUST check status here to make sure it's ready for more.....
+			while(ZYNQ_SHA1_STATUS != 0x1); // Wait for Rdy for data
+			(void)memcpy((void*)ZYNQ_SHA1_DATA_BASE,
+				(void*)((data + done)+(i*SHA1_BLOCK_SIZE),
+				SHA1_BLOCK_SIZE);
+		}
 		printBlk(data+done,rounds * SHA1_BLOCK_SIZE);
 		done += rounds * SHA1_BLOCK_SIZE;
 	}
@@ -95,6 +139,12 @@ static int sha1_update(struct shash_desc *desc, const u8 *data,
 	struct SHA1_CTX *sctx = shash_desc_ctx(desc);
 	unsigned int partial = sctx->count % SHA1_BLOCK_SIZE;
 	int res;
+
+	if(!sctx->count)  // reset the status bit and signal new msg
+	{
+		*(ZYNQ_SHA1_FINISHED) = 0x0;
+		*(ZYNQ_SHA1_RST)      = 0x1;
+	}
 
 	/* Handle the fast case right here */
 	if (partial + len < SHA1_BLOCK_SIZE) {
@@ -135,6 +185,13 @@ static int sha1_final(struct shash_desc *desc, u8 *out)
 	}
 	__sha1_update(sctx, (const u8 *)&bits, sizeof(bits), 56);
 
+
+	while(ZYNQ_SHA1_STATUS != 0x1); // Wait for Rdy for data before requesting hash
+
+	*(ZYNQ_SHA1_FINISHED) = 0x1;
+
+	while(ZYNQ_SHA1_STATUS != 0x2); // Wait for HASH to be rdy
+	(void)memcpy((u32 *)sctx, (void*)ZYNQ_SHA1_HASH_BASE, ZYNQ_SHA1_HASH_SIZE);
 	/* Store state in digest */
 	printk("HASH: ");
 	for (i = 0; i < 5; i++)
