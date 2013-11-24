@@ -35,7 +35,7 @@
 #define ZYNQ_SHA1_RSV		0x02
 #define ZYNQ_SHA1_FINISHED	0x03
 #define ZYNQ_SHA1_H0		0x04
-#define ZYNQ_SHA1_HASH_BASH	0x04
+#define ZYNQ_SHA1_HASH_BASE	0x04
 #define ZYNQ_SHA1_HASH_SIZE	0x05
 #define ZYNQ_SHA1_H1		0x05
 #define ZYNQ_SHA1_H2		0x05
@@ -120,9 +120,9 @@ static int __sha1_update(struct SHA1_CTX *sctx, const u8 *data,
 		for(i = 0; i < rounds; i++)
 		{
 			//!!!!!!!!!!!!!!!!!!!  MUST check status here to make sure it's ready for more.....
-			while(ZYNQ_SHA1_STATUS != 0x1); // Wait for Rdy for data
+			while(*(u32*)ZYNQ_SHA1_STATUS != 0x1); // Wait for Rdy for data
 			(void)memcpy((void*)ZYNQ_SHA1_DATA_BASE,
-				(void*)((data + done)+(i*SHA1_BLOCK_SIZE),
+				(void*)((data + done)+(i*SHA1_BLOCK_SIZE)),
 				SHA1_BLOCK_SIZE);
 		}
 		printBlk(data+done,rounds * SHA1_BLOCK_SIZE);
@@ -142,8 +142,8 @@ static int sha1_update(struct shash_desc *desc, const u8 *data,
 
 	if(!sctx->count)  // reset the status bit and signal new msg
 	{
-		*(ZYNQ_SHA1_FINISHED) = 0x0;
-		*(ZYNQ_SHA1_RST)      = 0x1;
+		*(u32*)(ZYNQ_SHA1_FINISHED) = 0x0;
+		*(u32*)(ZYNQ_SHA1_RST)      = 0x1;
 	}
 
 	/* Handle the fast case right here */
@@ -186,11 +186,11 @@ static int sha1_final(struct shash_desc *desc, u8 *out)
 	__sha1_update(sctx, (const u8 *)&bits, sizeof(bits), 56);
 
 
-	while(ZYNQ_SHA1_STATUS != 0x1); // Wait for Rdy for data before requesting hash
+	while(*(u32*)ZYNQ_SHA1_STATUS != 0x1); // Wait for Rdy for data before requesting hash
 
-	*(ZYNQ_SHA1_FINISHED) = 0x1;
+	*(u32*)(ZYNQ_SHA1_FINISHED) = 0x1;
 
-	while(ZYNQ_SHA1_STATUS != 0x2); // Wait for HASH to be rdy
+	while(*(u32*)ZYNQ_SHA1_STATUS != 0x2); // Wait for HASH to be rdy
 	(void)memcpy((u32 *)sctx, (void*)ZYNQ_SHA1_HASH_BASE, ZYNQ_SHA1_HASH_SIZE);
 	/* Store state in digest */
 	printk("HASH: ");
