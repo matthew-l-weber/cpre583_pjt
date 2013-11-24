@@ -81,7 +81,7 @@ signal test3_hash : sha1_out := (
 
 type test_states is (t1_send, t1_wait, t1_validate,
 					 t2_send, t2_wait, t2_validate,
-					 t3_1_send, t3_1_wait, t3_2_send, t3_2_wait,
+					 t3_1_send, t3_1_wait, t3_2_delay, t3_2_send, t3_2_wait,
 					 t3_validate, done);
 signal current_state : test_states;
 
@@ -176,7 +176,17 @@ begin
 
 			elsif( current_state = t3_1_wait ) then
 				if( valid = '1') then
+					current_state <= t3_2_delay;
+				end if;
+
+			-- Let's see what happens if we delay the second block by a few
+			-- cycles:
+			elsif( current_state = t3_2_delay ) then
+				if( idx < 89 ) then
+					idx <= idx + 1;
+				else
 					current_state <= t3_2_send;
+					idx <= 0;
 				end if;
 
 			elsif( current_state = t3_2_send ) then
