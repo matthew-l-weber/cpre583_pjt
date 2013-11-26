@@ -1,0 +1,12 @@
+run
+-opt_level 2
+-opt_mode speed
+-ifmt mixed
+-ifn "F:\Project_Files\gradFinalProjCPRE583\pcores\glue_v1_00_a\devl\synthesis\glue_xst.prj"
+-top glue
+-p virtex6
+-ofn "F:\Project_Files\gradFinalProjCPRE583\pcores\glue_v1_00_a\devl\synthesis\glue_xst.ngc"
+-iobuf NO
+-rtlview YES
+-hierarchy_separator /
+-work_lib glue_v1_00_a
