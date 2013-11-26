@@ -29,37 +29,40 @@
 #include <asm/byteorder.h>
 
 
+#define ZYNQ_SHA1_BASE          0x7xxxxxxx
+#define ZYNQ_SHA1_RST		(ZYNQ_SHA1_BASE + 0x00)
+#define ZYNQ_SHA1_STATUS	(ZYNQ_SHA1_BASE + 0X01)
+#define ZYNQ_SHA1_RSV		(ZYNQ_SHA1_BASE + 0x02)
+#define ZYNQ_SHA1_FINISHED	(ZYNQ_SHA1_BASE + 0x03)
+#define ZYNQ_SHA1_H0		(ZYNQ_SHA1_BASE + 0x04)
+#define ZYNQ_SHA1_HASH_BASE	(ZYNQ_SHA1_BASE + 0x04)
+#define ZYNQ_SHA1_HASH_SIZE	(ZYNQ_SHA1_BASE + 0x05)
+#define ZYNQ_SHA1_H1		(ZYNQ_SHA1_BASE + 0x05)
+#define ZYNQ_SHA1_H2		(ZYNQ_SHA1_BASE + 0x05)
+#define ZYNQ_SHA1_H3		(ZYNQ_SHA1_BASE + 0x06)
+#define ZYNQ_SHA1_H4		(ZYNQ_SHA1_BASE + 0x07)
+#define ZYNQ_SHA1_DATA_BASE	(ZYNQ_SHA1_BASE + 0x08)
+#define ZYNQ_SHA1_DATA_NUM_REGS	(ZYNQ_SHA1_BASE + 0x20)
+#define ZYNQ_SHA1_D0		(ZYNQ_SHA1_BASE + 0x08)
+#define ZYNQ_SHA1_D1		(ZYNQ_SHA1_BASE + 0x09)
+#define ZYNQ_SHA1_D2		(ZYNQ_SHA1_BASE + 0x0A)
+#define ZYNQ_SHA1_D3		(ZYNQ_SHA1_BASE + 0x0B)
+#define ZYNQ_SHA1_D4		(ZYNQ_SHA1_BASE + 0x0C)
+#define ZYNQ_SHA1_D5		(ZYNQ_SHA1_BASE + 0x0D)
+#define ZYNQ_SHA1_D6		(ZYNQ_SHA1_BASE + 0x0E)
+#define ZYNQ_SHA1_D7		(ZYNQ_SHA1_BASE + 0x0F)
+#define ZYNQ_SHA1_D8		(ZYNQ_SHA1_BASE + 0x10)
+#define ZYNQ_SHA1_D9		(ZYNQ_SHA1_BASE + 0x11)
+#define ZYNQ_SHA1_D10		(ZYNQ_SHA1_BASE + 0x12)
+#define ZYNQ_SHA1_D11		(ZYNQ_SHA1_BASE + 0x13)
+#define ZYNQ_SHA1_D12		(ZYNQ_SHA1_BASE + 0x14)
+#define ZYNQ_SHA1_D13		(ZYNQ_SHA1_BASE + 0x15)
+#define ZYNQ_SHA1_D14		(ZYNQ_SHA1_BASE + 0x16)
+#define ZYNQ_SHA1_D15		(ZYNQ_SHA1_BASE + 0x17)
+#define ZYNQ_SHA1_FSM		(ZYNQ_SHA1_BASE + 0x1E)
 
-#define ZYNQ_SHA1_RST		0x00
-#define ZYNQ_SHA1_STATUS	0X01
-#define ZYNQ_SHA1_RSV		0x02
-#define ZYNQ_SHA1_FINISHED	0x03
-#define ZYNQ_SHA1_H0		0x04
-#define ZYNQ_SHA1_HASH_BASE	0x04
-#define ZYNQ_SHA1_HASH_SIZE	0x05
-#define ZYNQ_SHA1_H1		0x05
-#define ZYNQ_SHA1_H2		0x05
-#define ZYNQ_SHA1_H3		0x06
-#define ZYNQ_SHA1_H4		0x07
-#define ZYNQ_SHA1_DATA_BASE	0x08
-#define ZYNQ_SHA1_DATA_NUM_REGS	0x20
-#define ZYNQ_SHA1_D0		0x08
-#define ZYNQ_SHA1_D1		0x09
-#define ZYNQ_SHA1_D2		0x0A
-#define ZYNQ_SHA1_D3		0x0B
-#define ZYNQ_SHA1_D4		0x0C
-#define ZYNQ_SHA1_D5		0x0D
-#define ZYNQ_SHA1_D6		0x0E
-#define ZYNQ_SHA1_D7		0x0F
-#define ZYNQ_SHA1_D8		0x10
-#define ZYNQ_SHA1_D9		0x11
-#define ZYNQ_SHA1_D10		0x12
-#define ZYNQ_SHA1_D11		0x13
-#define ZYNQ_SHA1_D12		0x14
-#define ZYNQ_SHA1_D13		0x15
-#define ZYNQ_SHA1_D14		0x16
-#define ZYNQ_SHA1_D15		0x17
-
+#define IO_SHA_READ(adr)         *(u32*)adr
+#define IO_SHA_WRITE(adr,val)    *(u32*)adr = (u32)val
 
 struct SHA1_CTX {
 	uint32_t h0,h1,h2,h3,h4;
@@ -120,7 +123,7 @@ static int __sha1_update(struct SHA1_CTX *sctx, const u8 *data,
 		for(i = 0; i < rounds; i++)
 		{
 			//!!!!!!!!!!!!!!!!!!!  MUST check status here to make sure it's ready for more.....
-			while(*(u32*)ZYNQ_SHA1_STATUS != 0x1); // Wait for Rdy for data
+			while(IO_SHA_READ(ZYNQ_SHA1_STATUS) != 0x1); // Wait for Rdy for data
 			(void)memcpy((void*)ZYNQ_SHA1_DATA_BASE,
 				(void*)((data + done)+(i*SHA1_BLOCK_SIZE)),
 				SHA1_BLOCK_SIZE);
@@ -142,8 +145,8 @@ static int sha1_update(struct shash_desc *desc, const u8 *data,
 
 	if(!sctx->count)  // reset the status bit and signal new msg
 	{
-		*(u32*)(ZYNQ_SHA1_FINISHED) = 0x0;
-		*(u32*)(ZYNQ_SHA1_RST)      = 0x1;
+//		IO_SHA_WRITE(ZYNQ_SHA1_FINISHED, 0x0);
+		IO_SHA_WRITE(ZYNQ_SHA1_RST, 0x1);
 	}
 
 	/* Handle the fast case right here */
@@ -186,11 +189,11 @@ static int sha1_final(struct shash_desc *desc, u8 *out)
 	__sha1_update(sctx, (const u8 *)&bits, sizeof(bits), 56);
 
 
-	while(*(u32*)ZYNQ_SHA1_STATUS != 0x1); // Wait for Rdy for data before requesting hash
+	while(IO_SHA_READ(ZYNQ_SHA1_STATUS) != 0x1); // Wait for Rdy for data before requesting hash
 
-	*(u32*)(ZYNQ_SHA1_FINISHED) = 0x1;
+	IO_SHA_WRITE(ZYNQ_SHA1_FINISHED, 0x1);
 
-	while(*(u32*)ZYNQ_SHA1_STATUS != 0x2); // Wait for HASH to be rdy
+	while(IO_SHA_READ(ZYNQ_SHA1_STATUS) != 0x2); // Wait for HASH to be rdy
 	(void)memcpy((u32 *)sctx, (void*)ZYNQ_SHA1_HASH_BASE, ZYNQ_SHA1_HASH_SIZE);
 	/* Store state in digest */
 	printk("HASH: ");
