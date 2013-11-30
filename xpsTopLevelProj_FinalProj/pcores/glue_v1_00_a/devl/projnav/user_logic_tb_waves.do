@@ -2,6 +2,7 @@ onerror {resume}
 quietly WaveActivateNextPane {} 0
 add wave -noupdate /user_logic_tb/clk
 add wave -noupdate /user_logic_tb/reset_n
+add wave -noupdate /user_logic_tb/reset_user_logic
 add wave -noupdate -radix hexadecimal /user_logic_tb/ipif_Bus2IP_Data
 add wave -noupdate /user_logic_tb/ipif_Bus2IP_BE
 add wave -noupdate -radix hexadecimal /user_logic_tb/user_Bus2IP_RdCE
@@ -10,7 +11,11 @@ add wave -noupdate -radix hexadecimal /user_logic_tb/user_IP2Bus_Data
 add wave -noupdate /user_logic_tb/user_IP2Bus_RdAck
 add wave -noupdate /user_logic_tb/user_IP2Bus_WrAck
 add wave -noupdate /user_logic_tb/user_IP2Bus_Error
-add wave -noupdate /user_logic_tb/current_state
+add wave -noupdate -radix decimal /user_logic_tb/current_test
+add wave -noupdate /user_logic_tb/tsi
+add wave -noupdate /user_logic_tb/tso
+add wave -noupdate -divider {Test 1}
+add wave -noupdate /user_logic_tb/test1_i/current_state
 add wave -noupdate -divider user_logic
 add wave -noupdate /user_logic_tb/user_logic_i/algoState
 add wave -noupdate /user_logic_tb/user_logic_i/local_rst
@@ -60,7 +65,7 @@ add wave -noupdate /user_logic_tb/user_logic_i/slv_ip2bus_data
 add wave -noupdate /user_logic_tb/user_logic_i/slv_read_ack
 add wave -noupdate /user_logic_tb/user_logic_i/slv_write_ack
 TreeUpdate [SetDefaultTree]
-WaveRestoreCursors {{Cursor 1} {100241 ps} 0}
+WaveRestoreCursors {{Cursor 1} {300234 ps} 0}
 quietly wave cursor active 1
 configure wave -namecolwidth 178
 configure wave -valuecolwidth 100
@@ -76,4 +81,4 @@ configure wave -griddelta 40
 configure wave -timeline 0
 configure wave -timelineunits ps
 update
-WaveRestoreZoom {90355 ps} {116955 ps}
+WaveRestoreZoom {77109 ps} {157500 ps}
