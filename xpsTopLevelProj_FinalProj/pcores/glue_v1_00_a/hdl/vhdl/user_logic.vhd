@@ -130,38 +130,49 @@ end entity user_logic;
 
 architecture IMP of user_logic is
 
-  --USER signal declarations added here, as needed for user logic
---  port
---  (
---    sha_m : in std_logic_vector ( 31 downto 0);
---    sha_init : in std_logic; -- initial message
---    sha_ld : in std_logic; -- load signal
---    sha_h : out std_logic_vector ( 31 downto 0); --
---    sha_v : out std_logic;
---    sha_clk : in std_logic; -- master clock signal
---    sha_rst : in std_logic -- master reset signal
---  );
---  end component;
+	component sha1
+	port
+	(
+		sha_msg   : in std_logic_vector ( 31 downto 0);
+		sha_init  : in std_logic; -- initial message
+		sha_load  : in std_logic; -- load signal
+		sha_hash  : out std_logic_vector ( 31 downto 0); --
+		sha_valid : out std_logic;
+		sha_clk   : in std_logic; -- master clock signal
+		sha_reset : in std_logic -- master reset signal
+);
+end component;
 
-  -- State info
-  type algo_states is (algoWait, dataXfer, hashWait, algoDone);
-  signal algoState :  algo_states;
+	-- State info:
+	type algo_states is (algoWait, dataXfer, hashWait, saveHash, algoDone);
+	signal algoState :  algo_states;
   
-  -- These local_ reg and the bus_slv_reg# are used to allow the user
-  -- logic to modify bus regs which could also be set via the bus
-  signal local_rst      : std_logic_vector(C_SLV_DWIDTH-1 downto 0);
-  signal local_status   : std_logic_vector(C_SLV_DWIDTH-1 downto 0);
-  signal local_startBlk : std_logic_vector(C_SLV_DWIDTH-1 downto 0);
-  signal local_finished : std_logic_vector(C_SLV_DWIDTH-1 downto 0);
-  signal bus_slv_reg0   : std_logic_vector(C_SLV_DWIDTH-1 downto 0);
-  signal bus_slv_reg1   : std_logic_vector(C_SLV_DWIDTH-1 downto 0);
-  signal bus_slv_reg2   : std_logic_vector(C_SLV_DWIDTH-1 downto 0);
-  signal bus_slv_reg3   : std_logic_vector(C_SLV_DWIDTH-1 downto 0);
-  
-  -- Algo specific registers
---  signal sha_init_reg : std_logic;
---  signal sha_ld_reg : std_logic;
-  signal hashIdx : integer range 0 to 5;
+	-- Status bits: 
+	signal input_rdy : std_logic;		-- Input data can safely be written.
+	signal hash_rdy  : std_logic;		-- Hash operation is complete.
+	signal hash_busy : std_logic;		-- Hash operation in progress.
+
+	signal ul_msg   : std_logic_vector ( 31 downto 0);
+	signal ul_init  : std_logic;
+	signal ul_load  : std_logic;
+	signal ul_hash  : std_logic_vector ( 31 downto 0);
+	signal ul_valid : std_logic;
+	signal ul_reset : std_logic;
+
+
+	signal ld_map : std_logic_vector ( 16 downto 0 );
+
+	-- These local_ reg and the bus_slv_reg# are used to allow the user
+	-- logic to modify bus regs which could also be set via the bus
+	signal bus_slv_reg0   : std_logic_vector(C_SLV_DWIDTH-1 downto 0);
+	signal bus_slv_reg1   : std_logic_vector(C_SLV_DWIDTH-1 downto 0);
+	signal bus_slv_reg2   : std_logic_vector(C_SLV_DWIDTH-1 downto 0);
+	signal bus_slv_reg3   : std_logic_vector(C_SLV_DWIDTH-1 downto 0);
+
+	signal local_rst      : std_logic_vector(C_SLV_DWIDTH-1 downto 0);
+	signal local_status   : std_logic_vector(C_SLV_DWIDTH-1 downto 0);
+	signal local_startBlk : std_logic_vector(C_SLV_DWIDTH-1 downto 0);
+	signal local_finished : std_logic_vector(C_SLV_DWIDTH-1 downto 0);
 
   ------------------------------------------
   -- Signals for user logic slave model s/w accessible register example
@@ -196,7 +207,7 @@ architecture IMP of user_logic is
   signal slv_reg27                      : std_logic_vector(C_SLV_DWIDTH-1 downto 0);
   signal slv_reg28                      : std_logic_vector(C_SLV_DWIDTH-1 downto 0);
   signal slv_reg29                      : std_logic_vector(C_SLV_DWIDTH-1 downto 0);
-  signal slv_reg30                      : std_logic_vector(C_SLV_DWIDTH-1 downto 0);  -- Current state (user_logic driven) (bus RO)
+  signal slv_reg30_state                : std_logic_vector(C_SLV_DWIDTH-1 downto 0);  -- Current state (user_logic driven) (bus RO)
   signal slv_reg31                      : std_logic_vector(C_SLV_DWIDTH-1 downto 0);
   signal slv_reg_write_sel              : std_logic_vector(31 downto 0);
   signal slv_reg_read_sel               : std_logic_vector(31 downto 0);
@@ -241,11 +252,11 @@ begin
         bus_slv_reg1 <= (others => '0');
         bus_slv_reg2 <= (others => '0');
         bus_slv_reg3 <= (others => '0');
---        slv_reg4_h0 <= (others => '0');
---        slv_reg5_h1 <= (others => '0');
---        slv_reg6_h2 <= (others => '0');
---        slv_reg7_h3 <= (others => '0');
---        slv_reg8_h4 <= (others => '0');
+		--slv_reg4_h0 <= (others => '0');
+		--slv_reg5_h1 <= (others => '0');
+		--slv_reg6_h2 <= (others => '0');
+		--slv_reg7_h3 <= (others => '0');
+		--slv_reg8_h4 <= (others => '0');
         slv_reg9  <= (others => '0');
         slv_reg10 <= (others => '0');
         slv_reg11 <= (others => '0');
@@ -267,7 +278,6 @@ begin
         slv_reg27 <= (others => '0');
         slv_reg28 <= (others => '0');
         slv_reg29 <= (others => '0');
---        slv_reg30 <= (others => '0');
         slv_reg31 <= (others => '0');
       else
         case slv_reg_write_sel is
@@ -421,7 +431,7 @@ begin
               if ( Bus2IP_BE(byte_index) = '1' ) then
                 slv_reg24(byte_index*8+7 downto byte_index*8) <= Bus2IP_Data(byte_index*8+7 downto byte_index*8);
               end if;
-            end loop;		
+            end loop;
           when "00000000000000000000000001000000" =>
             for byte_index in 0 to (C_SLV_DWIDTH/8)-1 loop
               if ( Bus2IP_BE(byte_index) = '1' ) then
@@ -452,13 +462,6 @@ begin
                 slv_reg29(byte_index*8+7 downto byte_index*8) <= Bus2IP_Data(byte_index*8+7 downto byte_index*8);
               end if;
             end loop;
--- read only	
---          when "00000000000000000000000000000010" =>
---            for byte_index in 0 to (C_SLV_DWIDTH/8)-1 loop
---              if ( Bus2IP_BE(byte_index) = '1' ) then
---                slv_reg30(byte_index*8+7 downto byte_index*8) <= Bus2IP_Data(byte_index*8+7 downto byte_index*8);
---              end if;
---            end loop;
           when "00000000000000000000000000000001" =>
             for byte_index in 0 to (C_SLV_DWIDTH/8)-1 loop
               if ( Bus2IP_BE(byte_index) = '1' ) then
@@ -473,7 +476,13 @@ begin
   end process SLAVE_REG_WRITE_PROC;
 
   -- implement slave model software accessible register(s) read mux
-  SLAVE_REG_READ_PROC : process( slv_reg_read_sel, slv_reg0_rst, slv_reg1_status, slv_reg2_startBlk, slv_reg3_finished, slv_reg4_h0, slv_reg5_h1, slv_reg6_h2, slv_reg7_h3, slv_reg8_h4, slv_reg9, slv_reg10, slv_reg11, slv_reg12, slv_reg13, slv_reg14, slv_reg15, slv_reg16, slv_reg17, slv_reg18, slv_reg19, slv_reg20, slv_reg21, slv_reg22, slv_reg23, slv_reg24, slv_reg25, slv_reg26, slv_reg27, slv_reg28, slv_reg29, slv_reg30, slv_reg31 ) is
+  SLAVE_REG_READ_PROC : process( slv_reg_read_sel, slv_reg0_rst,
+	  slv_reg1_status, slv_reg2_startBlk, slv_reg3_finished, slv_reg4_h0,
+	  slv_reg5_h1, slv_reg6_h2, slv_reg7_h3, slv_reg8_h4, slv_reg9, slv_reg10,
+	  slv_reg11, slv_reg12, slv_reg13, slv_reg14, slv_reg15, slv_reg16,
+	  slv_reg17, slv_reg18, slv_reg19, slv_reg20, slv_reg21, slv_reg22,
+	  slv_reg23, slv_reg24, slv_reg25, slv_reg26, slv_reg27, slv_reg28,
+	  slv_reg29, slv_reg30_state, slv_reg31 ) is
   begin
 
     case slv_reg_read_sel is
@@ -507,7 +516,7 @@ begin
       when "00000000000000000000000000010000" => slv_ip2bus_data <= slv_reg27;
       when "00000000000000000000000000001000" => slv_ip2bus_data <= slv_reg28;
       when "00000000000000000000000000000100" => slv_ip2bus_data <= slv_reg29;
-      when "00000000000000000000000000000010" => slv_ip2bus_data <= slv_reg30;
+      when "00000000000000000000000000000010" => slv_ip2bus_data <= slv_reg30_state;
       when "00000000000000000000000000000001" => slv_ip2bus_data <= slv_reg31;
       when others => slv_ip2bus_data <= (others => '0');
     end case;
@@ -524,93 +533,131 @@ begin
   IP2Bus_RdAck <= slv_read_ack;
   IP2Bus_Error <= '0';
 
+  sha1_hw : sha1
+  port map
+  (
+	sha_msg		=> ul_msg,
+	sha_init	=> ul_init,
+	sha_load	=> ul_load,
+	sha_hash	=> ul_hash,
+	sha_valid	=> ul_valid,
+	sha_clk		=> Bus2IP_Clk,
+	sha_reset	=> ul_reset
+  );
+  
   ---------------------------------------------------------
   -- FSM to glue together processor interface to custom algo
   ---------------------------------------------------------
-  user_fsm : process(Bus2IP_Clk)
-  begin
-    if Bus2IP_Clk'event and Bus2IP_Clk = '1' then
-      if Bus2IP_Resetn = '0' then
---        sha_init_reg <= '0';
---        sha_ld_reg   <= '0';
---        sha_m        <= (others => '0');
-        slv_reg30    <= (others => '0');  -- rst state status to 0x0, should transition immediately to 0x1 out of reset
-        algoState    <= algoWait;
-      else
-        case algoState is
-          when algoWait =>
-            if slv_reg0_rst = x"00000001" then     -- beginning of new msg/data in
-              algoState       <= dataXfer;
-				  local_rst       <= (others => '0');  -- clr until next msg rsts the statemachine
-              local_status    <= x"00000001";      -- rst rdy bits to sig sw to write data regs
-              slv_reg4_h0     <= (others => '0');  -- rst hash to zero
-              slv_reg5_h1     <= (others => '0');  -- rst hash to zero
-              slv_reg6_h2     <= (others => '0');  -- rst hash to zero
-              slv_reg7_h3     <= (others => '0');  -- rst hash to zero
-              slv_reg8_h4     <= (others => '0');  -- rst hash to zero			
-              hashIdx         <= 0;				      -- rst hash idx
---              sha_init_reg    <= '1';  -- reset algo to know it's a new msg sequence
-            end if;
-          when dataXfer =>
-            if slv_reg3_finished = x"00000001" then  -- check if finished
-              local_finished   <= (others => '0');  -- clr since this reg doesn't hold state
-              algoState        <= hashWait;
-              local_status     <= (others => '0');  -- rst rdy bits
-				  
---              sha_ld_reg       <= '0';
---              sha_init_reg     <= '0';  -- start rst to know it's a new msg sequence
---  need to add something to tell algo to gen the hash
-				else
-              if slv_reg2_startBlk = x"00000001" then
-                local_startBlk <= x"00000000";  -- clr sw sig that blk was ready
---TODO					 local_status   <= x"00000000";  -- tell sw to wait until blk has been loaded into algo
---     update to write in a whole block to the algo (probably another FSM that doesn't a sequence of reg loads and then sig back to this .......
---     will need logic here to hold off until the algo finishes?  then set the local_status to 0x1 to get sw to write more?
-                local_status <= x"00000001";  -- rdy for more data (WAWRNING TODO, this is for testing, eventually this 
-					 -- should only be set after a sequence loads the complete blk into the algo.  then the sw should be sig to load more data....
-              else
-                local_status <= x"00000001";  -- sig sw rdy for more data
-              end if;
-            end if;
-          when hashWait =>
---signal from algo for hash rdy            if sha_valid = '1' then
-              case hashIdx is      -- hash is a 20byte value
-                when 0 =>
-                  slv_reg4_h0 <= x"00000000";--sha_h;  -- TODO set to the real algo value
-                when 1 =>
-                  slv_reg5_h1 <= x"00000001";--sha_h;  -- TODO set to the real algo value
-                when 2 =>
-                  slv_reg6_h2 <= x"00000002";--sha_h;  -- TODO set to the real algo value
-                when 3 =>
-                  slv_reg7_h3 <= x"00000003";--sha_h;  -- TODO set to the real algo value
-                when 4 =>
-                  slv_reg8_h4 <= x"00000004";--sha_h;  -- TODO set to the real algo value
-                when others => null;
-                  algoState <= algoDone;
-              end case;
-              hashIdx <= hashIdx + 1;
---            end if;    
-          when algoDone =>
-            algoState        <= algoWait;
-            hashIdx          <= 0;
-            local_status     <= x"00000002";      -- hash rdy
-        end case;  
+	user_fsm : process(Bus2IP_Clk)
+	begin
+		if Bus2IP_Clk'event and Bus2IP_Clk = '1' then
+			-- Defaults:
+			ul_load <= '0';
+			ul_msg  <= (others => '0');
 
-        -- debug state output		
-		  case algoState is
-          when algoWait => 
-            slv_reg30 <= x"00000001";
-          when dataXfer => 
-            slv_reg30 <= x"00000002";
-          when hashWait => 
-            slv_reg30 <= x"00000003";
-          when algoDone => 
-            slv_reg30 <= x"00000004";
-        end case;		  
+			if Bus2IP_Resetn = '0' then
+				algoState		<= algoWait;
+				input_rdy		<= '0';
+				hash_rdy		<= '0';
+				hash_busy		<= '0';
+				local_rst       <= (others => '0');
+				slv_reg4_h0     <= (others => '0');
+				slv_reg5_h1     <= (others => '0');
+				slv_reg6_h2     <= (others => '0');
+				slv_reg7_h3     <= (others => '0');
+				slv_reg8_h4     <= (others => '0');  
+			else
+				case algoState is
+					when algoWait =>
+						input_rdy	<= '1';
+						hash_busy <= '0';
+						if slv_reg0_rst = x"00000001" then     -- begin hash!
+							algoState <= dataXfer;
+							ld_map <= "10000000000000000";
+						end if;
+					when dataXfer =>
+						ul_load		<= '1';
+						hash_busy	<= '1';
+						input_rdy	<= '0';		-- We no longer accept input data.
+						case ld_map is
+							when "10000000000000000" =>
+								ul_msg <= slv_reg9;
+							when "01000000000000000" =>
+								ul_msg <= slv_reg10;
+							when "00100000000000000" =>
+								ul_msg <= slv_reg11;
+							when "00010000000000000" =>
+								ul_msg <= slv_reg12;
+							when "00001000000000000" =>
+								ul_msg <= slv_reg13;
+							when "00000100000000000" =>
+								ul_msg <= slv_reg14;
+							when "00000010000000000" =>
+								ul_msg <= slv_reg15;
+							when "00000001000000000" =>
+								ul_msg <= slv_reg16;
+							when "00000000100000000" =>
+								ul_msg <= slv_reg17;
+							when "00000000010000000" =>
+								ul_msg <= slv_reg18;
+							when "00000000001000000" =>
+								ul_msg <= slv_reg19;
+							when "00000000000100000" =>
+								ul_msg <= slv_reg20;
+							when "00000000000010000" =>
+								ul_msg <= slv_reg21;
+							when "00000000000001000" =>
+								ul_msg <= slv_reg22;
+							when "00000000000000100" =>
+								ul_msg <= slv_reg23;
+							when "00000000000000010" =>
+								ul_msg <= slv_reg24;
+							when "00000000000000001" =>
+								ul_load <= '0';
+								algoState <= hashWait;
+							when others =>
+								ul_load <= '0';
+								algoState <= hashWait;
+							end case;
+							ld_map <= '0' & ld_map(ld_map'length-1 downto 1);
+					when hashWait =>
+						input_rdy <= '1';
+						if ul_valid = '1' then
+							algoState <= saveHash;
+							ld_map <= "00000000000100000";
+						end if;
+					when saveHash =>
+						case ld_map is
+							when "00000000000100000" =>
+								slv_reg4_h0 <= ul_hash; 
+							when "00000000000010000" =>
+								slv_reg5_h1 <= ul_hash; 
+							when "00000000000001000" =>
+								slv_reg6_h2 <= ul_hash; 
+							when "00000000000000100" =>
+								slv_reg7_h3 <= ul_hash; 
+							when "00000000000000010" =>
+								slv_reg8_h4 <= ul_hash; 
+							when "00000000000000001" =>
+								algoState <= algoWait;
+								hash_rdy <= '1';
+							when others =>
+								hash_rdy <= '1';
+								algoState <= algoWait;
+						end case;
+						ld_map <= '0' & ld_map(ld_map'length-1 downto 1);
+					when others =>
+						algoState <= algoWait;
+				end case;
+			end if;  --if Bus2IP_Resetn = '0' then
+		end if;  --if Bus2IP_Clk'event and Bus2IP_Clk = '1' then
+	end process user_fsm;
 
-      end if;  --if Bus2IP_Resetn = '0' then
-    end if;  --if Bus2IP_Clk'event and Bus2IP_Clk = '1' then
-  end process user_fsm;
+-- Status is comprised of the hash ready and input ready bits:
+local_status <= "00000000" & "00000000" & "00000000" & "00000" & hash_busy & hash_rdy & input_rdy;
+
+ul_reset <= not Bus2IP_Resetn;
+
 
 -- Allow either the bus or the internal logic to set bus reg value
 slv_reg0_rst      <= local_rst      or bus_slv_reg0;

@@ -187,7 +187,7 @@ port map
 );
 
 
-test2_i : entity glue_v1_00_a.user_logic_tb_test1
+test2_i : entity glue_v1_00_a.test2_lazy_dog
 generic map
 (
 	C_NUM_REG                      => USER_NUM_REG,
