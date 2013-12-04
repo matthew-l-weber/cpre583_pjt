@@ -123,7 +123,10 @@ CORE_STATE_DEVELOPMENT_FILES = //ccanet/approot/eti/eda/xilinx/suite/14.7/Window
 //ccanet/approot/eti/eda/xilinx/suite/14.7/Windows/14.7/ISE_DS/EDK/hw/XilinxProcessorIPLib/pcores/axi_lite_ipif_v1_01_a/hdl/vhdl/slave_attachment.vhd \
 //ccanet/approot/eti/eda/xilinx/suite/14.7/Windows/14.7/ISE_DS/EDK/hw/XilinxProcessorIPLib/pcores/axi_lite_ipif_v1_01_a/hdl/vhdl/axi_lite_ipif.vhd \
 pcores/glue_v1_00_a/hdl/vhdl/user_logic.vhd \
-pcores/glue_v1_00_a/hdl/vhdl/glue.vhd
+pcores/glue_v1_00_a/hdl/vhdl/glue.vhd \
+pcores/glue_v1_00_a/hdl/vhdl/sha1_oc.vhd \
+pcores/glue_v1_00_a/hdl/vhdl/c4b.vhd \
+pcores/glue_v1_00_a/hdl/vhdl/c6b.vhd
 
 WRAPPER_NGC_FILES = implementation/system_axi4lite_0_wrapper.ngc \
 implementation/system_leds_4bits_wrapper.ngc \

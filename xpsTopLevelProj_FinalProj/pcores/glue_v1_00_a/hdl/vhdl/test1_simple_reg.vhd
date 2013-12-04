@@ -23,7 +23,7 @@ entity user_logic_tb_test1 is
   );
   port
   (
-    clk							   : in  std_logic;
+    clk                            : in  std_logic;
     Bus2IP_Resetn                  : in  std_logic;
     Bus2IP_Data                    : out std_logic_vector(C_SLV_DWIDTH-1 downto 0);
     Bus2IP_BE                      : out std_logic_vector(C_SLV_DWIDTH/8-1 downto 0);
@@ -33,7 +33,7 @@ entity user_logic_tb_test1 is
     IP2Bus_RdAck                   : in  std_logic;
     IP2Bus_WrAck                   : in  std_logic;
     IP2Bus_Error                   : in  std_logic;
-    finished					   : out std_logic
+    finished                       : out std_logic
   );
 end user_logic_tb_test1;
 
@@ -86,3 +86,4 @@ end process test1;
 finished <= '1' when current_state = done else '0';
 
 end test1_i;
+
