@@ -43,15 +43,18 @@ architecture test2_i of test2_lazy_dog is
 ----------------------------------------------
 --       Signal Declarations                --
 ----------------------------------------------
-	type test_states is (pre_setup, setup, setup_wait, clear_cmd, begin_hash, wait_hash,
+	type test_states is (wait_for_ready, write_data, write_data_done,
+						 begin_hash, wait_hash,
 						 wait_clear, validate, done);
 	signal current_state : test_states;
 
 	type sha1_in is array (0 to 15) of std_logic_vector(31 downto 0);
 	type sha1_out is array (0 to 4) of std_logic_vector(31 downto 0);
 
-	constant CMD_REG : std_logic_vector    := x"80000000";
+	constant CMD_REG    : std_logic_vector    := x"80000000";
 	constant STATUS_REG : std_logic_vector := x"40000000";
+	constant INPUT_RDY  : integer := 0;
+	constant HASH_RDY   : integer := 1;
 
 -- "The quick brown fox jumps over the lazy dog":
 --  Note1: The 0x80 must be appended to the end of text.
@@ -88,46 +91,41 @@ begin
 		Bus2IP_BE <= (others => '0');
 
 		if(Bus2IP_Resetn = '0') then
-			current_state <= pre_setup;
+			current_state <= wait_for_ready;
 			idx <= 0;
 			wrce <= x"00400000";
 			rdce <= x"08000000";
 		else
-			if( current_state = pre_setup ) then
-				Bus2IP_RdCE <= x"40000000";
-				if( IP2Bus_RdAck = '1' and IP2Bus_Data(0) = '1') then
-					current_state <= setup;
+			-- Wait until the pcore is ready:
+			if( current_state = wait_for_ready ) then
+				Bus2IP_RdCE <= STATUS_REG;
+				if( IP2Bus_RdAck = '1' and IP2Bus_Data(INPUT_RDY) = '1') then
+					current_state <= write_data;
 				end if;
-			elsif( current_state = setup ) then
+			elsif( current_state = write_data ) then
+				Bus2IP_RdCE <= (others => '0');
 				Bus2IP_WrCE <= wrce;
 				Bus2IP_Data <= test2_msg(idx);
-				Bus2IP_BE <= (others => '1');
+				Bus2IP_BE   <= (others => '1');
 				if( IP2Bus_WrAck = '1' ) then
+					current_state <= write_data_done;
+				end if;
+			elsif( current_state = write_data_done ) then
+				Bus2IP_WrCE <= (others => '0');
+				Bus2IP_Data <= (others => '0');
+				Bus2IP_BE   <= (others => '0');
+				if( IP2Bus_WrAck = '0' ) then
 					if( idx < 15 ) then
 						idx <= idx + 1;
 						wrce <= '0' & wrce(wrce'length-1 downto 1);
+						current_state <= write_data;
 					else
-						current_state <= setup_wait;
+						current_state <= begin_hash;
 					end if;
-				end if;
-			elsif( current_state = setup_wait ) then
-				Bus2IP_WrCE <= (others => '0');
-				Bus2IP_RdCE <= (others => '0');
-				Bus2IP_Data <= (others => '0');
-				Bus2IP_BE <= (others => '0');
-				if( IP2Bus_WrAck = '0' ) then
-					current_state <= begin_hash;
 				end if;
 			elsif( current_state = begin_hash ) then
 				Bus2IP_WrCE <= CMD_REG;
 				Bus2IP_Data <= x"00000001";
-				Bus2IP_BE	<= (others => '1');
-				if( IP2Bus_WrAck = '1' ) then
-					current_state <= clear_cmd;
-				end if;
-			elsif( current_state = clear_cmd ) then
-				Bus2IP_WrCE <= CMD_REG;
-				Bus2IP_Data <= (others => '0');
 				Bus2IP_BE	<= (others => '1');
 				if( IP2Bus_WrAck = '1' ) then
 					current_state <= wait_hash;
@@ -136,8 +134,8 @@ begin
 				Bus2IP_WrCE <= (others => '0');
 				Bus2IP_RdCE <= STATUS_REG;
 				Bus2IP_Data <= (others => '0');
-				Bus2IP_BE <= (others => '0');
-				if( IP2Bus_RdAck = '1' and IP2Bus_Data(1) = '1') then
+				Bus2IP_BE   <= (others => '0');
+				if( IP2Bus_RdAck = '1' and IP2Bus_Data(HASH_RDY) = '1') then
 					current_state <= wait_clear;
 					idx <= 0;
 				end if;

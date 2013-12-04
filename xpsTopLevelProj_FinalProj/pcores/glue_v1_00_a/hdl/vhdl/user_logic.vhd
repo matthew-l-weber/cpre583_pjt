@@ -144,14 +144,21 @@ architecture IMP of user_logic is
 end component;
 
 	-- State info:
-	type algo_states is (algoWait, dataXfer, hashWait, saveHash, algoDone);
+	type algo_states is (algoWait, algoBegin, dataXfer, hashWait, saveHash, algoDone);
 	signal algoState :  algo_states;
-  
-	-- Status bits: 
+
+	-- Status bits:
 	signal input_rdy : std_logic;		-- Input data can safely be written.
 	signal hash_rdy  : std_logic;		-- Hash operation is complete.
 	signal hash_busy : std_logic;		-- Hash operation in progress.
 
+
+	-- Signals for handling stale commands in the op register.
+	signal new_op			    : std_logic; -- A new operation is present.
+    signal p_Bus2IP_Data        : std_logic_vector(C_SLV_DWIDTH-1 downto 0);
+    signal p_slv_reg_write_sel  : std_logic_vector(31 downto 0);
+
+	-- Signals for interfacing with the SHA1 core:
 	signal ul_msg   : std_logic_vector ( 31 downto 0);
 	signal ul_init  : std_logic;
 	signal ul_load  : std_logic;
@@ -159,8 +166,7 @@ end component;
 	signal ul_valid : std_logic;
 	signal ul_reset : std_logic;
 
-
-	signal ld_map : std_logic_vector ( 16 downto 0 );
+	signal ld_map : std_logic_vector ( 15 downto 0 );
 
 	-- These local_ reg and the bus_slv_reg# are used to allow the user
 	-- logic to modify bus regs which could also be set via the bus
@@ -279,9 +285,24 @@ begin
         slv_reg28 <= (others => '0');
         slv_reg29 <= (others => '0');
         slv_reg31 <= (others => '0');
+		new_op <= '0';
+		p_Bus2IP_Data <= (others => '0');
+		p_slv_reg_write_sel <= (others => '0');
+
       else
+
+		-- Record the data and write select signals:
+		p_Bus2IP_Data <= Bus2IP_Data;
+		p_slv_reg_write_sel <= slv_reg_write_sel;
+
         case slv_reg_write_sel is
           when "10000000000000000000000000000000" =>
+			-- new_op is set when a new command is arrives and cleared when the
+			-- FSM begins its algorithm.
+			if (p_Bus2IP_Data /= Bus2IP_Data or
+			    p_slv_reg_write_sel /= slv_reg_write_sel ) then
+					new_op <= '1';
+			end if;
             for byte_index in 0 to (C_SLV_DWIDTH/8)-1 loop
               if ( Bus2IP_BE(byte_index) = '1' ) then
                 bus_slv_reg0(byte_index*8+7 downto byte_index*8) <= Bus2IP_Data(byte_index*8+7 downto byte_index*8);
@@ -470,6 +491,10 @@ begin
             end loop;
           when others => null;
         end case;
+
+		if algoState = algoBegin then
+			new_op <= '0';
+		end if;
       end if;
     end if;
 
@@ -565,56 +590,55 @@ begin
 				slv_reg5_h1     <= (others => '0');
 				slv_reg6_h2     <= (others => '0');
 				slv_reg7_h3     <= (others => '0');
-				slv_reg8_h4     <= (others => '0');  
+				slv_reg8_h4     <= (others => '0');
 			else
 				case algoState is
 					when algoWait =>
 						input_rdy	<= '1';
 						hash_busy <= '0';
-						if slv_reg0_rst = x"00000001" then     -- begin hash!
-							algoState <= dataXfer;
-							ld_map <= "10000000000000000";
+						if slv_reg0_rst = x"00000001" and new_op = '1' then
+							algoState <= algoBegin;
 						end if;
+					when algoBegin =>
+						ld_map <= "1000000000000000";
+						algoState <= dataXfer;
 					when dataXfer =>
 						ul_load		<= '1';
 						hash_busy	<= '1';
-						input_rdy	<= '0';		-- We no longer accept input data.
+						input_rdy	<= '0';		-- We don't accept new data
 						case ld_map is
-							when "10000000000000000" =>
+							when "1000000000000000" =>
 								ul_msg <= slv_reg9;
-							when "01000000000000000" =>
+							when "0100000000000000" =>
 								ul_msg <= slv_reg10;
-							when "00100000000000000" =>
+							when "0010000000000000" =>
 								ul_msg <= slv_reg11;
-							when "00010000000000000" =>
+							when "0001000000000000" =>
 								ul_msg <= slv_reg12;
-							when "00001000000000000" =>
+							when "0000100000000000" =>
 								ul_msg <= slv_reg13;
-							when "00000100000000000" =>
+							when "0000010000000000" =>
 								ul_msg <= slv_reg14;
-							when "00000010000000000" =>
+							when "0000001000000000" =>
 								ul_msg <= slv_reg15;
-							when "00000001000000000" =>
+							when "0000000100000000" =>
 								ul_msg <= slv_reg16;
-							when "00000000100000000" =>
+							when "0000000010000000" =>
 								ul_msg <= slv_reg17;
-							when "00000000010000000" =>
+							when "0000000001000000" =>
 								ul_msg <= slv_reg18;
-							when "00000000001000000" =>
+							when "0000000000100000" =>
 								ul_msg <= slv_reg19;
-							when "00000000000100000" =>
+							when "0000000000010000" =>
 								ul_msg <= slv_reg20;
-							when "00000000000010000" =>
+							when "0000000000001000" =>
 								ul_msg <= slv_reg21;
-							when "00000000000001000" =>
+							when "0000000000000100" =>
 								ul_msg <= slv_reg22;
-							when "00000000000000100" =>
+							when "0000000000000010" =>
 								ul_msg <= slv_reg23;
-							when "00000000000000010" =>
+							when "0000000000000001" =>
 								ul_msg <= slv_reg24;
-							when "00000000000000001" =>
-								ul_load <= '0';
-								algoState <= hashWait;
 							when others =>
 								ul_load <= '0';
 								algoState <= hashWait;
@@ -624,26 +648,26 @@ begin
 						input_rdy <= '1';
 						if ul_valid = '1' then
 							algoState <= saveHash;
-							ld_map <= "00000000000100000";
+							ld_map <= "0000000000100000";
 						end if;
 					when saveHash =>
 						case ld_map is
-							when "00000000000100000" =>
-								slv_reg4_h0 <= ul_hash; 
-							when "00000000000010000" =>
-								slv_reg5_h1 <= ul_hash; 
-							when "00000000000001000" =>
-								slv_reg6_h2 <= ul_hash; 
-							when "00000000000000100" =>
-								slv_reg7_h3 <= ul_hash; 
-							when "00000000000000010" =>
-								slv_reg8_h4 <= ul_hash; 
-							when "00000000000000001" =>
+							when "0000000000100000" =>
+								slv_reg4_h0 <= ul_hash;
+							when "0000000000010000" =>
+								slv_reg5_h1 <= ul_hash;
+							when "0000000000001000" =>
+								slv_reg6_h2 <= ul_hash;
+							when "0000000000000100" =>
+								slv_reg7_h3 <= ul_hash;
+							when "0000000000000010" =>
+								slv_reg8_h4 <= ul_hash;
+							when "0000000000000001" =>
 								algoState <= algoWait;
 								hash_rdy <= '1';
 							when others =>
-								hash_rdy <= '1';
 								algoState <= algoWait;
+								hash_rdy <= '1';
 						end case;
 						ld_map <= '0' & ld_map(ld_map'length-1 downto 1);
 					when others =>
@@ -656,7 +680,7 @@ begin
 -- Status is comprised of the hash ready and input ready bits:
 local_status <= "00000000" & "00000000" & "00000000" & "00000" & hash_busy & hash_rdy & input_rdy;
 
-ul_reset <= not Bus2IP_Resetn;
+ul_reset <= (not Bus2IP_Resetn);
 
 
 -- Allow either the bus or the internal logic to set bus reg value
