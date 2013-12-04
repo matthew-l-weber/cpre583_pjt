@@ -31,7 +31,7 @@ architecture rtl of user_logic_tb is
 ----------------------------------------------
 --       Constants declarations             --
 ----------------------------------------------
-constant NUM_TESTS						: integer			   := 2;
+constant NUM_TESTS						: integer			   := 3;
 
 constant C_S_AXI_DATA_WIDTH             : integer              := 32;
 constant C_S_AXI_ADDR_WIDTH             : integer              := 32;
@@ -207,6 +207,30 @@ port map
       IP2Bus_Error                   => tsi(1).IP2Bus_Error,
 	  finished						 => tso(1).finished
 );
+
+
+test3_i : entity glue_v1_00_a.test3_double_dog
+generic map
+(
+	C_NUM_REG                      => USER_NUM_REG,
+	C_SLV_DWIDTH                   => USER_SLV_DWIDTH
+)
+port map
+(
+      clk                            => clk,
+      Bus2IP_Resetn                  => tsi(2).Bus2IP_Resetn,
+      Bus2IP_Data                    => tso(2).Bus2IP_Data,
+      Bus2IP_BE                      => tso(2).Bus2IP_BE,
+      Bus2IP_RdCE                    => tso(2).Bus2IP_RdCE,
+      Bus2IP_WrCE                    => tso(2).Bus2IP_WrCE,
+      IP2Bus_Data                    => tsi(2).IP2Bus_Data,
+      IP2Bus_RdAck                   => tsi(2).IP2Bus_RdAck,
+      IP2Bus_WrAck                   => tsi(2).IP2Bus_WrAck,
+      IP2Bus_Error                   => tsi(2).IP2Bus_Error,
+	  finished						 => tso(2).finished
+);
+
+
 test_harness : process(clk)
 begin
 	if(clk = '1' and clk'event) then

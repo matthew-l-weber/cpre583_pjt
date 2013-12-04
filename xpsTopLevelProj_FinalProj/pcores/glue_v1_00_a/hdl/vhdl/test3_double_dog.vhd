@@ -16,7 +16,7 @@ use IEEE.numeric_std.all;
 library proc_common_v3_00_a;
 use proc_common_v3_00_a.ipif_pkg.all;
 
-entity test2_lazy_dog is
+entity test3_double_dog is
   generic
   (
     C_NUM_REG                      : integer              := 32;
@@ -24,7 +24,7 @@ entity test2_lazy_dog is
   );
   port
   (
-    clk                            : in  std_logic;
+    clk							   : in  std_logic;
     Bus2IP_Resetn                  : in  std_logic;
     Bus2IP_Data                    : out std_logic_vector(C_SLV_DWIDTH-1 downto 0);
     Bus2IP_BE                      : out std_logic_vector(C_SLV_DWIDTH/8-1 downto 0);
@@ -34,11 +34,11 @@ entity test2_lazy_dog is
     IP2Bus_RdAck                   : in  std_logic;
     IP2Bus_WrAck                   : in  std_logic;
     IP2Bus_Error                   : in  std_logic;
-    finished                       : out std_logic
+    finished					   : out std_logic
   );
-end test2_lazy_dog;
+end test3_double_dog;
 
-architecture test2_i of test2_lazy_dog is
+architecture test3_i of test3_double_dog is
 
 ----------------------------------------------
 --       Signal Declarations                --
@@ -61,17 +61,18 @@ architecture test2_i of test2_lazy_dog is
 --  Note2: The length of the message IN BITS (not including the 0x80) is
 --  located in the last 64-bits of the message.
 
-	signal test2_msg : sha1_in := (
+	signal test3_msg : sha1_in := (
 	x"54686520", x"71756963", x"6b206272", x"6f776e20",
 	x"666f7820", x"6a756d70", x"73206f76", x"65722074",
 	x"6865206c", x"617a7920", x"646f6780", x"00000000",
 	x"00000000", x"00000000", x"00000000", x"00000158"
 );
 
-signal test2_hash : sha1_out := (
+signal test3_hash : sha1_out := (
 x"2fd4e1c6", x"7a2d28fc", x"ed849ee1", x"bb76e739", x"1b93eb12"
 );
 
+signal msg_count : integer range 0 to 2;
 signal idx : integer range 0 to 16;
 
 signal wrce : std_logic_vector(C_NUM_REG-1 downto 0);
@@ -82,7 +83,7 @@ begin
 
 -- Processes
 
-test2 : process(clk)
+test3 : process(clk)
 begin
 	if(clk = '1' and clk'event) then
 		Bus2IP_WrCE <= (others => '0');
@@ -95,17 +96,22 @@ begin
 			idx <= 0;
 			wrce <= x"00400000";
 			rdce <= x"08000000";
+			msg_count <= 0;
+
 		else
 			-- Wait until the pcore is ready:
 			if( current_state = wait_for_ready ) then
 				Bus2IP_RdCE <= STATUS_REG;
+				idx <= 0;
+				wrce <= x"00400000";
+				rdce <= x"08000000";
 				if( IP2Bus_RdAck = '1' and IP2Bus_Data(INPUT_RDY) = '1') then
 					current_state <= write_data;
 				end if;
 			elsif( current_state = write_data ) then
 				Bus2IP_RdCE <= (others => '0');
 				Bus2IP_WrCE <= wrce;
-				Bus2IP_Data <= test2_msg(idx);
+				Bus2IP_Data <= test3_msg(idx);
 				Bus2IP_BE   <= (others => '1');
 				if( IP2Bus_WrAck = '1' ) then
 					current_state <= write_data_done;
@@ -148,10 +154,13 @@ begin
 				Bus2IP_RdCE <= rdce;
 				if( IP2Bus_RdAck = '1' ) then
 					if( idx < 5 ) then
-						assert( IP2Bus_Data = test2_hash(idx));
+						assert( IP2Bus_Data = test3_hash(idx));
 						idx <= idx + 1;
 						rdce <= '0' & rdce(rdce'length-1 downto 1);
 						current_state <= wait_clear;
+					elsif( msg_count < 1 ) then
+						current_state <= wait_for_ready;
+						msg_count <= msg_count + 1;
 					else
 						current_state <= done;
 					end if;
@@ -165,8 +174,8 @@ begin
 		end if;
 	end if;
 
-end process test2;
+end process test3;
 
 finished <= '1' when current_state = done else '0';
 
-end test2_i;
+end test3_i;
