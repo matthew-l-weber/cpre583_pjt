@@ -18,8 +18,9 @@ add wave -noupdate -divider {Test 1}
 add wave -noupdate /user_logic_tb/test1_i/current_state
 add wave -noupdate -divider {Test 2}
 add wave -noupdate /user_logic_tb/test2_i/current_state
-add wave -noupdate -radix decimal /user_logic_tb/test2_i/idx
-add wave -noupdate -radix hexadecimal /user_logic_tb/test2_i/wrce
+add wave -noupdate -divider {Test 3}
+add wave -noupdate /user_logic_tb/test3_i/current_state
+add wave -noupdate /user_logic_tb/test3_i/msg_count
 add wave -noupdate -divider user_logic
 add wave -noupdate /user_logic_tb/user_logic_i/algoState
 add wave -noupdate /user_logic_tb/user_logic_i/new_op
@@ -91,4 +92,4 @@ configure wave -griddelta 40
 configure wave -timeline 0
 configure wave -timelineunits ps
 update
-WaveRestoreZoom {295434 ps} {444283 ps}
+WaveRestoreZoom {1220930 ps} {1369779 ps}

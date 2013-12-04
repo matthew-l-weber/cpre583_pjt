@@ -569,7 +569,7 @@ begin
 	sha_clk		=> Bus2IP_Clk,
 	sha_reset	=> ul_reset
   );
-  
+
   ---------------------------------------------------------
   -- FSM to glue together processor interface to custom algo
   ---------------------------------------------------------
@@ -579,6 +579,7 @@ begin
 			-- Defaults:
 			ul_load <= '0';
 			ul_msg  <= (others => '0');
+			ul_init <= '0';
 
 			if Bus2IP_Resetn = '0' then
 				algoState		<= algoWait;
@@ -596,8 +597,13 @@ begin
 					when algoWait =>
 						input_rdy	<= '1';
 						hash_busy <= '0';
-						if slv_reg0_rst = x"00000001" and new_op = '1' then
-							algoState <= algoBegin;
+						if new_op = '1' then
+							if slv_reg0_rst = x"00000001" then
+								ul_init <= '1';
+								algoState <= algoBegin;
+							elsif slv_reg0_rst = x"00000002" then
+								algoState <= algoBegin;
+							end if;
 						end if;
 					when algoBegin =>
 						ld_map <= "1000000000000000";
