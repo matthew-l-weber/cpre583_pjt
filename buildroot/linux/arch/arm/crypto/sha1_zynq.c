@@ -26,9 +26,12 @@
 #include <linux/module.h>
 #include <linux/cryptohash.h>
 #include <linux/types.h>
+#include <linux/delay.h>
 #include <crypto/sha.h>
 #include <asm/byteorder.h>
 
+
+//#define DEBUG_SHA  1
 
 static void *memPtr;
 
@@ -70,10 +73,19 @@ static void *memPtr;
 #define IO_SHA_READ(offset)         ioread32(memPtr + offset)
 #define IO_SHA_WRITE(offset, val)   iowrite32((u32)val, memPtr + offset)
 
+
+#define HASH_RDY   0x2
+#define INPUT_RDY  0x1
+#define HASH_BUSY  0x4
+
+#define NEW_HASH   0x1
+#define CONT_HASH  0x2
+
 struct SHA1_CTX {
 	uint32_t h0,h1,h2,h3,h4;
 	u64 count;
 	u8 data[SHA1_BLOCK_SIZE];
+	u32 algoCMD;
 };
 
 static int sha1_init(struct shash_desc *desc)
@@ -106,71 +118,87 @@ static void printBlk(const u8* buf, unsigned int size)
 
 static void printAlgoState(void)
 {
-	char * stateStr;
-	unsigned int currentState = IO_SHA_READ(ZYNQ_SHA1_FSM);
-	switch(currentState)
-	{
-		case 0x0:
-			stateStr = "RST";
-			break;
-		case 0x1:
-			stateStr = "WAIT";
-			break;
-		case 0x2:
-			stateStr = "DXFER";
-			break;
-		case 0x3:
-			stateStr = "HWAIT";
-			break;
-		case 0x4:
-			stateStr = "DONE";
-			break;
-		default:
-			stateStr = "UNKWN";
-	}
-	printk("SHA1 FSM[%s]\n", stateStr);
+	unsigned int currentStatus = IO_SHA_READ(ZYNQ_SHA1_STATUS);
+	printk("SHA1 Status[");
+	if(currentStatus & INPUT_RDY)
+		printk("INPUT_RDY ");
+	if(currentStatus & HASH_RDY)
+		printk("HASH_RDY ");
+	if(currentStatus & HASH_BUSY)
+		printk("HASH_BUSY ");
+	printk("]\n");	
 }
 
 static int __sha1_update(struct SHA1_CTX *sctx, const u8 *data,
 			       unsigned int len, unsigned int partial)
 {
-	unsigned int done = 0, i = 0;
+	unsigned int done = 0, i = 0, j = 0;
 	unsigned int rounds = 0;
 
 	sctx->count += len;
 	if (partial) {
+#ifdef DEBUG_SHA
 		printk("__sha1_update --> len:%u.(0x%x) partial:%u.(0x%x) cnt:%llu.(0x%x)\n",
 			len, len, partial, partial, sctx->count,(u32) sctx->count);
+#endif
 		done = SHA1_BLOCK_SIZE - partial;
 		memcpy(sctx->data + partial, data, done);
+#ifdef DEBUG_SHA
 		printBlk(sctx->data,SHA1_BLOCK_SIZE);
-//		sha1_block_data_order(sctx, sctx->data, 1);
+#endif
+		// MUST check status here to make sure it's ready for more.....
+		while(!(IO_SHA_READ(ZYNQ_SHA1_STATUS) & INPUT_RDY))
+		{
+#ifdef DEBUG_SHA
+			printAlgoState();
+			msleep(100);
+#endif
+		}
+
+		for(i = 0; i < SHA1_BLOCK_SIZE /4; i++) //HACK
+			((u32*)(sctx->data))[i] = cpu_to_be32(((u32*)(sctx->data))[i]); //HACK
 		(void)memcpy_toio(
 			(u32*)(memPtr+ZYNQ_SHA1_DATA_BASE),
 			(u32*)(sctx->data),
 			SHA1_BLOCK_SIZE);
-		IO_SHA_WRITE(ZYNQ_SHA1_STARTBLK, 0x1);
-		IO_SHA_WRITE(ZYNQ_SHA1_STARTBLK, 0x0);  //hack until vhdl is fixed
+#ifdef DEBUG_SHA
+printk("algoCMD1 0x%x  0x%08x\n",sctx->algoCMD,IO_SHA_READ(ZYNQ_SHA1_D0));
+#endif
+		IO_SHA_WRITE(ZYNQ_SHA1_RST, sctx->algoCMD); 
+		sctx->algoCMD = CONT_HASH;
 	}
 
 	if (len - done >= SHA1_BLOCK_SIZE) {
+#ifdef DEBUG_SHA
 		printk("__sha1_update --> len:%u.(0x%x) done:%u.(0x%x) cnt:%llu.(0x%x)\n",
 			len, len, done, done, sctx->count,(u32) sctx->count);
+#endif
 		rounds = (len - done) / SHA1_BLOCK_SIZE;
-//		sha1_block_data_order(sctx, data + done, rounds);
 		for(i = 0; i < rounds; i++)
 		{
-			// MUST check status here to make sure it's ready for more.....
-			while(IO_SHA_READ(ZYNQ_SHA1_STATUS) != 0x1);
+			while(!(IO_SHA_READ(ZYNQ_SHA1_STATUS) & INPUT_RDY))
+			{
+#ifdef DEBUG_SHA
+				printAlgoState();
+				msleep(100);
+#endif
+			}
+			for(j = 0; j < SHA1_BLOCK_SIZE /4; j++) //HACK
+				((u32*)((data + done)+(i*SHA1_BLOCK_SIZE)))[j] = 
+					cpu_to_be32(((u32*)((data + done)+(i*SHA1_BLOCK_SIZE)))[j]); //HACK
 			(void)memcpy_toio(
 				(u32*)(memPtr+ZYNQ_SHA1_DATA_BASE),
 				(u32*)((data + done)+(i*SHA1_BLOCK_SIZE)),
 				SHA1_BLOCK_SIZE);
-			//tell algo to start, eventually this could be trigger in fabric on the last word to write.
-			IO_SHA_WRITE(ZYNQ_SHA1_STARTBLK, 0x1);  
-			IO_SHA_WRITE(ZYNQ_SHA1_STARTBLK, 0x0);  //hack until vhdl is fixed
+#ifdef DEBUG_SHA
+printk("algoCMD2 0x%x  0x%08x\n",sctx->algoCMD,IO_SHA_READ(ZYNQ_SHA1_D0));
+#endif
+			IO_SHA_WRITE(ZYNQ_SHA1_RST, sctx->algoCMD); 
+			sctx->algoCMD = CONT_HASH;
 		}
+#ifdef DEBUG_SHA
 		printBlk(data+done,rounds * SHA1_BLOCK_SIZE);
+#endif
 		done += rounds * SHA1_BLOCK_SIZE;
 	}
 	memcpy(sctx->data, data + done, len - done);
@@ -184,18 +212,19 @@ static int sha1_update(struct shash_desc *desc, const u8 *data,
 	struct SHA1_CTX *sctx = shash_desc_ctx(desc);
 	unsigned int partial = sctx->count % SHA1_BLOCK_SIZE;
 	int res;
-printAlgoState();
+
 	if(!sctx->count)  // reset the status bit and signal new msg
 	{
-		IO_SHA_WRITE(ZYNQ_SHA1_RST, 0x1); 
-		IO_SHA_WRITE(ZYNQ_SHA1_RST, 0x0);  //hack until vhdl is fixed
-	}
-printAlgoState();
+		sctx->algoCMD = NEW_HASH;
+	}		
+
 	/* Handle the fast case right here */
 	if (partial + len < SHA1_BLOCK_SIZE) {
 		sctx->count += len;
 		memcpy(sctx->data + partial, data, len);
+#ifdef DEBUG_SHA
 		printBlk(data,len);
+#endif
 		return 0;
 	}
 	res = __sha1_update(sctx, data, len, partial);
@@ -221,7 +250,9 @@ static int sha1_final(struct shash_desc *desc, u8 *out)
 	index = sctx->count % SHA1_BLOCK_SIZE;
 	padlen = (index < 56) ? (56 - index) : ((SHA1_BLOCK_SIZE+56) - index);
 	/* We need to fill a whole block for __sha1_update() */
+#ifdef DEBUG_SHA
 	printk("__sha1_final --> padlen:%u. index:%u.\n",padlen,index);
+#endif
 	if (padlen <= 56) {
 		sctx->count += padlen;
 		memcpy(sctx->data + index, padding, padlen);
@@ -230,14 +261,13 @@ static int sha1_final(struct shash_desc *desc, u8 *out)
 	}
 	__sha1_update(sctx, (const u8 *)&bits, sizeof(bits), 56);
 
-	// Wait for Rdy for data before requesting hash
-	while(IO_SHA_READ(ZYNQ_SHA1_STATUS) != 0x1); 
-printAlgoState();
-	// Request hash
-	IO_SHA_WRITE(ZYNQ_SHA1_FINISHED, 0x1);
-	IO_SHA_WRITE(ZYNQ_SHA1_FINISHED, 0x0); //hack until vhdl is fixed
-printAlgoState();
-	while(IO_SHA_READ(ZYNQ_SHA1_STATUS) != 0x2); // Wait for HASH to be rdy
+	while((IO_SHA_READ(ZYNQ_SHA1_STATUS) & HASH_BUSY))
+	{
+#ifdef DEBUG_SHA
+		printAlgoState();
+		msleep(100);
+#endif
+	}
 	(void)memcpy_fromio(
 		(u32 *)sctx, 
 		(u32*)(memPtr+ZYNQ_SHA1_HASH_BASE), 
@@ -246,7 +276,8 @@ printAlgoState();
 	printk("HASH: ");
 	for (i = 0; i < 5; i++)
 	{
-		dst[i] = cpu_to_be32(((u32 *)sctx)[i]);
+		dst[i] = ((u32 *)sctx)[i];
+//opencore already gens big endian		dst[i] = cpu_to_be32(((u32 *)sctx)[i]);
 		printk("0x%x ",dst[i]);
 	}
 	printk("\n");
