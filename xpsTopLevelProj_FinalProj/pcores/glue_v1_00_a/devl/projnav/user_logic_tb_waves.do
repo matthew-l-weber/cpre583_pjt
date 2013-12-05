@@ -21,6 +21,9 @@ add wave -noupdate /user_logic_tb/test2_i/current_state
 add wave -noupdate -divider {Test 3}
 add wave -noupdate /user_logic_tb/test3_i/current_state
 add wave -noupdate /user_logic_tb/test3_i/msg_count
+add wave -noupdate -divider {Test 4}
+add wave -noupdate /user_logic_tb/test4_i/current_state
+add wave -noupdate /user_logic_tb/test4_i/msg_count
 add wave -noupdate -divider user_logic
 add wave -noupdate /user_logic_tb/user_logic_i/algoState
 add wave -noupdate /user_logic_tb/user_logic_i/new_op
@@ -92,4 +95,4 @@ configure wave -griddelta 40
 configure wave -timeline 0
 configure wave -timelineunits ps
 update
-WaveRestoreZoom {1220930 ps} {1369779 ps}
+WaveRestoreZoom {1858594 ps} {2007443 ps}

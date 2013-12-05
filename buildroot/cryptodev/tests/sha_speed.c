@@ -74,6 +74,13 @@ int hash_data(struct session_op *sess, int fdc, int chunksize, int alignmask)
 {
 	struct crypt_op cop;
 	char *buffer;
+	char *testbufSm = "The quick brown fox jumps over the lazy dog";// The quick brown fox jumps over the lazy dog";
+	//2fd4e1c6 7a2d28fc ed849ee1 bb76e739 1b93eb12
+	char *testbufLg = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"; 
+
+	//d0572de8 e494e0b7 b8e50302 003fc4ae 0596ef4d
+	int testLngthLg = 119;
+	int testLngthSm = 43;// + 1 + 43; //size of testbuf
 	static int val = 23;
 	struct timeval start, end;
 	double total = 0;
@@ -81,6 +88,8 @@ int hash_data(struct session_op *sess, int fdc, int chunksize, int alignmask)
 	char metric[16];
 	uint8_t mac[AALG_MAX_RESULT_LEN];
 	int i = 0;
+
+
 
 	if (alignmask) {
 		if (posix_memalign((void **)&buffer, alignmask + 1, chunksize)) {
@@ -98,8 +107,16 @@ int hash_data(struct session_op *sess, int fdc, int chunksize, int alignmask)
 //	fflush(stdout);
 
 //	memset(buffer, val++, chunksize);
-	for(i = 0; i < chunksize;i++)
-		buffer[i] = i+1;
+	if(chunksize)
+	{
+		for(i = 0; i < chunksize;i++)
+			buffer[i] = i+'a';
+	}
+//	else
+//	{
+//		chunksize = testLngth;
+//		printf("Str[%s] size[%u.] sizeInBits[0x%x]\n",testbuf,chunksize,chunksize*8);
+//	}
 
 	must_finish = 0;
 	if(totalTime)
@@ -111,7 +128,13 @@ int hash_data(struct session_op *sess, int fdc, int chunksize, int alignmask)
 		cop.ses = sess->ses;
 		cop.len = chunksize;
 		cop.op = COP_ENCRYPT;
-		cop.src = (unsigned char *)buffer;
+		if(chunksize == testLngthSm)
+			cop.src = (unsigned char *)testbufSm;
+		else if(chunksize == testLngthLg)
+			cop.src = (unsigned char *)testbufLg;
+		else
+			cop.src = (unsigned char *)buffer;
+
 		cop.mac = mac;
 
 		if (ioctl(fdc, CIOCCRYPT, &cop)) {
