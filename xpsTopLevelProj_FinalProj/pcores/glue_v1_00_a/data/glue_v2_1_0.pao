@@ -8,6 +8,3 @@ lib proc_common_v3_00_a  all
 lib axi_lite_ipif_v1_01_a  all 
 lib glue_v1_00_a user_logic vhdl
 lib glue_v1_00_a glue vhdl
-lib glue_v1_00_a sha1_oc vhdl
-lib glue_v1_00_a c4b vhdl
-lib glue_v1_00_a c6b vhdl

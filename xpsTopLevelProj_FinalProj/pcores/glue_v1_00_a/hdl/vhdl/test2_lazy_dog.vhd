@@ -24,7 +24,7 @@ entity test2_lazy_dog is
   );
   port
   (
-    clk                            : in  std_logic;
+    clk							   : in  std_logic;
     Bus2IP_Resetn                  : in  std_logic;
     Bus2IP_Data                    : out std_logic_vector(C_SLV_DWIDTH-1 downto 0);
     Bus2IP_BE                      : out std_logic_vector(C_SLV_DWIDTH/8-1 downto 0);
@@ -34,7 +34,7 @@ entity test2_lazy_dog is
     IP2Bus_RdAck                   : in  std_logic;
     IP2Bus_WrAck                   : in  std_logic;
     IP2Bus_Error                   : in  std_logic;
-    finished                       : out std_logic
+    finished					   : out std_logic
   );
 end test2_lazy_dog;
 
