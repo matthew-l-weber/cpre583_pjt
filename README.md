@@ -28,3 +28,85 @@ Project overview
 
 Our original project proposal suggested using a framework called Open Crypto Framework (OCF).  It turned out OCF was deprecated and not functional with newer Linux kernels.  Instead the Cryptodev development now provides a comparable capability along with a set of test applications used for validation and benchmarking.  This works out to fulfill the Crypto API and TestApp portions of the design.  The SHA1 entity is based on an Opencore core.
 As originally proposed, the architecture [Figure 1] consists of a software kernel driver API, user space application, as well as a programmable logic (PL) entity.  Using these components, an initial implementation yielded a functional implementation of the SHA1 algorithm using the PL to compute the hash results.
+
+
+Additional Info
+
+Notes on SHA1 - Overview of padding and tail…..
+http://www.itl.nist.gov/fipspubs/fip180-1.htm
+
+Crypto dev sha testing example
+http://lists.freebsd.org/pipermail/freebsd-security/2013-August/007115.html
+
+Notes on using cryptodev-linux
+https://github.com/nmav/cryptodev-linux/blob/master/INSTALL
+
+Notes on some changes to zynq fabric loading
+http://xlnx.lithium.com/t5/Embedded-Linux/download-bitfile-to-dev-xdevcfg-timeout/m-p/322419#M6137
+http://forums.xilinx.com/t5/Embedded-Linux/Zynq-Loading-bitfile-into-FPGA-from-Linux-xdevcfg/td-p/237850/page/3
+.
+sha1 open core
+http://opencores.org/websvn,filedetails?repname=nfhc&path=%2Fnfhc%2Ftrunk%2Fsha1%2Fsha1.vhdl
+
+Xilinx Core Generator
+http://www.xilinx.com/tools/coregen.htm
+
+
+
+REFERENCES
+
+[1] Altera, Altera SoC Overview. http://www.altera.com/devices/processor/soc-
+fpga/overview/proc-soc-fpga.html, Oct 2013.
+
+[2] Altera, Altera Nios Overview. http://www.altera.com/devices/processor/nios2/ni2-
+
+[3] Buildroot, Buildroot: making Embedded Linux easy. http://buildroot.uclibc.org/, Oct 2013.
+
+[4] Gaisler, Gaisler LEON Overview. http://www.gaisler.com/index.php/products/processors/leon3,
+
+[5] Angelos Keromytis, Jason Wright, Theo Raadt The Design of the OpenBSD Cryptographic Framework. http://www.openbsd.org/papers/ocf.pdf, Proceedings of the USENIX Annual Technical Conference, pages 181-196, 2003.
+
+[6] Jacquard, Riverside Optimizing Compiler for Conﬁgurable Computing.
+http://www.jacquardcomputing.com/roccc/, Oct 2013.
+
+[7] David McCullough, Open Crypto Framework - Linux. http://ocf-
+linux.sourceforge.net/, Sept 2013.
+
+[8] OpenSSL, OpenSSL. http://www.openssl.org/, 2013.
+
+[9] Texas Instruments, Cryptography Users Guide. http://processors.wiki.ti.com/index.php/Cryptography Users Guide,
+
+[10] Wikipedia, Crypto API Linux. http://en.wikipedia.org/wiki/Crypto API (Linux),
+
+[11] Xilinx, Xilinx Zynq All Programmable SoC. http://www.xilinx.com/products/silicon-devices/soc/zynq-7000/, Oct
+
+[12] Xilinx, Xilinx Zynq SoC Linux. http://www.xilinx.com/products/zynq-7000/linux.htm, Oct 2013.
+
+[13] Xilinx, Xilinx Electronic System Level Design. http://www.xilinx.com/products/design-tools/vivado/integration/esl-
+design/index.htm, Oct 2013.
+
+[14] Xilinx, Xilinx GIT Repo. https://github.com/xilinx, Oct 2013.
+
+
+
+[15] J. Villarreal, A. Park, W. Najjar, and R. Halstead. Designing modular hardware accelerators in C with ROCCC 2.0. In Field-Programmable Custom Computing Machines (FCCM), 2010 18th IEEE Annual International Symposium, 2010.
+
+[16] HIPAA Collaborative of Wisconsin, HIPAA En-
+cryption Whitepaper 7.7.10, http://www.general-
+
+ﬁles.org/download/gs584dd455h32i0/encryption%20whitepaper%207.7.10.doc.html
+
+[17] IEEE 1363-2000: Standard Speciﬁcations For Public Key Cryptography,
+
+http://grouper.ieee.org/groups/1363/P1363/index.html
+
+[18] Peter Gutmann, An Open-source Cryptographic Co-
+processor, University of Auckland, New Zealand-
+http://www.cypherpunks.to/˜peter/usenix00.pdf
+
+[19] Shay Gueron, Vlad Krasnov; Parallelzing message schedules to accel-
+erate the computations of hash functions; Department of Mathematics,
+University of Haifa, Isreal; June 5, 2012
+
+[20] A. Nugroho, http://opencores.org/websvn,filedetails?repname=nfhc&path=%2Fnfhc%2Ftrunk%2Fsha1%2Fsha1.vhdl
+
