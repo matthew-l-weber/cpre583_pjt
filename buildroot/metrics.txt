@@ -1,0 +1,252 @@
+Initial test to validate package and kernel configuration is executing with a Linux 3.12 kernel on a ARM OMAP3730 CortexA8 (platform built with buildroot and attached config).   Using the cryptodev pkg sha1 test app (a.out in the output below) and the cryptodev-linux framework.  Two kernel algos are demonstrated below.  The driver will be developed to add a third option in the Zynq configuration.
+
+# 
+# modprobe cryptodev
+# ./a.out 
+Testing SHA1 Hash: 
+requested hash CRYPTO_SHA1, got sha1 with driver sha1-generic
+	Encrypting in chunks of 256 bytes: done. 30.84 MB in 5.00 secs: 6.17 MB/sec
+	Encrypting in chunks of 1024 bytes: done. 81.92 MB in 5.00 secs: 16.38 MB/sec
+	Encrypting in chunks of 4096 bytes: done. 134.07 MB in 5.00 secs: 26.81 MB/sec
+	Encrypting in chunks of 16384 bytes: done. 162.07 MB in 5.00 secs: 32.41 MB/sec
+	Encrypting in chunks of 65536 bytes: done. 171.70 MB in 5.00 secs: 34.33 MB/sec
+
+Testing SHA256 Hash: 
+requested hash CRYPTO_SHA2_256, got sha256 with driver sha256-generic
+	Encrypting in chunks of 256 bytes:
+
+###############################################
+
+# insmod /lib/modules/3.12.0/kernel/arch/arm/crypto/sha1-arm.ko
+# ./a.out 
+
+Testing SHA1 Hash: 
+requested hash CRYPTO_SHA1, got sha1 with driver sha1-asm
+	Encrypting in chunks of 256 bytes: done. 32.29 MB in 5.00 secs: 6.46 MB/sec
+	Encrypting in chunks of 1024 bytes: done. 88.17 MB in 5.00 secs: 17.63 MB/sec
+	Encrypting in chunks of 4096 bytes: done. 148.03 MB in 5.00 secs: 29.60 MB/sec
+	Encrypting in chunks of 16384 bytes: done. 181.75 MB in 5.00 secs: 36.35 MB/sec
+	Encrypting in chunks of 65536 bytes: done. 192.94 MB in 5.00 secs: 38.58 MB/sec
+
+Testing SHA256 Hash: 
+requested hash CRYPTO_SHA2_256, got sha256 with driver sha256-generic
+	Encrypting in chunks of 256 bytes: done. 27.63 MB in 5.00 secs: 5.53 MB/sec
+	Encrypting in chunks of 1024 bytes:
+
+
+
+Re-test on a Zynq 702 devkit
+
+Testing SHA1 Hash: 
+requested hash CRYPTO_SHA1, got sha1 with driver sha1-generic
+	Encrypting in chunks of 256 bytes: done. 64.62 MB in 5.00 secs: 12.92 MB/sec
+	Encrypting in chunks of 1024 bytes: done. 131.72 MB in 5.00 secs: 26.34 MB/sec
+	Encrypting in chunks of 4096 bytes: done. 166.71 MB in 5.00 secs: 33.34 MB/sec
+	Encrypting in chunks of 16384 bytes: done. 181.91 MB in 5.00 secs: 36.38 MB/sec
+	Encrypting in chunks of 65536 bytes: done. 185.53 MB in 5.00 secs: 37.09 MB/sec
+
+
+Testing SHA1 Hash: 
+requested hash CRYPTO_SHA1, got sha1 with driver sha1-asm
+	Encrypting in chunks of 256 bytes: done. 68.74 MB in 5.00 secs: 13.75 MB/sec
+	Encrypting in chunks of 1024 bytes: done. 146.83 MB in 5.00 secs: 29.37 MB/sec
+	Encrypting in chunks of 4096 bytes: done. 190.15 MB in 5.00 secs: 38.03 MB/sec
+	Encrypting in chunks of 16384 bytes: done. 208.50 MB in 5.00 secs: 41.70 MB/sec
+	Encrypting in chunks of 65536 bytes: done. 213.32 MB in 5.00 secs: 42.66 MB/sec
+
+
+
+Reference Info
+------------------------------------
+
+Notes on SHA1 - Overview of padding and tail…..
+http://www.itl.nist.gov/fipspubs/fip180-1.htm
+
+Crypto dev sha testing example
+http://lists.freebsd.org/pipermail/freebsd-security/2013-August/007115.html
+
+Notes on using cryptodev-linux
+https://github.com/nmav/cryptodev-linux/blob/master/INSTALL
+
+
+
+Notes on some changes to zynq fabric loading
+http://xlnx.lithium.com/t5/Embedded-Linux/download-bitfile-to-dev-xdevcfg-timeout/m-p/322419#M6137
+http://forums.xilinx.com/t5/Embedded-Linux/Zynq-Loading-bitfile-into-FPGA-from-Linux-xdevcfg/td-p/237850/page/3
+
+
+
+
+TODO:  Need to document how ocf was abandoned so we switched to cryptodev-linux which does the same concept but is actively supported.
+
+
+
+
+
+random test cases
+
+# ./a.out 0 119
+Testing SHA1 Hash: 
+requested hash CRYPTO_SHA1, got sha1 with driver sha1-zynqpl
+SHA1 Status[INPUT_RDY HASH_RDY HASH_BUSY ]
+HASH: 0xee971065 0xaaa017e0 0x632a8ca6 0xc77bb3bf 0x8b1dfc56 
+done. 119.00 B in 0.12 secs: 1029.03 B/sec
+# 
+# sh go.sh 
+Mapped 0xf007e000 
+SHA1 Status[INPUT_RDY ]
+Module                  Size  Used by    Tainted: G  
+sha1_zynq               2360  0 
+cryptodev              27733  0 
+ipv6                  207045 12 
+# 
+# ./a.out 0 119
+Testing SHA1 Hash: 
+requested hash CRYPTO_SHA1, got sha1 with driver sha1-zynqpl
+HASH: 0xee971065 0xaaa017e0 0x632a8ca6 0xc77bb3bf 0x8b1dfc56 
+done. 119.00 B in 0.01 secs: 21663.94 B/sec
+# 
+# ./a.out 0 256
+Testing SHA1 Hash: 
+requested hash CRYPTO_SHA1, got sha1 with driver sha1-zynqpl
+HASH: 0x62aca1ad 0x7aca5165 0xa86aea8a 0xf56763fd 0xff525d7f 
+done. 256.00 B in 0.01 secs: 46301.32 B/sec
+# 
+# ./a.out 0 1024
+Testing SHA1 Hash: 
+requested hash CRYPTO_SHA1, got sha1 with driver sha1-zynqpl
+HASH: 0xcd16868d 0x7ce3754 0xe50d4264 0xd02b1323 0x4893697f 
+done. 1.02 KB in 0.01 secs: 180.38 KB/sec
+# 
+# sh go.sh 
+# vi go.sh 
+# 
+# sh go.sh 
+rmmod: can't unload 'sha1_arm': unknown symbol in module, or unknown parameter
+Module                  Size  Used by    Tainted: G  
+sha1_arm                2943  0 
+cryptodev              27733  0 
+ipv6                  207045 12 
+# 
+# ./a.out 0 1024
+Testing SHA1 Hash: 
+requested hash CRYPTO_SHA1, got sha1 with driver sha1-asm
+done. 1.02 KB in 0.00 secs: 18618.18 KB/sec
+# 
+# ./a.out 0 10240
+Testing SHA1 Hash: 
+requested hash CRYPTO_SHA1, got sha1 with driver sha1-asm
+done. 10.24 KB in 0.00 secs: 36967.51 KB/sec
+# 
+# vi go.sh 
+# 
+# ./a.out 0 10240
+Testing SHA1 Hash: 
+requested hash CRYPTO_SHA1, got sha1 with driver sha1-asm
+done. 10.24 KB in 0.00 secs: 39689.92 KB/sec
+# 
+# vi go.sh 
+# 
+# lsmod
+Module                  Size  Used by    Tainted: G  
+sha1_arm                2943  0 
+cryptodev              27733  0 
+ipv6                  207045 12 
+# 
+# vi go.sh 
+# 
+# sh go.sh 
+rmmod: can't unload 'sha1_zynq': unknown symbol in module, or unkMapped 0xf0122000 
+nown parameter
+SHA1 Status[INPUT_RDY ]
+Module                  Size  Used by    Tainted: G  
+sha1_zynq               2360  0 
+cryptodev              27733  0 
+ipv6                  207045 12 
+# 
+# ./a.out 0 10240
+Testing SHA1 Hash: 
+requested hash CRYPTO_SHA1, got sha1 with driver sha1-zynqpl
+HASH: 0x3d12f243 0x1f070bef 0xfd2e6ce9 0xd3db340b 0x128b5763 
+done. 10.24 KB in 0.01 secs: 1174.45 KB/sec
+# 
+# ./a.out 0 10241024
+Testing SHA1 Hash: 
+requested hash CRYPTO_SHA1, got sha1 with driver sha1-zynqpl
+HASH: 0xec1b9cf4 0xcdb91d95 0xffb7804d 0x11aff008 0x42d6c873 
+done. 10.24 MB in 3.30 secs: 3.11 MB/sec
+# 
+# vi go.sh 
+# 
+# ./a.out 0 10241024
+Testing SHA1 Hash: 
+requested hash CRYPTO_SHA1, got sha1 with driver sha1-zynqpl
+HASH: 0x7a4f0ec2 0xeaf2f397 0x5dd2eb7e 0xf468379c 0xc288658a 
+done. 10.24 MB in 3.30 secs: 3.11 MB/sec
+# 
+# sh go.sh 
+rmmod: can't unload 'sha1_arm': unknown symbol in module, or unknown parameter
+Module                  Size  Used by    Tainted: G  
+sha1_arm                2943  0 
+cryptodev              27733  0 
+ipv6                  207045 12 
+# 
+# ./a.out 0 10241024
+Testing SHA1 Hash: 
+requested hash CRYPTO_SHA1, got sha1 with driver sha1-asm
+done. 10.24 MB in 0.24 secs: 42.71 MB/sec
+# 
+# ./a.out 0 10485760
+Testing SHA1 Hash: 
+requested hash CRYPTO_SHA1, got sha1 with driver sha1-asm
+done. 10.49 MB in 0.25 secs: 42.63 MB/sec
+# 
+# vi go.sh 
+# 
+# sh go.sh 
+rmmod: can't unload 'sha1_zynq': unknown symbol in module, or unkMapped 0xf012a000 
+nown parameter
+SHA1 Status[INPUT_RDY ]
+Module                  Size  Used by    Tainted: G  
+sha1_zynq               2304  0 
+sha1_arm                2943  0 
+cryptodev              27733  0 
+ipv6                  207045 12 
+# 
+# rmmod sha1_arm
+# 
+# ./a.out 0 10485760
+Testing SHA1 Hash: 
+requested hash CRYPTO_SHA1, got sha1 with driver sha1-zynqpl
+HASH: 0xc297c6e3 0xe11db7ce 0xfd8fd8cf 0xd090e30f 0xd2a0fe1c 
+done. 10.49 MB in 3.35 secs: 3.13 MB/sec
+# 
+# sh go.sh 
+Mapped 0xf0130000 
+SHA1 Status[INPUT_RDY ]
+Module                  Size  Used by    Tainted: G  
+sha1_zynq               2340  0 
+cryptodev              27733  0 
+ipv6                  207045 12 
+# 
+# ./a.out 0 10485760
+Testing SHA1 Hash: 
+requested hash CRYPTO_SHA1, got sha1 with driver sha1-zynqpl
+HASH: 0xcfaf97f2 0x245cb4e6 0x4338736b 0x785072b0 0x9c59f418 
+done. 10.49 MB in 3.38 secs: 3.11 MB/sec
+# 
+# sh go.sh 
+Mapped 0xf0136000 
+SHA1 Status[INPUT_RDY ]
+Module                  Size  Used by    Tainted: G  
+sha1_zynq               2316  0 
+cryptodev              27733  0 
+ipv6                  207045 12 
+# 
+# ./a.out 0 10485760
+Testing SHA1 Hash: 
+requested hash CRYPTO_SHA1, got sha1 with driver sha1-zynqpl
+done. 10.49 MB in 3.37 secs: 3.11 MB/sec
+
+
+
