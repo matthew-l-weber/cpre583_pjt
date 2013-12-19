@@ -27,7 +27,7 @@
 
 \begin{document}
 
-\title{Group 2 Final Project Report (revA1217)}
+\title{Group 2 Final Project Report (revA1218)}
 \author{Jay Guild, Nathan Miller, Matthew L Weber}
 
 % The paper headers
@@ -45,7 +45,7 @@
 
 \begin{abstract}
 %\boldmath
-This project seeks to characterize the acceleration of a Linux Kernel cryptography algorithm using programmable logic. It targets a specific algorithm and uses a combination of open source user space applications, new kernel drivers, and custom logic to perform the analysis.
+This project seeks to characterize the acceleration of a Linux Kernel cryptography algorithm using programmable logic. It targets a specific algorithm and uses a combination of open source user space applications, new kernel drivers, and custom logic to create a working SoC FPGA design.
 \end{abstract}
 
 % Note that keywords are not normally used for peerreview papers.
@@ -55,7 +55,11 @@ This project seeks to characterize the acceleration of a Linux Kernel cryptograp
 \IEEEpeerreviewmaketitle
 
 \section{Introduction}
-\IEEEPARstart{A}{cceleration} of a cryptographic algorithms on an embedded device remains an outstanding challenge. New System on Chip (SoC) FPGA technologies provide more options to ofﬂoad or accelerate the cryptographic computations, however, integrating these technologies into existing designs can be challenging. Similarly, migrating designs between different SoC FPGA platforms can also require a signiﬁcant investment of time and resources. Even though the system functionality and underlying algorithms remain unchanged, the design teams are forced to re-invent their designs for each new platform. We believe this effort hampers the wider adoption of SoC FPGA technologies within the industry.  This project seeks to characterize the effort of porting an cryptographic algorithm to a SoC FPGA prototype containing a fabric based accelerator and provide empirical performance data showing the beneﬁts of doing so. The prototype will be running the Linux/BSD Cryptodev framework to transparently provide user-space programs with access to cryptographic functions. This prototype leverages similar concepts implemented on Texas Instruments SoC processors to tie their hardware accelerators into the Linux Kernel.
+\IEEEPARstart{A}{cceleration} of a cryptographic algorithms on an embedded device remains an outstanding challenge. New System on Chip (SoC) FPGA technologies provide more options to ofﬂoad or accelerate the cryptographic computations, however, integrating these technologies into existing designs can be challenging. Similarly, migrating designs between different SoC FPGA platforms can also require a signiﬁcant investment of time and resources. Even though the system functionality and underlying algorithms remain unchanged, the design teams are forced to re-invent their designs for each new platform.
+
+This project sought to characterize the effort of porting a simple cryptographic algorithm to a SoC FPGA prototype containing a fabric based accelerator and provide empirical performance data showing the beneﬁts of doing so. Towards this end, we implemented the SHA-1 algorithm on a Xilinx Zynq SoC FPGA 702 development kit and compared the performance of our SHA-1 fabric to a pure software implementation running on the Zynq’s ARM core.  The Linux cryptodev framework provided transparent access to the SHA-1 function, permitting the user-space to be ignorant of where the SHA-1 function was actually being performed.   Our project uses similar concepts implemented on Texas Instruments SoC processors to tie their hardware accelerators into the Linux Kernel.
+
+It would be fair to characterize our project as more of an “engineering project”.  Experimental data was certainly collected and analyzed (see the section VI \& VII), but the bulk of our effort was directed towards creating a working implementation.
 
 \section{Related Work}
 Cryptography is the process of encrypting information using an algorithm and either a public key (asymmetric encryption) or a private key (symmetric encryption) that makes the information unreadable unless the data is passed through a decryption algorithm that utilizes a private key that only the receiver holds\cite{HIPPA}. Several keys and algorithms have been developed under the IEEE standard for public key cryptography \cite{IEEESTD} and studied in several different environments for effectiveness and speed. It has been found that over networks with cryptography implemented that the limiting factor for most systems in speed is the network itself so using software to handle cryptography has not helped to speed up processing time much \cite{GUTMANN}. With speeds always increasing on communication buses this will change soon though. The largest bonuses in the recent past have been seen when adding a co-processor or FPGA to handle cryptography. By adding a co-processor or FPGA effectiveness is increased because computations can be done in parallel and logic can be handled in fewer steps\cite{GUERON}. Computations are also hard wired and coded into circuits and that creates a security that software in a single dedicated processor can’t match because that software can be manipulated by outside code\cite{GUTMANN}. A SoC FPGA that can process cryptography very fast using parallelization in a low cost implementation can resolve any issues that using a single processor software solution creates.
@@ -186,7 +190,7 @@ The initial simulation was used as a benchmark to give a metric as to the actual
 \caption{Test2 Runtime}
 \label{fig_test2Runtime}
 \end{figure} 
-The second test in the simulation was to send 44 bytes of data through the SHA1 hash as a single block and validate the generated hash.  See Appendix A: Table A-1 for detailed metrics used to create Figure \ref{fig_test2Runtime}.
+The second test in the simulation was to send 44 bytes of data through the SHA1 hash as a single block and validate the generated hash.  This test was set to validate an entire block of data passed through the SHA-1 core.  The write time increased disproportionately to the amount of data sent due to wait time in between writing to the registers and the passing of data to the SHA-1 core.  Hash time was added in for the time in hash process and the validation time increased proportionally to the amount of data sent.  See Appendix A: Table A-1 for detailed metrics used to create Figure \ref{fig_test2Runtime}.
 \subsubsection{Test3 - Single block twice}
 \begin{figure}[ht]
 \centering
@@ -194,7 +198,7 @@ The second test in the simulation was to send 44 bytes of data through the SHA1 
 \caption{Test3 Runtime}
 \label{fig_test3Runtime}
 \end{figure}
-The third test in the simulation was to send 44 bytes of data through SHA1 hash twice, each time computing a single block and validating the generated hash.  See Appendix A: Table A-1 for detailed metrics used to create Figure \ref{fig_test3Runtime}. 
+The third test in the simulation was to send 44 bytes of data through SHA1 hash twice, each time computing a single block and validating the generated hash.  This test was set to validate the proper function of writing to the registers multiple times with a proper hash calculated with each block sent.  The write time and validation time doubled as expected while the hash time was optimized and showed a better performance than Test 2.  See Appendix A: Table A-1 for detailed metrics used to create Figure \ref{fig_test3Runtime}. 
 \subsubsection{Test4 - Multi block}
 \begin{figure}[ht]
 \centering
@@ -202,7 +206,7 @@ The third test in the simulation was to send 44 bytes of data through SHA1 hash 
 \caption{Test4 Runtime}
 \label{fig_test4Runtime}
 \end{figure} 
-The fourth test in the simulation was to send 88 bytes of data through the SHA1 hash and have the algorithm process it as two blocks (multi-message).  This test had increased data load time and a similar hash compute time.  See Appendix A: Table A-1 for detailed metrics used to create Figure \ref{fig_test4Runtime}.
+The fourth test in the simulation was to send 88 bytes of data through the SHA1 hash and have the algorithm process it as two blocks (multi-message).  This test was to validate the proper function of running multiple blocks through the SHA-1 core while maintaining an appended hash.  Write time stayed the same as expected while validation time was halved due to only one hash result needing to be verified, unlike Test 3.  Hash time only increased slightly and was due to the need to carry over the hash from the first block instead of the hard coded initial hash values.  See Appendix A: Table A-1 for detailed metrics used to create Figure \ref{fig_test4Runtime}.
 
 The most noticeable sim performance observation was how the system was always in a state of feeding data.  This resulted in our limiting factor being the width/rate of the data bus used to send data to the FPGA.  If this data bus width/rate were increased so that more than one registers worth of data could be written or data written to individual registers at a faster pace, then more data could be processed in parallel on the FPGA.  
 
@@ -302,8 +306,8 @@ What we did not anticipate was the amount of time it took to merge one independe
 
 In our original project proposal we expressed our intent to use a high-level synthesis tool to a convert a C implementation of the SHA-1 algorithm directly into VHDL.  We were then going to compare our hand-coded core against the synthesized version to determine how it compared in terms of performance and resource utilization.  In our proposal we listed two tools:  Xilinx HLS and Jacquard ROCCC 2.0.  in the course of working on this project we discovered that the university did not have a license for Xilinx HLS.  We were not inclined to purchase a license ourselves for a single project (about \$2000).  This left the ROCCC 2.0 compiler.  Although the ROCCC web-site is operational, the project itself appears to be either defunct or simply uninterested in responding to students.  All inquires to get a student license for the ROCCC 2.0 compiler went unanswered.
 \section{Conclusion}
-
-<<Will update this tomorrow from Jay>>
+The implementation of a PL SHA1 cryptographic algorithm using the Linux kernel Crypto API showed to be successful.  With modifications to the user logic PL interface that would make the system custom to our application, integration of a SHA1 PL core, and tying it all together in simulation and on hardware.  In this process we thought that the core initially could operate with a lower process time if the state machine was driven by interrupts instead of process control to allow the software to execute parallel processes instead of waiting for data.  We did not explore this avenue as it was not in the scope of the project.  To test the system we stepped through a software simulated validation of the pieces with a final test on sending multiple block messages that gave successful data.  Upon examining the waveforms in the simulation we discovered the process time in the SHA-1 core could be optimized a bit more by using a wider AXI bus to send more than one 32 bit word at a time for more parallelized processing.
+With a successful implementation of a software simulated SHA-1 we moved to a hardware implementation on a Zynq board.  We used the same approach as the software validation and stepped through tests to verify that all pieces were working properly with the final test being a multi block message being passed through the core and validated on the output.  This proved to be successful in the end, but has significant performance depreciation in speed.  We attributed this to the 50 MHz clock signal on the Zynq board and AXI bus to the ARM core while the software version ran a 1 GHz clock signal and all three pieces were in phase on the clock signal.  We achieved all middle level milestones for the project while discovering several areas for future development and extended data for this report.
 
 
 \begin{thebibliography}{1}
